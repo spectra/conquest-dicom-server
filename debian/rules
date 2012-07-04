@@ -4,5 +4,19 @@
 %:
 	dh $@ --parallel
 
+dgate:
+	g++ $(CPPFLAGS) $(CXXFLAGS) -I/usr/include/lua5.1 -DUNIX -DNATIVE_ENDIAN=1 -DHAVE_LIBJASPER -DHAVE_LIBJPEG -DUSESQLITE -Wno-write-strings total.cpp -o dgate -lpthread -ldl -ljasper -ljpeg -Wno-multichar $(LDFLAGS)
+
+override_dh_auto_build: dgate
+	cp dicom.ini.sqlite dicom.ini
+	cp dicom.sql.sqlite dicom.sql
+	#sudo cp dgate /usr/lib/cgi-bin
+	#sudo cp dicom.sql /usr/lib/cgi-bin
+	#sudo cp dicom.ini.www /usr/lib/cgi-bin/dicom.ini
+	#sudo cp sample.cq /usr/lib/cgi-bin
+	#
+	#sudo cp ActiveFormProj1.ocx /var/www
+	#sudo cp conquest.jpg /var/www
+
 get-orig-source:
 	./debian/get-orig-source
