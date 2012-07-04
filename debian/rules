@@ -4,8 +4,13 @@
 %:
 	dh $@ --parallel
 
-dgate:
-	g++ $(CPPFLAGS) $(CXXFLAGS) -I/usr/include/lua5.1 -DUNIX -DNATIVE_ENDIAN=1 -DHAVE_LIBJASPER -DHAVE_LIBJPEG -DUSESQLITE -Wno-write-strings total.cpp -o dgate -lpthread -ldl -ljasper -ljpeg -Wno-multichar $(LDFLAGS)
+jpeg-6c/libjpeg.a:
+	cd jpeg-6c/
+	./configure
+	make
+
+dgate: jpeg-6c/libjpeg.a
+	g++ $(CPPFLAGS) $(CXXFLAGS) -Ijpeg-6c -I/usr/include/lua5.1 -DUNIX -DNATIVE_ENDIAN=1 -DHAVE_LIBJASPER -DHAVE_LIBJPEG -DUSESQLITE -Wno-write-strings total.cpp -o dgate -lpthread -ldl -ljasper -llua5.1 -lsqlite3 jpeg-6c/libjpeg.a -Wno-multichar $(LDFLAGS)
 
 override_dh_auto_build: dgate
 	cp dicom.ini.sqlite dicom.ini
