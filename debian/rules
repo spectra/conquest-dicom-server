@@ -20,13 +20,20 @@ dgate: jpeg-6c/libjpeg.a jasper-1.900.1-6ct/src/libjasper/.libs/libjasper.a
 override_dh_auto_build: dgate
 	cp dicom.ini.sqlite dicom.ini
 	cp dicom.sql.sqlite dicom.sql
-	#sudo cp dgate /usr/lib/cgi-bin
-	#sudo cp dicom.sql /usr/lib/cgi-bin
-	#sudo cp dicom.ini.www /usr/lib/cgi-bin/dicom.ini
-	#sudo cp sample.cq /usr/lib/cgi-bin
-	#
-	#sudo cp ActiveFormProj1.ocx /var/www
-	#sudo cp conquest.jpg /var/www
+
+override_dh_install:
+	dh_install dgate /usr/lib/cgi-bin
+	dh_install dicom.sql /usr/lib/cgi-bin
+	dh_install dicom.ini.www /usr/lib/cgi-bin/dicom.ini
+	dh_install sample.cq /usr/lib/cgi-bin
+	#dh_install ActiveFormProj1.ocx /var/www
+	dh_install conquest.jpg /var/www
+	# added (MM)
+	dh_install dgate.dic /usr/lib/cgi-bin
+
+override_dh_auto_clean:
+	dh_clean dicom.ini
+	dh_clean dicom.sql
 
 get-orig-source:
 	./debian/get-orig-source
