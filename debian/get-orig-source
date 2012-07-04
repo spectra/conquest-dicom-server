@@ -16,7 +16,7 @@ tar xvf ${UPSTREAM} -C ${FOLDER}
 
 # cleanup
 # conv copy of libjasper (sigh)
-rm -rf ${FOLDER}/jasper-1.900.1-6ct/
+#rm -rf ${FOLDER}/jasper-1.900.1-6ct/
 # conv copy of libjpeg 6c:
 #rm -rf ${FOLDER}/jpeg-6c/
 # conv copy of lua 5.1.4
