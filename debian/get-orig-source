@@ -1,0 +1,38 @@
+#!/bin/sh
+
+PACKAGE=conquest-dicom-server
+
+VERSION=`dpkg-parsechangelog | sed -n -e 's/^Version: \(.*\)-[^-]*$/\1/p'`
+
+TARFILE=${PACKAGE}_${VERSION}.orig.tar.gz
+UPSTREAM=conquestlinux1416.tar.gz
+
+FOLDER=${PACKAGE}-${VERSION}
+
+wget -c ftp://ftp-rt.nki.nl/outbox/MarcelVanHerk/dicomserver/${UPSTREAM}
+
+mkdir ${FOLDER}
+tar xvf ${UPSTREAM} -C ${FOLDER}
+
+# cleanup
+# conv copy of libjasper (sigh)
+rm -rf ${FOLDER}/jasper-1.900.1-6ct/
+# conv copy of libjpeg 6c:
+rm -rf ${FOLDER}/jpeg-6c/
+# conv copy of lua 5.1.4
+rm -rf ${FOLDER}/lua_5.1.4/
+# conv copy of sqlite3
+rm ${FOLDER}/sqlite3.*
+
+# remove DICOM test files:
+rm -rf ${FOLDER}/data/samples/
+
+# scary stuff:
+rm ${FOLDER}/ActiveFormProj1.ocx
+
+# no real source:
+rm ${FOLDER}/*.pdf
+
+GZIP="--best --no-name" tar cvfz ${TARFILE} ${FOLDER} 
+rm -rf ${FOLDER}
+rm ${UPSTREAM}

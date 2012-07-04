@@ -1,0 +1,26 @@
+Source: conquest-dicom-server
+Section: web
+Maintainer: Debian Med Packaging Team <debian-med-packaging@lists.alioth.debian.org>
+DM-Upload-Allowed: yes
+Uploaders: Mathieu Malaterre <malat@debian.org>
+Priority: extra
+Build-Depends: debhelper (>= 9)
+Standards-Version: 3.9.3
+Vcs-Browser: http://anonscm.debian.org/viewvc/debian-med/trunk/packages/conquest-dicom-server/trunk/
+Vcs-Svn: svn://svn.debian.org/debian-med/trunk/packages/conquest-dicom-server/trunk/
+Homepage: http://ingenium.home.xs4all.nl/dicom.html
+
+Package: conquest-dicom-server
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Conquest DICOM Server
+ A full featured DICOM server that has been developed based on and heavily
+ extending the public domain UCDMC DICOM code. Some possible applications of the
+ Conquest DICOM software are:
+  - DICOM training and testing
+  - Demonstration and research image archives
+  - Image format conversion from a scanner with DICOM network access
+  - DICOM image viewing and slide making
+  - DICOM image selection, (limited) editing, and splitting and merging of series
+  - Advanced automatic image forwarding and (de)compression
+  - DICOM caching and archive merging
