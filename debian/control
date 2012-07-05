@@ -13,10 +13,10 @@ Homepage: http://ingenium.home.xs4all.nl/dicom.html
 Package: conquest-dicom-server
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Conquest DICOM Server
+Description: ConQuest DICOM Server
  A full featured DICOM server that has been developed based on and heavily
- extending the public domain UCDMC DICOM code. Some possible applications of the
- Conquest DICOM software are:
+ extending the public domain UCDMC DICOM code. Some possible applications of
+ the ConQuest DICOM software are:
   - DICOM training and testing
   - Demonstration and research image archives
   - Image format conversion from a scanner with DICOM network access
