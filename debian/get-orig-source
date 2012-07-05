@@ -33,6 +33,10 @@ rm ${FOLDER}/ActiveFormProj1.ocx
 # no real source:
 rm ${FOLDER}/*.pdf
 
+# make distclean
+(cd ${FOLDER}/jasper-1.900.1-6ct && make distclean)
+(cd ${FOLDER}/jpeg-6c && make distclean)
+
 GZIP="--best --no-name" tar cvfz ${TARFILE} ${FOLDER} 
 rm -rf ${FOLDER}
 rm ${UPSTREAM}

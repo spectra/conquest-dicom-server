@@ -5,6 +5,8 @@
 	dh $@ --with autotools_dev
 
 override_dh_auto_configure:
+	# see bug #673254
+	#dh_autoreconf --sourcedirectory=jasper-1.900.1-6ct -- -i --force
 	(cd jasper-1.900.1-6ct && autoreconf -i --force)
 	dh_auto_configure --sourcedirectory=jasper-1.900.1-6ct -- --disable-libjpeg
 	dh_auto_configure --sourcedirectory=jpeg-6c
@@ -37,6 +39,7 @@ override_dh_install:
 	dh_install debian/dgate.load etc/apache2/mods-available
 
 override_dh_auto_clean:
+	#dh_autoreconf_clean --sourcedirectory=jasper-1.900.1-6ct
 	dh_auto_clean --sourcedirectory=jasper-1.900.1-6ct
 	dh_auto_clean --sourcedirectory=jpeg-6c
 
