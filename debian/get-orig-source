@@ -37,6 +37,12 @@ rm ${FOLDER}/jasper-1.900.1-6ct/doc/*.pdf
 # zip file:
 rm ${FOLDER}/jpeg-6c/jpeg-6c-changesmvh2.zip
 
+# vc80.pdb ?
+find ${FOLDER} -name vc80.pdb -delete
+
+# 
+rm ${FOLDER}/data/dbase/conquest.db3
+
 # make distclean
 (cd ${FOLDER}/jasper-1.900.1-6ct && make distclean)
 (cd ${FOLDER}/jpeg-6c && make distclean)
