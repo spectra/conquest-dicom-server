@@ -21,7 +21,6 @@ dgate: jpeg-6c/libjpeg.a jasper-1.900.1-6ct/src/libjasper/.libs/libjasper.a
 	g++ $(CPPFLAGS) $(CXXFLAGS) -Ijasper-1.900.1-6ct/src/libjasper/include -Ijpeg-6c -I/usr/include/lua5.1 -DUNIX -DNATIVE_ENDIAN=1 -DHAVE_LIBJASPER -DHAVE_LIBJPEG -DUSESQLITE -Wno-write-strings total.cpp -o dgate -lpthread -llua5.1 -lsqlite3 jpeg-6c/libjpeg.a jasper-1.900.1-6ct/src/libjasper/.libs/libjasper.a -Wno-multichar $(LDFLAGS)
 
 override_dh_auto_build: dgate
-	#cp dicom.ini dicom.ini.bak
 	cp dicom.ini.sqlite dicom.ini
 	cp dicom.sql.sqlite dicom.sql
 
@@ -44,10 +43,14 @@ override_dh_auto_clean:
 	dh_auto_clean --sourcedirectory=jpeg-6c
 
 override_dh_clean:
+	-rm dgate
 	dh_clean dicom.ini
 	dh_clean dicom.sql
-	#mv dicom.ini.bak dicom.ini
-	-rm dgate
+	# autoreconf ?
+	dh_clean jasper-1.900.1-6ct/config.log
+	dh_clean jasper-1.900.1-6ct/config.status
+	dh_clean jpeg-6c/config.log
+	dh_clean jpeg-6c/config.status
 
 get-orig-source:
 	./debian/get-orig-source

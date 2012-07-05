@@ -32,6 +32,10 @@ rm ${FOLDER}/ActiveFormProj1.ocx
 
 # no real source:
 rm ${FOLDER}/*.pdf
+rm ${FOLDER}/jasper-1.900.1-6ct/doc/*.pdf
+
+# zip file:
+rm ${FOLDER}/jpeg-6c/jpeg-6c-changesmvh2.zip
 
 # make distclean
 (cd ${FOLDER}/jasper-1.900.1-6ct && make distclean)
