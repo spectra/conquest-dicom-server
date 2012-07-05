@@ -1,5 +1,5 @@
 conquest-dicom-server (1.14.16-1) unstable; urgency=low
 
-  * Initial release (Closes: #)
+  * Initial release (Closes: #680352)
 
  -- Mathieu Malaterre <malat@debian.org>  Wed, 04 Jul 2012 17:49:00 +0200
