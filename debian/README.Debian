@@ -1,0 +1,17 @@
+After installation you can test the server is working:
+
+echoscu localhost 5678
+
+See output in:
+
+cat /var/log/dgate.log
+
+Send a file:
+
+storescu localhost 5678 input.dcm
+
+Then go online to see it directly:
+
+xdg-open http://localhost/dgate
+
+ -- Mathieu Malaterre <malat@debian.org>  Wed, 04 Jul 2012 17:49:00 +0200

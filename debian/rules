@@ -20,19 +20,19 @@ dgate: jpeg-6c/libjpeg.a jasper-1.900.1-6ct/src/libjasper/.libs/libjasper.a
 override_dh_auto_build: dgate
 	cp dicom.ini.sqlite dicom.ini
 	cp dicom.sql.sqlite dicom.sql
-	# ???
-	#cp dicom.ini.www dicom.ini
 
 override_dh_install:
-	dh_install dgate       /usr/lib/conquest-dicom-server/
-	dh_install dgate.dic   /usr/lib/conquest-dicom-server/
-	dh_install dicom.sql   /usr/lib/conquest-dicom-server/
-	dh_install dicom.ini   /usr/lib/conquest-dicom-server/
-	dh_install sample.cq   /usr/lib/conquest-dicom-server/
-	dh_install acrnema.map /usr/lib/conquest-dicom-server/
-	#dh_install ActiveFormProj1.ocx /var/www
+	# DICOM Server:
+	dh_install dgate       usr/lib/conquest-dicom-server/
+	dh_install dgate.dic   usr/lib/conquest-dicom-server/
+	dh_install dicom.sql   usr/lib/conquest-dicom-server/
+	dh_install dicom.ini   usr/lib/conquest-dicom-server/
+	dh_install sample.cq   usr/lib/conquest-dicom-server/
+	dh_install acrnema.map usr/lib/conquest-dicom-server/
+	# web
 	#dh_install conquest.jpg /var/www
-	# added (MM)
+	dh_install debian/dgate.conf etc/apache2/mods-available
+	dh_install debian/dgate.load etc/apache2/mods-available
 
 override_dh_clean:
 	(cd jpeg-6c && $(MAKE) clean)
