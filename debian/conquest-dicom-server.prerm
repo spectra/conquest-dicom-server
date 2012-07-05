@@ -10,5 +10,9 @@ fi
 
 rm /var/log/dgate.log
 
+if [ -e /etc/apache2/apache2.conf ]; then
+  a2dismod dgate || true
+fi
+
 exit 0
 

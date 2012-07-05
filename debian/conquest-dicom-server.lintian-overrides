@@ -1,3 +1,3 @@
 # As any other DICOM implementation we need to heavily patch IJG in order to support
-# all type of JPEG streams
+# all types of JPEG streams
 conquest-dicom-server: embedded-library usr/lib/conquest-dicom-server/dgate: libjpeg

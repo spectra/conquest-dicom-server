@@ -8,7 +8,13 @@ if [ "$1" != "configure" -a "$1" != "purge" ]; then
   exit 0
 fi
 
+# DICOM db setup
 /usr/lib/conquest-dicom-server/dgate -v -r
+
+# web access:
+if [ -e /etc/apache2/apache2.conf ]; then
+  a2enmod dgate || true
+fi
 
 exit 0
 
