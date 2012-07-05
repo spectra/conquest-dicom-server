@@ -1,23 +1,25 @@
 #!/usr/bin/make -f
 #export DH_VERBOSE=1
 
-#export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
-
 %:
-	dh $@ --parallel
+	dh $@ --with autotools_dev
+
+override_dh_auto_configure:
+	(cd jasper-1.900.1-6ct && autoreconf -i --force)
+	dh_auto_configure --sourcedirectory=jasper-1.900.1-6ct -- --disable-libjpeg
+	dh_auto_configure --sourcedirectory=jpeg-6c
 
 jasper-1.900.1-6ct/src/libjasper/.libs/libjasper.a:
-	(cd jasper-1.900.1-6ct && ./configure --disable-libjpeg)
 	$(MAKE) -C jasper-1.900.1-6ct
 
 jpeg-6c/libjpeg.a:
-	(cd jpeg-6c && ./configure)
 	$(MAKE) -C jpeg-6c
 
 dgate: jpeg-6c/libjpeg.a jasper-1.900.1-6ct/src/libjasper/.libs/libjasper.a
 	g++ $(CPPFLAGS) $(CXXFLAGS) -Ijasper-1.900.1-6ct/src/libjasper/include -Ijpeg-6c -I/usr/include/lua5.1 -DUNIX -DNATIVE_ENDIAN=1 -DHAVE_LIBJASPER -DHAVE_LIBJPEG -DUSESQLITE -Wno-write-strings total.cpp -o dgate -lpthread -llua5.1 -lsqlite3 jpeg-6c/libjpeg.a jasper-1.900.1-6ct/src/libjasper/.libs/libjasper.a -Wno-multichar $(LDFLAGS)
 
 override_dh_auto_build: dgate
+	#cp dicom.ini dicom.ini.bak
 	cp dicom.ini.sqlite dicom.ini
 	cp dicom.sql.sqlite dicom.sql
 
@@ -34,14 +36,15 @@ override_dh_install:
 	dh_install debian/dgate.conf etc/apache2/mods-available
 	dh_install debian/dgate.load etc/apache2/mods-available
 
-override_dh_clean:
-	(cd jpeg-6c && $(MAKE) clean)
-	-(cd jasper-1.900.1-6ct && $(MAKE) clean)
-	-rm dgate
-
 override_dh_auto_clean:
+	dh_auto_clean --sourcedirectory=jasper-1.900.1-6ct
+	dh_auto_clean --sourcedirectory=jpeg-6c
+
+override_dh_clean:
 	dh_clean dicom.ini
 	dh_clean dicom.sql
+	#mv dicom.ini.bak dicom.ini
+	-rm dgate
 
 get-orig-source:
 	./debian/get-orig-source
