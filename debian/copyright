@@ -109,5 +109,5 @@ License:
 
 Files: debian/*
 Copyright: 2012, Mathieu Malaterre <malat@debian.org>
-License: 
- Same as above
+License: PD
+ The packaging work is in the public domain unless stated otherwise.

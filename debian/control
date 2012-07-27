@@ -13,7 +13,7 @@ Homepage: http://ingenium.home.xs4all.nl/dicom.html
 Package: conquest-dicom-server
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, libapache2-mod-fcgid
-Description: ConQuest DICOM Server
+Description: DICOM Server with storage, verification, query and retrieve
  A full featured DICOM server that has been developed based on and heavily
  extending the public domain UCDMC DICOM code. Some possible applications of
  the ConQuest DICOM software are:
