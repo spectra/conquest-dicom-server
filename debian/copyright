@@ -2,6 +2,16 @@ Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: ConQuest DICOM Server
 Upstream-Contact: Lambert Zijp <zijp@nki.nl>
 Upstream-Source: http://ingenium.home.xs4all.nl/dicom.html
+Files-Excluded:
+    lua_5.1.4/
+    sqlite3.*
+    data/samples
+    ActiveFormProj1.ocx
+    *.pdf
+    jasper-1.900.1-6ct/doc/*.pdf
+    jpeg-6c/jpeg-6c-changesmvh2.zip
+    vc80.pdb
+    data/dbase/conquest.db3
 
 Files: *
 Copyright: Copyright © 1995, University of California, Davis

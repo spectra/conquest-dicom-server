@@ -1,4 +1,4 @@
-conquest-dicom-server (1.14.16-1) unstable; urgency=low
+conquest-dicom-server (1.14.16-1) UNRELEASED; urgency=low
 
   * Initial release (Closes: #680352)
 
