@@ -4,8 +4,10 @@ PACKAGE=conquest-dicom-server
 
 VERSION=`dpkg-parsechangelog | sed -n -e 's/^Version: \(.*\)-[^-]*$/\1/p'`
 
+#ftp://ftp-rt.nki.nl/outbox/MarcelVanHerk/dicomserver/dicomserver1417c.zip
+#ftp://ftp-rt.nki.nl/outbox/MarcelVanHerk/dicomserver/conquestlinux1417c.tar.gz
 TARFILE=${PACKAGE}_${VERSION}.orig.tar.gz
-UPSTREAM=conquestlinux1416.tar.gz
+UPSTREAM=conquestlinux1417c.tar.gz
 
 FOLDER=${PACKAGE}-${VERSION}
 
