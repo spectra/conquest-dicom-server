@@ -9,7 +9,7 @@ Forwarded: not-needed
  # Host for postgres or mysql only, name, username and password for database
  SQLHost                  = localhost
 -SQLServer                = ./data/dbase/conquest.db3
-+SQLServer                = /var/lib/conquest-dicom-server/data/dbase/conquest.db3
++SQLServer                = /var/lib/conquest-dicom-server/data/dbase/conquest.sqlite
  Username                 = dontcare
  Password                 = dontcare
  PostGres                 = 0

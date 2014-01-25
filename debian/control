@@ -2,7 +2,7 @@ Source: conquest-dicom-server
 Section: web
 Maintainer: Debian Med Packaging Team <debian-med-packaging@lists.alioth.debian.org>
 DM-Upload-Allowed: yes
-Uploaders: Mathieu Malaterre <malat@debian.org>
+Uploaders: Pablo Lorenzzoni <spectra@debian.org>, Mathieu Malaterre <malat@debian.org>
 Priority: extra
 Build-Depends: debhelper (>= 9), liblua5.1-dev, libsqlite3-dev, autotools-dev, dh-autoreconf
 Standards-Version: 3.9.3
@@ -12,7 +12,7 @@ Homepage: http://ingenium.home.xs4all.nl/dicom.html
 
 Package: conquest-dicom-server
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libapache2-mod-fcgid
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: DICOM Server with storage, verification, query and retrieve
  A full featured DICOM server that has been developed based on and heavily
  extending the public domain UCDMC DICOM code. Some possible applications of
@@ -26,4 +26,3 @@ Description: DICOM Server with storage, verification, query and retrieve
   - Advanced scriptable image modification, filtering, forwarding and
     conversion 
   - DICOM caching and archive merging 
-  - DICOM web access for viewing and data management (scriptable)

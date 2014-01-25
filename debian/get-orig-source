@@ -22,9 +22,17 @@ tar xvf ${UPSTREAM} -C ${FOLDER}
 # conv copy of libjpeg 6c:
 #rm -rf ${FOLDER}/jpeg-6c/
 # conv copy of lua 5.1.4
-rm -rf ${FOLDER}/lua_5.1.4/
+rm -rf ${FOLDER}/lua_*
 # conv copy of sqlite3
 rm ${FOLDER}/sqlite3.*
+# ZeroBraneStudio
+rm -rf ${FOLDER}/ZeroBraneStudio*
+# clibs windows
+rm -rf ${FOLDER}/clibs*
+# logs
+rm -f ${FOLDER}/*.log
+# mak* files
+rm -f ${FOLDER}/mak*
 
 # remove DICOM test files:
 rm -rf ${FOLDER}/data/samples/
@@ -32,8 +40,8 @@ rm -rf ${FOLDER}/data/samples/
 # scary stuff:
 rm ${FOLDER}/ActiveFormProj1.ocx
 
-# no real source:
-rm ${FOLDER}/*.pdf
+# Unused PDFs
+rm ${FOLDER}/windowsmanual.pdf
 rm ${FOLDER}/jasper-1.900.1-6ct/doc/*.pdf
 
 # zip file:

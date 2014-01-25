@@ -1,1 +1,1 @@
-I do not think we can use system jasper since it will load jpeg in our back and symbols will conflicts with the lossless jpeg implementation
+Add support for MySQL, DBIII and PostgreSQL.

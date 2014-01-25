@@ -7,11 +7,15 @@ Files-Excluded:
     sqlite3.*
     data/samples
     ActiveFormProj1.ocx
-    *.pdf
+    windowsmanual.pdf
     jasper-1.900.1-6ct/doc/*.pdf
     jpeg-6c/jpeg-6c-changesmvh2.zip
     vc80.pdb
     data/dbase/conquest.db3
+    ZeroBraneStudio*
+    clibs*
+    *.log
+    mak*
 
 Files: *
 Copyright: Copyright © 1995, University of California, Davis
