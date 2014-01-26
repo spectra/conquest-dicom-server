@@ -11,10 +11,10 @@ UPSTREAM=conquestlinux1417c.tar.gz
 
 FOLDER=${PACKAGE}-${VERSION}
 
-wget -c ftp://ftp-rt.nki.nl/outbox/MarcelVanHerk/dicomserver/${UPSTREAM}
+wget -c -O /tmp/$UPSTREAM ftp://ftp-rt.nki.nl/outbox/MarcelVanHerk/dicomserver/${UPSTREAM}
 
 mkdir ${FOLDER}
-tar xvf ${UPSTREAM} -C ${FOLDER}
+tar xvf /tmp/${UPSTREAM} -C ${FOLDER}
 
 # cleanup
 # conv copy of libjasper (sigh)
@@ -62,4 +62,3 @@ rm ${FOLDER}/data/dbase/conquest.db3
 
 GZIP="--best --no-name" tar cvfz ${TARFILE} ${FOLDER} 
 rm -rf ${FOLDER}
-rm ${UPSTREAM}
