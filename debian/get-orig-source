@@ -50,6 +50,9 @@ rm ${FOLDER}/jpeg-6c/jpeg-6c-changesmvh2.zip
 # vc80.pdb ?
 find ${FOLDER} -name vc80.pdb -delete
 
+# remove executable bit from lua examples
+chmod a-x ${FOLDER}/lua/*
+
 # 
 rm ${FOLDER}/data/dbase/conquest.db3
 
