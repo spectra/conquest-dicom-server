@@ -41,7 +41,6 @@ rm -rf ${FOLDER}/data/samples/
 rm ${FOLDER}/ActiveFormProj1.ocx
 
 # Unused PDFs
-rm ${FOLDER}/windowsmanual.pdf
 rm ${FOLDER}/jasper-1.900.1-6ct/doc/*.pdf
 
 # zip file:
