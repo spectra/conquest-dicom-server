@@ -1,6 +1,11 @@
 #!/usr/bin/make -f
 #export DH_VERBOSE=1
 
+# Debian Policy 10.1
+CPP = /usr/bin/g++
+CPPFLAGS = -O2 -g -Wall
+INSTALL = install -s
+
 %:
 	dh $@ --with autotools_dev
 
