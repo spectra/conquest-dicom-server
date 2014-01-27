@@ -1,0 +1,14 @@
+Description: Use IANA port for the daemon
+Author: Pablo Lorenzzoni <spectra@debian.org>
+Forwarded: not-needed
+
+--- conquestlinux1417c.orig/dicom.ini.sqlite
++++ conquestlinux1417c/dicom.ini.sqlite
+@@ -84,3 +85,7 @@
+ MAGDeviceThreshhold      = 0
+ MAGDevices               = 1
+ MAGDevice0               = /var/lib/conquest-dicom-server/MAG0/
++
++# Logging
++TroubleLog               = /var/log/conquest-dicom-server/trouble.log
++UserLog                  = /var/log/conquest-dicom-server/user.log

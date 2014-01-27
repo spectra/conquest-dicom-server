@@ -9,7 +9,7 @@ if [ "$1" != "configure" -a "$1" != "purge" ]; then
 fi
 
 # DICOM db setup
-/usr/lib/conquest-dicom-server/dgate -v -r
+/usr/bin/dgate -w/etc/conquest-dicom-server -v -r
 
 exit 0
 

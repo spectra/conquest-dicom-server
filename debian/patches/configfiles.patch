@@ -1,0 +1,20 @@
+Description: Use IANA port for the daemon
+Author: Pablo Lorenzzoni <spectra@debian.org>
+Forwarded: not-needed
+
+--- conquestlinux1417c.orig/dicom.ini.sqlite
++++ conquestlinux1417c/dicom.ini.sqlite
+@@ -13,9 +13,10 @@
+ TCPPort                  = 11112
+ 
+ # Reference to other files: known dicom servers; database layout; sops
+-ACRNemaMap               = acrnema.map
+-kFactorFile              = dicom.sql
+-SOPClassList             = dgatesop.lst
++ACRNemaMap               = /etc/conquest-dicom-server/acrnema.map
++kFactorFile              = /etc/conquest-dicom-server/dicom.sql
++SOPClassList             = /etc/conquest-dicom-server/dgatesop.lst
++Dictionary               = /etc/conquest-dicom-server/dgate.dic
+ 
+ # Host for postgres or mysql only, name, username and password for database
+ SQLHost                  = localhost

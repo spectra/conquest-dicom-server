@@ -1,2 +1,4 @@
 debianlayout.patch
 ianaport.patch
+configfiles.patch
+logfiles.patch

@@ -18,7 +18,7 @@ The packaged software listen on 11112/TCP by default.
 Running User
 ------------
 The main software runs under an unpriviledged user (dicom) as daemon
-(initscripts were provided)
+(initscripts were provided).
 
 CGI Interface
 -------------
@@ -59,7 +59,7 @@ bash$ echoscu localhost 11112
 
 See output in:
 
-bash$ cat /var/log/dgate.log
+bash$ cat /var/log/conquest-dicom-server/dgate.log
 
 Send a file:
 
