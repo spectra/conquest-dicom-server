@@ -1,0 +1,109 @@
+#
+# This file contains configuration information for the conquest cgi web server;
+# it must be in the same directory as the dgate.exe in the web server script directory.
+# For wamp: dgate.exe runs if it is put in C:\wamp\Apache2\cgi-bin
+# The server home page is then "http://127.0.0.1/cgi-bin/dgate.exe?mode=top"
+# The cgi interface has been tested with wamp5, dgate4.12d, and ie6sp1
+#
+# modified 20070213: default to n4, note about ocx only required on client
+# modified 20080902: webreadonly ON; graphics and viewer configs; sample scripted web pages
+# modified 20101121: Added wadoservers section
+#
+
+[sscscp]
+MicroPACS                = sscscp
+
+
+# database layout (copy dicom.sql to the web server script directory or point to the one in your dicom server directory)
+
+kFactorFile              = .\dicom.sql
+TruncateFieldNames       = 10
+
+
+# default IP address and port of DICOM server (may be non-local, web pages empty if wrong)
+# use version 1.4.14 up, if an older version some feautues will not work
+
+WebServerFor             = 127.0.0.1
+TCPPort                  = 5678
+
+
+# path to script engine: ocx will not download images if wrong - shows as black square with controls
+# for wamp: dgate.exe runs if it is put in C:\wamp\Apache2\cgi-bin
+
+WebScriptAddress         = http://127.0.0.1/cgi-bin/dgate.exe
+
+
+# web or local location of ActiveFormProj1.ocx for download (include trailing / or \)
+# the activeX control will not download if wrong or security too high - shows as white square with red x
+# note: it only needs to be registered by the client, not the server!
+# for wamp: the ocx canNOT be in C:\wamp\Apache2\cgi-bin, I put it in c:\wamp\www (above cgi-bin)
+# - the default value is derived from WebScriptAddress
+
+#WebCodeBase              = http://127.0.0.1/
+
+
+# if set to 1, the web user cannot edit databases and (in future) other things
+
+#WebReadonly              = 1
+
+
+# this is an optional virtual directory used to http: all images from mag0
+# this entry is experimental and unused except for viewer=seriesviewer2
+# in this mode (only) ocx will not download images if wrong - shows as black square with 
+# controls - the default value is derived from WebScriptAddress
+
+#WebMAG0Address           = http://127.0.0.1/mag0
+
+# excerpt from C:\wamp\Apache2\conf\httpd.conf required for WebMAG0Address (un-# there)
+# or use the wamp traybar menu to create the alias
+
+#Alias /mag0/ "c:/dicomserver/data/" 
+#
+#<Directory "c:/dicomserver/data">
+#    Options Indexes MultiViews
+#    AllowOverride None
+#    Order allow,deny
+#    Allow from all
+#</Directory>
+
+
+# these settings control size of slice and series viewers, max size of transmitted dicom images 
+# (0=original), compression for images sent to the activex (may be un,n1..4,j1,j2), the size of 
+# the icons in the image list, the image type used for icons and slice display, and the dgate 
+# mode containing the viewer (may be seriesviewer, seriesviewer2, noviewer, serversideviewer, 
+# or aiviewer - java code of the latter not included with 1.4.14).
+# note: all items require at least one space left and right of the '=' !
+
+[webdefaults]
+size     = 560
+dsize    = 0
+compress = n4
+iconsize = 48
+graphic  = gif
+viewer   = serversideviewer
+
+# enter address (up to not including the ?) of the WADO server for each DICOM AE listed
+# the sample (for AE TESTWADOSRV) comes from the DICOM standard and is not valid
+# the default is the local conquest server (which could use virtualservers as WADO bridge)
+
+[wadoservers]
+TESTWADOSRV = http://www.hospital-stmarco/radiology/wado.php
+
+
+# this creates web page http://xxxxx/cgi-bin/dgate.exe?mode=sample
+
+[sample]
+source   = sample.cq
+variable = sample 1
+
+
+# this creates web page http://xxxxx/cgi-bin/dgate.exe?mode=sample2
+# Note: in the header parameter newline is written as \
+
+[sample2]
+variable = sample 2
+line0 = <HEAD><TITLE>Conquest DICOM server - %variable%</TITLE></HEAD>
+line1 = <BODY BGCOLOR='CFDFCF'>
+line2 = <H2>Conquest DICOM server - %variable%</H2>
+line3 = </BODY>
+header= Content-type: text/html\Cache-Control: no-cache\

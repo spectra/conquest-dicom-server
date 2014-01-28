@@ -1,0 +1,20 @@
+<HEAD><TITLE>Conquest DICOM server - %variable%</TITLE></HEAD>
+<BODY BGCOLOR='CFDFCF'>
+<H2>Conquest DICOM server - %variable%</H2>
+
+<BR>
+#this is equivalent to: dgate "--display_status:"
+#where the output is sent to the web page (unquoted)
+<listing>
+--display_status:
+</listing>
+
+<hr>
+#the format parameter of the dgate -- command is used to create HTML tags
+--get_amaps:<br>%s <strong>%s %s</strong>
+
+<hr>
+#example of database query
+--query2:DICOMPatients|PatientID||<br>%s
+
+</BODY>

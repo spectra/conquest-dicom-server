@@ -1,0 +1,59 @@
+Changes for gcc4 warnings.+++++++++++++++++++++++
+jas_debug.c
+was:
+		fprintf(out, "%04x:", i);
+to:
+		fprintf(out, "%04x:", (unsigned int)i);
+
+bmp_dec.c
+jas_cm.c
+jas_getopt.c
+jas_image.c
+jpc_t1dec.c
+jpg_dummy.c
+mif_cod.c
+pnm_dec.c
+added:
+#include "jasper/jas_debug.h"
+
+jas_cm.c
+jasper.c
+added:
+#include <jasper/jas_debug.h>
+
+jpc_tsfb.c
+int jpc_tsfb_analyze2(jpc_tsfb_t *tsfb, int *a, int xstart, int ystart,
+  int width, int height, int stride, int numlvls)
+moved to before:
+int jpc_tsfb_analyze(jpc_tsfb_t *tsfb, jas_seq2d_t *a)
+
+int jpc_tsfb_synthesize2(jpc_tsfb_t *tsfb, int *a, int xstart, int ystart,
+  int width, int height, int stride, int numlvls)
+moved to before:
+int jpc_tsfb_synthesize(jpc_tsfb_t *tsfb, jas_seq2d_t *a)
+
+jpc_enc.c
+commented out the Local prototype and the Code as unused:
+static int jpc_calcssexp(jpc_fix_t stepsize);
+static int jpc_calcssmant(jpc_fix_t stepsize);
+
+for 64 bit warnings
+jpc_mqdec.c
+from:
+	fprintf(out, "CTX = %d, ", mqdec->curctx - mqdec->ctxs);
+	fprintf(out, "IND %d, MPS %d, QEVAL %x\n", *mqdec->curctx -
+	  jpc_mqstates, (*mqdec->curctx)->mps, (*mqdec->curctx)->qeval);
+to:
+	fprintf(out, "CTX = %d, ", (int)(mqdec->curctx - mqdec->ctxs));
+	fprintf(out, "IND %d, MPS %d, QEVAL %x\n", (int)(*mqdec->curctx -
+	  jpc_mqstates), (*mqdec->curctx)->mps, (*mqdec->curctx)->qeval);
+
+jpc_mqenc.c
+from:
+	fprintf(out, "IND = %02d, MPS = %d, QEVAL = %04x\n",
+	  *mqenc->curctx - jpc_mqstates, (*mqenc->curctx)->mps,
+	  (*mqenc->curctx)->qeval);
+to:
+	fprintf(out, "IND = %02d, MPS = %d, QEVAL = %04x\n",
+	  (int)(*mqenc->curctx - jpc_mqstates), (*mqenc->curctx)->mps,
+	  (*mqenc->curctx)->qeval);

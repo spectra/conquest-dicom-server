@@ -5,4 +5,5 @@
 [  ] Replace get-orig-source
 [  ] Run as non-root user
 [  ] Bind to 127.0.0.1 by default (probably have to patch source code)
-[  ] Convert Repository layout to git-buildpackage
+
+[**] Convert Repository layout to git-buildpackage
