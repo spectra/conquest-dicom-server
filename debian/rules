@@ -48,8 +48,8 @@ override_dh_auto_clean:
 
 override_dh_clean:
 	-rm dgate
-	dh_clean dicom.ini
-	dh_clean dicom.sql
+	#dh_clean dicom.ini
+	#dh_clean dicom.sql
 	# autoreconf ?
 	dh_clean jasper-1.900.1-6ct/config.log
 	dh_clean jasper-1.900.1-6ct/config.status
