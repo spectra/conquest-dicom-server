@@ -1,0 +1,118 @@
+Multi-bitwidth jpeg-6c with lossless changes+++++++++++++++++++++
+jpg_dec.c
+line 141 from:
+	int num_scanlines;
+to:
+	int num_scanlines, byte_width;
+
+add at line 181:
+    if (cinfo.data_precision > 8) byte_width = 2;/* 12 or 16 */
+    else byte_width = 1;/* 8 */
+
+line 183 from:
+       cinfo.output_width * cinfo.output_components, (JDIMENSION) 1);
+to:
+       cinfo.output_width * cinfo.output_components * byte_width, (JDIMENSION) 1);
+
+line 245 from:
+		cmptparm.prec = 8;
+to:
+		cmptparm.prec = cinfo->data_precision;
+add at line 312:
+    JSAMPLE16 *bufptr16;
+
+add at line 316:
+    bool wide = FALSE;
+
+add at line 322:
+    if (cinfo->data_precision > 8) wide = TRUE;
+
+
+line 326 from:
+		for (x = 0; x < width; ++x) {
+			jas_matrix_set(dinfo->data, 0, x, GETJSAMPLE(*bufptr));
+			bufptr += cinfo->output_components;
+		}
+to:
+	for (cmptno = 0; cmptno < cinfo->output_components; ++cmptno) {
+		width = jas_image_cmptwidth(dinfo->image, cmptno);
+        if (wide) {
+            bufptr16 = (dinfo->buffer[0]) + cmptno;
+            for (x = 0; x < width; ++x) {
+                jas_matrix_set(dinfo->data, 0, x, GETJSAMPLE16(*bufptr16));
+                bufptr16 += cinfo->output_components;
+            }
+        } else {
+            bufptr = (dinfo->buffer[0]) + cmptno;
+            for (x = 0; x < width; ++x) {
+                jas_matrix_set(dinfo->data, 0, x, GETJSAMPLE(*bufptr));
+                bufptr += cinfo->output_components;
+            }
+        }
+
+
+jpg_ecn.c -----------------------------------------
+line 108 from:
+typedef struct {
+	int qual;
+} jpg_encopts_t;
+
+typedef enum {
+	OPT_QUAL
+} jpg_optid_t;
+
+jas_taginfo_t jpg_opttab[] = {
+	{OPT_QUAL, "quality"},
+	{-1, 0}
+to:
+typedef struct {
+	int qual;
+    	bool lossless;
+} jpg_encopts_t;
+
+typedef enum {
+	OPT_QUAL,
+    	LOSSLESS
+} jpg_optid_t;
+
+jas_taginfo_t jpg_opttab[] = {
+	{OPT_QUAL, "quality"},
+  	{LOSSLESS, "lossless"},
+	{-1, 0}
+
+add at line 214:
+    uint_fast8_t prec;
+    uint byte_width;
+
+line 277 from:
+		  jas_image_cmptprec(image, enc->cmpts[cmptno]) != 8 ||
+to:
+/*		  jas_image_cmptprec(image, enc->cmpts[cmptno]) != 8 ||*/
+add at line 282:
+        prec = jas_image_cmptprec(image, enc->cmpts[cmptno]);
+        if ( prec != 8 && prec != 12 && prec != 16) {
+			jas_eprintf("error: The JPG encoder cannot handle an image with a %d bit width.\n", prec);
+			goto error;
+		}
+add at line 304:
+    cinfo.data_precision = prec;
+    cinfo.data_precision_other = prec;
+    if (prec > 8) byte_width = 2; /* 12 or 16 */
+    else byte_width = 1; /* 8 */
+    cinfo.lossless = encopts.lossless;
+    if (prec == 16) cinfo.lossless = TRUE;
+
+line 317 from:
+	  JPOOL_IMAGE, (JDIMENSION) width * cinfo.input_components,
+to:
+	  JPOOL_IMAGE, (JDIMENSION) width * cinfo.input_components * byte_width,
+
+add at line 392:
+    encopts->lossless = FALSE;
+
+add at line 411:
+        case LOSSLESS:
+            encopts->lossless = TRUE;
+            encopts->qual = -1;
+            break;
+
