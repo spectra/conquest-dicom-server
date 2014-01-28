@@ -55,6 +55,9 @@ find ${FOLDER} -type f -not -name "*configure" -exec chmod a-x {} \;
 # 
 rm ${FOLDER}/data/dbase/conquest.db3
 
+# webserver dir
+rm -rf ${FOLDER}/webserver
+
 # make distclean
 (cd ${FOLDER}/jasper-1.900.1-6ct && make distclean)
 (cd ${FOLDER}/jpeg-6c && make distclean)

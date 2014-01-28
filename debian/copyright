@@ -16,6 +16,7 @@ Files-Excluded:
     clibs*
     *.log
     mak*
+    webserver*
 
 Files: *
 Copyright: Copyright © 1995, University of California, Davis
