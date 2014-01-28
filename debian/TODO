@@ -1,1 +1,7 @@
-Add support for MySQL, DBIII and PostgreSQL.
+[  ] Add support for MySQL
+[  ] Add support for DBIII
+[  ] Add support for PostgreSQL
+[  ] Add Manpage
+[  ] Replace get-orig-source
+[  ] Run as non-root user
+[  ] Bind to 127.0.0.1 by default (probably have to patch source code)
