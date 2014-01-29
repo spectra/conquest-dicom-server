@@ -17,7 +17,7 @@ The packaged software listen on 11112/TCP by default.
 
 Running User
 ------------
-The main software runs under an unpriviledged user (dicom) as daemon
+The main software runs under an unpriviledged user (conquest) as daemon
 (initscripts were provided).
 
 CGI Interface

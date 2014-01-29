@@ -18,6 +18,8 @@ DAEMON=/usr/bin/$NAME # Introduce the server's location here
 DAEMON_ARGS="-w/etc/conquest-dicom-server -^/var/log/conquest-dicom-server/dgate.log"             # Arguments to run the daemon with
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
+USER=conquest
+GROUP=conquest
 
 # Exit if the package is not installed
 [ -x $DAEMON ] || exit 0
@@ -28,6 +30,16 @@ SCRIPTNAME=/etc/init.d/$NAME
 # Define LSB log_* functions.
 # Depend on lsb-base (>= 3.0-6) to ensure that this file is present.
 . /lib/lsb/init-functions
+
+# Does not run if there's no user/group conquest
+if ! getent passwd | grep -q "^conquest:"; then
+    echo "Conquest user does not exist. Aborting" >&2
+    exit 1
+fi
+if ! getent group | grep -q "^conquest:"; then
+    echo "Conquest group does not exist. Aborting" >&2
+    exit 1
+fi
 
 #
 # Function that starts the daemon/service
@@ -40,7 +52,7 @@ do_start()
 	#   2 if daemon could not be started
 	#start-stop-daemon --start --verbose --pidfile $PIDFILE --exec $DAEMON --test > /dev/null \
 	#	|| return 1
-	start-stop-daemon --background --start --verbose --make-pidfile --pidfile $PIDFILE --exec $DAEMON -- \
+	start-stop-daemon --background --start --verbose --make-pidfile --pidfile $PIDFILE --chuid conquest:conquest --exec $DAEMON -- \
 		$DAEMON_ARGS
 	# Add code here, if necessary, that waits for the process to be ready
 	# to handle requests from services started subsequently which depend
@@ -66,7 +78,7 @@ do_stop()
 	# that waits for the process to drop all resources that could be
 	# needed by services started subsequently.  A last resort is to
 	# sleep for some time.
-	start-stop-daemon --stop --verbose --oknodo --pidfile $PIDFILE 
+	start-stop-daemon --stop --verbose --oknodo --pidfile $PIDFILE --user conquest
 	RETVAL="$?"
 	#[ "$?" = 2 ] && return 2
 	# Many daemons don't delete their pidfiles when they exit.
@@ -104,6 +116,9 @@ case "$1" in
 		2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
 	esac
 	;;
+  regen)
+       $DAEMON $DAEMON_ARGS -v -r
+       ;;
   status)
        status_of_proc "$DAEMON" "$NAME" && exit 0 || exit $?
        ;;
@@ -140,7 +155,7 @@ case "$1" in
 	;;
   *)
 	#echo "Usage: $SCRIPTNAME {start|stop|restart|reload|force-reload}" >&2
-	echo "Usage: $SCRIPTNAME {start|stop|status|restart|force-reload}" >&2
+	echo "Usage: $SCRIPTNAME {start|stop|status|regen|restart|force-reload}" >&2
 	exit 3
 	;;
 esac
