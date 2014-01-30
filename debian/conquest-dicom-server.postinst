@@ -2,29 +2,59 @@
 
 set -e
 
-#DEBHELPER#
-if [ "$1" != "configure" -a "$1" != "purge" ]; then
-  exit 0
-fi
+PACKAGE=conquest-dicom-server
+USER=Debian-conquest
+GROUP=Debian-conquest
+ETCDIR=/etc/$PACKAGE
+VARDIR=/var/lib/$PACKAGE
+LOGDIR=/var/log/$PACKAGE
 
 # Create conquest user and group
-if ! getent passwd conquest >/dev/null 2>&1; then
-    if ! getent group conquest > /dev/null 2>&1; then
-	echo "Adding \`conquest' group to system ..."
-	addgroup --quiet --system conquest || true
+create_user_group() {
+  if ! getent passwd $USER >/dev/null 2>&1; then
+    if ! getent group $GROUP > /dev/null 2>&1; then
+      echo "Adding \`$GROUP' group to system ..."
+      addgroup --quiet --system --force-badname $GROUP || true
     fi
-    echo "Adding \`conquest' user to system ..."
-    adduser --quiet --system --ingroup conquest --home \
-        /etc/conquest-dicom-server --shell /bin/false \
-        --disabled-password conquest || true
-fi
+    echo "Adding \`$USER' user to system ..."
+    adduser --quiet --system --ingroup $GROUP --home $ETCDIR --shell \
+      /bin/false --disabled-password --force-badname $USER || true
+  fi
+}
 
 # DICOM db setup
-if which invoke-rc.d >/dev/null 2>&1; then
-    invoke-rc.d conquest-dicom-server regen
-else
-    /etc/init.d/conquest-dicom-server regen
-fi
+setup_db() {
+  echo "We'll regenerate the database..."
+  if which invoke-rc.d >/dev/null 2>&1; then
+    invoke-rc.d $PACKAGE regen
+  else
+    /etc/init.d/$PACKAGE regen
+  fi
+  echo "If it's the first time you install $PACKAGE, disregard any error \
+        messages about absent database tables."
+}
+
+# Change ownership of files
+chown_files() {
+  for target in $VARDIR $ETCDIR $LOGDIR; do
+    chown -R $USER:$GROUP $target
+  done
+}
+
+case "$1" in
+  configure)
+    create_user_group
+    chown_files
+    setup_db
+    ;;
+
+  abort-upgrade|abort-deconfigure|abort-remove)
+    ;;
+
+  *)
+    echo "$0 called with unknown argument \`$1'" 1>&2
+    exit 1
+    ;;
+esac
 
 exit 0
-

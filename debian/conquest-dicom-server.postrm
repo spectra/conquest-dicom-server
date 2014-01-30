@@ -1,0 +1,34 @@
+#!/bin/bash
+
+set -e
+
+PACKAGE=conquest-dicom-server
+USER=Debian-conquest
+GROUP=Debian-conquest
+ETCDIR=/etc/$PACKAGE
+VARDIR=/var/lib/$PACKAGE
+LOGDIR=/var/log/$PACKAGE
+
+# Remove conquest user and group
+remove_user_group() {
+  if which deluser >/dev/null 2>&1; then
+    deluser --quiet $USER > /dev/null || true
+    deluser --quiet --group $GROUP > /dev/null || true
+  fi
+}
+
+case "$1" in
+  purge)
+    remove_user_group
+    ;;
+
+  remove)
+    ;;
+
+  *)
+    echo "$0 called with unknown argument \`$1'" 1>&2
+    exit 1
+    ;;
+esac
+
+exit 0
