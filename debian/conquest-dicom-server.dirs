@@ -1,4 +1,4 @@
-/var/lib/conquest-dicom-server/dbase/
-/var/lib/conquest-dicom-server/MAG0/
+/var/lib/conquest-dicom-server/dbase
+/var/lib/conquest-dicom-server/MAG0
 /var/log/conquest-dicom-server/
 /etc/conquest-dicom-server/

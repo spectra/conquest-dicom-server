@@ -3,8 +3,8 @@
 set -e
 
 PACKAGE=conquest-dicom-server
-USER=Debian-conquest
-GROUP=Debian-conquest
+USER=_conquest
+GROUP=_conquest
 ETCDIR=/etc/$PACKAGE
 VARDIR=/var/lib/$PACKAGE
 LOGDIR=/var/log/$PACKAGE

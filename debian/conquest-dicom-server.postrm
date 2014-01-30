@@ -3,8 +3,8 @@
 set -e
 
 PACKAGE=conquest-dicom-server
-USER=Debian-conquest
-GROUP=Debian-conquest
+USER=_conquest
+GROUP=_conquest
 ETCDIR=/etc/$PACKAGE
 VARDIR=/var/lib/$PACKAGE
 LOGDIR=/var/log/$PACKAGE
@@ -17,8 +17,15 @@ remove_user_group() {
   fi
 }
 
+# Chown root:root what remains
+chown_root() {
+  chown -R root:root $VARDIR > /dev/null || true
+  chown -R root:root $LOGDIR > /dev/null || true
+}
+
 case "$1" in
   purge)
+    chown_root
     remove_user_group
     ;;
 

@@ -3,9 +3,9 @@
 [  ] Add support for PostgreSQL
 [  ] Add Manpage (asciidoc?)
 [  ] Replace get-orig-source
-[  ] Run as non-root user
 [  ] Bind to 127.0.0.1 by default (probably have to patch source code)
 [  ] Change the expected path for dicom.ini by default (probably have to
      patch source code)
 
 [**] Convert Repository layout to git-buildpackage
+[**] Run as non-root user

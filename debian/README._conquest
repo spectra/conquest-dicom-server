@@ -1,0 +1,21 @@
+_conquest user and group accounts
+---------------------------------
+
+Debian Policy is silent wrt how system accounts are created and named by
+packages, except when talking about base-passwd accounts (UID < 100).
+Considering discussion in bugs 228692, 291177 and 621833, following the
+threads http://lists.debian.org/debian-devel/2003/11/msg02231.html and
+http://lists.debian.org/debian-devel/2008/11/msg00343.html and as is written
+in the wiki (https://wiki.debian.org/AccountHandlingInMaintainerScripts),
+there are some de facto best practices that this package try to follow:
+
+(*) The account name follows common convention of using an underscore as a
+prefix to package name (except that our package name is too lenghty, so I
+shortened it to _conquest);
+
+(*) The account is created in postinst script and everything that should be
+owned by the account is chowned so;
+
+(*) The account is removed in postrm if purging the package, but the logfiles
+and images eventually dropped in the /var/lib subdirectory are preserved and
+chowned root:root
