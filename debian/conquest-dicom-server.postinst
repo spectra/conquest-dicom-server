@@ -30,8 +30,8 @@ setup_db() {
   else
     /etc/init.d/$PACKAGE regen
   fi
-  echo "If it's the first time you install $PACKAGE, disregard any error \
-        messages about absent database tables."
+  echo "If it's the first time you install $PACKAGE, disregard any error" \
+       " messages about absent database tables."
 }
 
 # Change ownership of files

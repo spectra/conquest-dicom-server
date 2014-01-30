@@ -17,8 +17,8 @@ The packaged software listen on 11112/TCP by default.
 
 Running User
 ------------
-The main software runs under an unpriviledged user (conquest) as daemon
-(initscripts were provided).
+The main software runs under an unpriviledged user (_conquest) as daemon
+(initscripts were provided). Check README._conquest for details.
 
 CGI Interface
 -------------
@@ -64,5 +64,14 @@ bash$ cat /var/log/conquest-dicom-server/dgate.log
 Send a file:
 
 bash$ storescu localhost 11112 input.dcm
+
+What about /etc/conquest-dicom-server/acrnema.map file?
+----------------------------
+This is the file where you should map the DICOM Nodes allowed to retrieve
+content from ConQuest. A common mistake is to install ConQuest, point your
+DICOM Viewer to it and get errors while trying to retrieve content (listing
+is fine). List your node in the acrnema.map file and everything will go
+smoothly.
+
 
  -- Pablo Lorenzzoni <spectra@debian.org>  Wed, 25 Jan 2014 23:08:00 -0200
