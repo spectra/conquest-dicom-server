@@ -25,7 +25,10 @@ jpeg-6c/libjpeg.a:
 dgate: jpeg-6c/libjpeg.a jasper-1.900.1-6ct/src/libjasper/.libs/libjasper.a
 	g++ $(CPPFLAGS) $(CXXFLAGS) -Ijasper-1.900.1-6ct/src/libjasper/include -Ijpeg-6c -I/usr/include/lua5.1 -DUNIX -DNATIVE_ENDIAN=1 -DHAVE_LIBJASPER -DHAVE_LIBJPEG -DUSESQLITE -Wno-write-strings total.cpp -o dgate -lpthread -llua5.1 -lsqlite3 jpeg-6c/libjpeg.a jasper-1.900.1-6ct/src/libjasper/.libs/libjasper.a -Wno-multichar $(LDFLAGS)
 
-override_dh_auto_build: dgate
+dgate.1: dgate
+	./debian/make_manpage
+
+override_dh_auto_build: dgate.1
 	cp dicom.ini.sqlite dicom.ini
 	cp dicom.sql.sqlite dicom.sql
 
@@ -36,10 +39,6 @@ override_dh_install:
 	dh_install dicom.sql   etc/conquest-dicom-server/
 	dh_install dicom.ini   etc/conquest-dicom-server/
 	dh_install acrnema.map etc/conquest-dicom-server/
-	# lua examples
-	dh_installexamples
-	# docs
-	dh_installdocs
 
 override_dh_auto_clean:
 	#dh_autoreconf_clean --sourcedirectory=jasper-1.900.1-6ct
