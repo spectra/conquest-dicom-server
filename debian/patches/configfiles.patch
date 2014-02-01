@@ -1,6 +1,6 @@
-Description: Use IANA port for the daemon
-Author: Pablo Lorenzzoni <spectra@debian.org>
-Forwarded: not-needed
+From: Pablo Lorenzzoni <spectra@debian.org>
+Date: Mon, 27 Jan 2014 00:00:01 +0000
+Subject: List configfiles with path in dicom.ini.sqlite
 
 --- conquestlinux1417c.orig/dicom.ini.sqlite
 +++ conquestlinux1417c/dicom.ini.sqlite

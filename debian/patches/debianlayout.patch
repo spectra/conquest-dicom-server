@@ -1,6 +1,6 @@
-Description: Use standard debian location for config files
-Author: Mathieu Malaterre <malat@debian.org>
-Forwarded: not-needed
+From: Mathieu Malaterre <malat@debian.org>
+Date: Thu, 5 Jul 2012 00:00:01 +0000
+Subject: Use standard debian location for config files
 
 --- conquest-dicom-server-1.14.16.orig/dicom.ini.sqlite
 +++ conquest-dicom-server-1.14.16/dicom.ini.sqlite
