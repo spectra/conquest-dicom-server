@@ -2,8 +2,14 @@ From: Mathieu Malaterre <malat@debian.org>
 Date: Thu, 5 Jul 2012 00:00:01 +0000
 Subject: Use standard debian location for config files
 
---- conquest-dicom-server-1.14.16.orig/dicom.ini.sqlite
-+++ conquest-dicom-server-1.14.16/dicom.ini.sqlite
+---
+ dicom.ini.sqlite |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/dicom.ini.sqlite b/dicom.ini.sqlite
+index f750bee..ce5d09b 100644
+--- a/dicom.ini.sqlite
++++ b/dicom.ini.sqlite
 @@ -19,7 +19,7 @@ SOPClassList             = dgatesop.lst
  
  # Host for postgres or mysql only, name, username and password for database

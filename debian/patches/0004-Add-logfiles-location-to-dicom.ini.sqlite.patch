@@ -2,9 +2,15 @@ From: Pablo Lorenzzoni <spectra@debian.org>
 Date: Mon, 27 Jan 2014 00:00:01 +0000
 Subject: Add logfiles location to dicom.ini.sqlite
 
---- conquestlinux1417c.orig/dicom.ini.sqlite
-+++ conquestlinux1417c/dicom.ini.sqlite
-@@ -84,3 +85,7 @@
+---
+ dicom.ini.sqlite |    4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/dicom.ini.sqlite b/dicom.ini.sqlite
+index ae4f7da..d8e1f71 100644
+--- a/dicom.ini.sqlite
++++ b/dicom.ini.sqlite
+@@ -85,3 +85,7 @@ OperatorConsole          = 127.0.0.1
  MAGDeviceThreshhold      = 0
  MAGDevices               = 1
  MAGDevice0               = /var/lib/conquest-dicom-server/MAG0/

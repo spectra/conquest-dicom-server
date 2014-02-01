@@ -2,9 +2,15 @@ From: Pablo Lorenzzoni <spectra@debian.org>
 Date: Mon, 27 Jan 2014 00:00:01 +0000
 Subject: List configfiles with path in dicom.ini.sqlite
 
---- conquestlinux1417c.orig/dicom.ini.sqlite
-+++ conquestlinux1417c/dicom.ini.sqlite
-@@ -13,9 +13,10 @@
+---
+ dicom.ini.sqlite |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/dicom.ini.sqlite b/dicom.ini.sqlite
+index 896c182..ae4f7da 100644
+--- a/dicom.ini.sqlite
++++ b/dicom.ini.sqlite
+@@ -13,9 +13,10 @@ MyACRNema                = CONQUESTSRV1
  TCPPort                  = 11112
  
  # Reference to other files: known dicom servers; database layout; sops
