@@ -1,0 +1,12 @@
+[synopsis]
+.br
+.B dgate
+\-wDIR \-^LOGFILE
+.br
+Starts dgate with dicom.ini located at DIR and logging to LOGFILE
+.PP
+
+.B dgate
+\-pPORT \-qIP \-\-COMMAND:ARGS
+.br
+Sends COMMAND with ARGS directly to dgate instance at IP:PORT

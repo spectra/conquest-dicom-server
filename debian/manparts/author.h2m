@@ -1,0 +1,10 @@
+[author]
+.B ConQuest DICOM Server
+was written by Marcel van Herk and Lambert Zijp at Netherlands Cancer
+Institute based on University of California at Davis Medical Center DICOM
+code, originally developed by Mark Oskin.
+.PP
+This manpage was written by
+.B help2man
+with parts supplied by Pablo Lorenzzoni <spectra@debian.org> for the Debian
+package.

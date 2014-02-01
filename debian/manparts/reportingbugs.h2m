@@ -1,0 +1,11 @@
+[reporting bugs]
+For ConQuest specific bugs, please first check their forum at
+.B http://forum.image-systems.biz/viewforum.php?f=33
+and, if needed, send email to
+.B Lambert Zijp <zijp@nki.nl>.
+.PP
+For bugs in the Debian package, please use Debian's BTS at
+.B http://bugs.debian.org
+or the tool provided in
+.B reportbug
+package.

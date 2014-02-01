@@ -1,0 +1,6 @@
+/DGATE: UCDMC\/NKI DICOM server thread and PACS utility application/
+.SH OPTIONS
+There are three common patterns to use
+.B dgate.
+And those patterns have different ways to interpret options, as follows.
+Other options are described below.

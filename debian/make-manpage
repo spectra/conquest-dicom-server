@@ -1,0 +1,16 @@
+#!/bin/sh
+
+PACKAGE=conquest-dicom-server
+VERSION=`dpkg-parsechangelog | sed -n -e 's/^Version: \(.*\)-[^-]*$/\1/p'`
+
+help2man -h "-?" -N -s 1 -n "UCDMC/NKI DICOM server thread and PACS utility application" \
+         --no-discard-stderr --version-string $VERSION -m "ConQuest DICOM server" -S \
+         "Netherlands Cancer Institute" \
+         --include debian/manparts/synopsis.h2m \
+         --include debian/manparts/description.h2m \
+         --include debian/manparts/options.h2m \
+         --include debian/manparts/otheroptions.h2m \
+         --include debian/manparts/files.h2m \
+         --include debian/manparts/author.h2m \
+         --include debian/manparts/reportingbugs.h2m \
+         -o dgate.1 ./dgate

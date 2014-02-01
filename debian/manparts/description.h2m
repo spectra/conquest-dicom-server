@@ -1,0 +1,6 @@
+[description]
+.PP
+ConQuest is a full featured and Lua-scriptable DICOM server.
+.PP
+To check DICOM conformance, please check
+.B /usr/share/doc/conquest-dicom-server/DicomConformance_FilesLST_Changes.pdf.gz
