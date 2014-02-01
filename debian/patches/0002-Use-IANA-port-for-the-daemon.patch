@@ -1,0 +1,21 @@
+From: Pablo Lorenzzoni <spectra@debian.org>
+Date: Sat, 25 Jan 2014 00:00:01 +0000
+Subject: Use IANA port for the daemon
+
+---
+ dicom.ini.sqlite |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dicom.ini.sqlite b/dicom.ini.sqlite
+index ce5d09b..896c182 100644
+--- a/dicom.ini.sqlite
++++ b/dicom.ini.sqlite
+@@ -10,7 +10,7 @@ Edition                  = Personal
+ 
+ # Network configuration: server name and TCP/IP port#
+ MyACRNema                = CONQUESTSRV1
+-TCPPort                  = 5678
++TCPPort                  = 11112
+ 
+ # Reference to other files: known dicom servers; database layout; sops
+ ACRNemaMap               = acrnema.map
