@@ -2,3 +2,4 @@
 0002-Use-IANA-port-for-the-daemon.patch
 0003-List-configfiles-with-path-in-dicom.ini.sqlite.patch
 0004-Add-logfiles-location-to-dicom.ini.sqlite.patch
+0005-Separate-option-and-description-in-PrintOptions.patch

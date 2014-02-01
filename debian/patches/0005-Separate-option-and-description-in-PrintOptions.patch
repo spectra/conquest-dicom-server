@@ -1,0 +1,163 @@
+From: Pablo Lorenzzoni <spectra@debian.org>
+Date: Sat, 1 Feb 2014 15:03:04 +0000
+Subject: Separate option and description in PrintOptions
+
+---
+ dgate.cpp |   64 ++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 32 insertions(+), 32 deletions(-)
+
+diff --git a/dgate.cpp b/dgate.cpp
+index 20c6e3f..61bba6f 100644
+--- a/dgate.cpp
++++ b/dgate.cpp
+@@ -11174,10 +11174,10 @@ PrintOptions ()
+ 	fprintf(stderr, "          [-i|-r|-arDEVICE]   Init|Init/regenerate DB|Regen single device\n");
+ 	fprintf(stderr, "          [-d|-m|-k]          List (-d) devices (-m) AE map (-k) DICOM.SQL\n");
+ 	fprintf(stderr, "          [-t|-o]             Test console|Test database\n");
+-	fprintf(stderr, "          [-sOpt|-esap d u p] Create ODBC source (WIN32), database with SApw\n");
+-	fprintf(stderr, "          [-nd|-nc#|-jd|-jc#] NKI de-/compress#|JPEG de-/compress# FILE\n");
++	fprintf(stderr, "          [-sOpt|-esap d u p]   Create ODBC source (WIN32), database with SApw\n");
++	fprintf(stderr, "          [-nd|-nc#|-jd|-jc#]   NKI de-/compress#|JPEG de-/compress# FILE\n");
+ 	fprintf(stderr, "          [-j*##|-j-##FILE]   Recompress FILE to ##\n");
+-	fprintf(stderr, "          [-as#,N|-amFROM,TO] Select#KB to archive of MAGN|move device data\n");
++	fprintf(stderr, "          [-as#,N|-amFROM,TO]   Select#KB to archive of MAGN|move device data\n");
+ 	fprintf(stderr, "          [-au|-aeFROM,TO]    Undo select for archiving|rename device\n");
+ 	fprintf(stderr, "          [-av|-atDEVICE]     Verify mirror disk|Test read files for DEVICE\n");
+ 	fprintf(stderr, "          [-abJUKEBOX1.2,N]   Make cacheset to burn JUKEBOX1,CD2 from MAGN\n");
+@@ -11188,7 +11188,7 @@ PrintOptions ()
+ 	fprintf(stderr, "          [-faFILE<,ID>]      Add file to server<optionally change PATID>\n");
+ 	fprintf(stderr, "          [-zID]              Delete (zap) patient\n");
+ 	fprintf(stderr, "          [-frDEVICE,DIR]     Regen single directory DIR on DEVICE\n");
+-	fprintf(stderr, "          [-f<c|k>PATID,file] Change/Kopy PATID of file (irreversible/once)\n");
++	fprintf(stderr, "          [-f<c|k>PATID,file]   Change/Kopy PATID of file (irreversible/once)\n");
+ 	fprintf(stderr, "          [-f?file|-fu|-c#]   get UID of file|Make new UID|UID helper(0..99)\n");
+ 	fprintf(stderr, "          [-ff#]              Delete old patients until #MB free\n");
+ 	fprintf(stderr, "          [-gSERVER,DATE]     grab images from SERVER of date not on here\n");
+@@ -11213,14 +11213,14 @@ PrintOptions ()
+ 	fprintf(stderr, "    --movestudy:source,dest,patid:studyuid  Move study, patid: optional\n" );
+ 	fprintf(stderr, "    --moveaccession:source,dest,patid:acc   Move by Accession#, patid: optional\n" );
+ 	fprintf(stderr, "    --movestudies:source,dest,date(range)   Move studies on date\n" );
+-	fprintf(stderr, "    --moveseries:src,dst,patid:seruid,stuid Move series patid: optional\n" );
++	fprintf(stderr, "    --moveseries:src,dst,patid:seruid,stuid   Move series patid: optional\n" );
+ 	fprintf(stderr, "\n");
+ 	fprintf(stderr, "Modification of dicom objects:\n");
+ 	fprintf(stderr, "    --modifypatid:patid,file  Change patid of given file\n" );
+ 	fprintf(stderr, "    --anonymize:patid,file    Anonymize given file\n" );
+-	fprintf(stderr, "    --modifystudy:p,s,script  Change items in patient or study\n" );
+-	fprintf(stderr, "    --modifyseries:p,s,script Change items in series\n" );
+-	fprintf(stderr, "    --modifyimage:file,script Change items in file\n" );
++	fprintf(stderr, "    --modifystudy:p,s,script    Change items in patient or study\n" );
++	fprintf(stderr, "    --modifyseries:p,s,script   Change items in series\n" );
++	fprintf(stderr, "    --modifyimage:file,script   Change items in file\n" );
+ 	fprintf(stderr, "    --mergestudy:uid,uid,..   Start merging studies with given studyuids\n" );
+ 	fprintf(stderr, "    --mergestudyfile:file     Use to process all files to merge\n" );
+ 	fprintf(stderr, "    --mergeseries:uid,uid,..  Start merging series with given seriesuids\n" );
+@@ -11228,7 +11228,7 @@ PrintOptions ()
+ 	fprintf(stderr, "    --attachanytopatient:any,sample     Modify uids to attach any object to\n" );
+ 	fprintf(stderr, "    --attachanytostudy:any,sample        patient|study|series in sample file\n" );
+ 	fprintf(stderr, "    --attachanytoseries:any,sample       Do not attach same at different levels\n" );
+-	fprintf(stderr, "    --attachrtplantortstruct:plan,struc Attach rtplan to rtstruct\n" );
++	fprintf(stderr, "    --attachrtplantortstruct:plan,struc   Attach rtplan to rtstruct\n" );
+ 	fprintf(stderr, "\n");
+ 	fprintf(stderr, "Maintenance options:\n");
+ 	fprintf(stderr, "    --initializetables:       Clear and create database\n" );
+@@ -11263,27 +11263,27 @@ PrintOptions ()
+ 	fprintf(stderr, "    --read_ini:               Re-read all parameters from DICOM.INI\n" );
+ 	fprintf(stderr, "    --get_amap:index,fmt      List any entry from ACRNEMA.MAP\n" );
+ 	fprintf(stderr, "    --get_amaps:fmt           List all entries from ACRNEMA.MAP\n" );
+-	fprintf(stderr, "    --put_amap:i,AE,ip,p#,cmp Write entry in memory for ACRNEMA.MAP\n" );
++	fprintf(stderr, "    --put_amap:i,AE,ip,p#,cmp   Write entry in memory for ACRNEMA.MAP\n" );
+ 	fprintf(stderr, "    --delete_amap:index       Delete entry in memory for ACRNEMA.MAP\n" );
+ 	fprintf(stderr, "    --write_amap:             Write ACRNEMA.MAP from memory to disk\n" );
+ 	fprintf(stderr, "    --read_amap:              Re-read ACRNEMA.MAP from disk to memory\n" );
+ 	fprintf(stderr, "    --get_sop:index,fmt       List any accepted service class UID\n" );
+-	fprintf(stderr, "    --put_sop:index,UID,name  Write/add accepted service class UID\n" );
++	fprintf(stderr, "    --put_sop:index,UID,name    Write/add accepted service class UID\n" );
+ 	fprintf(stderr, "    --delete_sop:index        Delete accepted service class UID\n" );
+-	fprintf(stderr, "    --get_transfer:index,fmt  List any accepted transfer syntax\n" );
+-	fprintf(stderr, "    --put_transfer:in,UID,nam Write/add accepted transfer syntax\n" );
++	fprintf(stderr, "    --get_transfer:index,fmt    List any accepted transfer syntax\n" );
++	fprintf(stderr, "    --put_transfer:in,UID,nam   Write/add accepted transfer syntax\n" );
+ 	fprintf(stderr, "    --delete_transfer:index   Delete accepted transfer syntax\n" );
+-	fprintf(stderr, "    --get_application:idx,fmt List any accepted application UID\n" );
++	fprintf(stderr, "    --get_application:idx,fmt   List any accepted application UID\n" );
+ 	fprintf(stderr, "    --put_application:i,U,n   Write/add accepted application UID\n" );
+-	fprintf(stderr, "    --delete_application:inde Delete accepted application UID\n" );
++	fprintf(stderr, "    --delete_application:inde   Delete accepted application UID\n" );
+ 	fprintf(stderr, "    --get_localae:index,fmt   List any accepted local AE title\n" );
+ 	fprintf(stderr, "    --put_localae:in,AE,name  Write/add accepted local AE title\n" );
+ 	fprintf(stderr, "    --delete_localae:index    Delete accepted local AE title\n" );
+ 	fprintf(stderr, "    --get_remoteae:index,fmt  List any accepted remote AE title\n" );
+-	fprintf(stderr, "    --put_remoteae:in,AE,name Write/add accepted remote AE title\n" );
++	fprintf(stderr, "    --put_remoteae:in,AE,name   Write/add accepted remote AE title\n" );
+ 	fprintf(stderr, "    --delete_remoteae:index   Delete accepted remote AE title\n" );
+ 	fprintf(stderr, "    --get_dic:index,fmt       List any dicom dictionary item\n" );
+-	fprintf(stderr, "    --get_sqldef:level,in,fmt List any database field definition\n" );
++	fprintf(stderr, "    --get_sqldef:level,in,fmt   List any database field definition\n" );
+ 	fprintf(stderr, "\n");
+ 	fprintf(stderr, "Communication options:\n");
+ 	fprintf(stderr, "    --addimagefile:file,patid      Copy file into server, optionally new patid\n" );
+@@ -11292,12 +11292,12 @@ PrintOptions ()
+ 	fprintf(stderr, "    --loadhl7:file                 Load HL7 data into worklist\n" );
+ 	fprintf(stderr, "    --dump_header:filein,fileout   Create header dump of file\n" );
+         fprintf(stderr, "    --forward:file,mode,server     Send file with compr. mode to server\n");
+-	fprintf(stderr, "    --grabimagesfromserver:AE,date Update this server from other\n" );
++	fprintf(stderr, "    --grabimagesfromserver:AE,date   Update this server from other\n" );
+ 	fprintf(stderr, "    --prefetch:patientid           Prefetch all images for improved speed\n" );
+ 	fprintf(stderr, "    --browsepatient:searchstring   Select patient in windows GUI\n" );
+-	fprintf(stderr, "    --submit:p,s,s,s,target,pw,scr Immediate sftp submit of data\n" );
+-	fprintf(stderr, "    --submit2:p,s,s,s,target,c,scr Immediate submit with command line c\n" );
+-	fprintf(stderr, "    --export:p,st,ser,sop,file,scr Immediate process and zip/7z data\n" );
++	fprintf(stderr, "    --submit:p,s,s,s,target,pw,scr   Immediate sftp submit of data\n" );
++	fprintf(stderr, "    --submit2:p,s,s,s,target,c,scr   Immediate submit with command line c\n" );
++	fprintf(stderr, "    --export:p,st,ser,sop,file,scr   Immediate process and zip/7z data\n" );
+ 	fprintf(stderr, "    --scheduletransfer:options     Background sftp transfer as above\n" );
+ 	fprintf(stderr, "\n");
+ 	fprintf(stderr, "Test options:\n");
+@@ -11309,24 +11309,24 @@ PrintOptions ()
+ 	fprintf(stderr, "    --clonedb:AE                   Clone db from server for testing\n" );
+ 	fprintf(stderr, "\n");
+ 	fprintf(stderr, "Conversion options:\n");
+-        fprintf(stderr, "    --convert_to_gif:file,size,out,l/w/f Downsize and convert to mono GIF\n");
+-        fprintf(stderr, "    --convert_to_bmp:file,size,out,l/w/f Downsize and convert to color BMP\n");
+-        fprintf(stderr, "    --convert_to_jpg:file,size,out,l/w/f Downsize and convert to color JPG\n");
+-        fprintf(stderr, "    --convert_to_dicom:file,size,comp,f  Downsize/compress/frame DICOM\n");
+-        fprintf(stderr, "    --extract_frames:file,out,first,last Select frames of DICOM file\n");
++        fprintf(stderr, "    --convert_to_gif:file,size,out,l/w/f   Downsize and convert to mono GIF\n");
++        fprintf(stderr, "    --convert_to_bmp:file,size,out,l/w/f   Downsize and convert to color BMP\n");
++        fprintf(stderr, "    --convert_to_jpg:file,size,out,l/w/f   Downsize and convert to color JPG\n");
++        fprintf(stderr, "    --convert_to_dicom:file,size,comp,f    Downsize/compress/frame DICOM\n");
++        fprintf(stderr, "    --extract_frames:file,out,first,last   Select frames of DICOM file\n");
+ 	fprintf(stderr, "    --count_frames:file                  report # frames in DICOM file\n");
+         fprintf(stderr, "    --uncompress:file,out                Uncompress DICOM\n");
+         fprintf(stderr, "    --wadorequest:parameters             Internal WADO server\n");
+ 	fprintf(stderr, "\n");
+ 	fprintf(stderr, "Database options:\n");
+-	fprintf(stderr, "    --query:table|fields|where|fmt|file Arbitrary query output to file\n" );
++	fprintf(stderr, "    --query:table|fields|where|fmt|file   Arbitrary query output to file\n" );
+ 	fprintf(stderr, "    --query2:tab|fld|whe|fmt|max|file   Same but limit output rows to max\n" );
+ 	fprintf(stderr, "    --patientfinder:srv|str|fmt|file    List patients on server\n" );
+ 	fprintf(stderr, "    --studyfinder:srv|str|fmt|file      List studies on server\n" );
+ 	fprintf(stderr, "    --seriesfinder:srv|str|fmt|file     List series on server\n" );
+ 	fprintf(stderr, "    --imagefinder:srv|str|fmt|file      List images on server\n" );
+-	fprintf(stderr, "    --serieslister:srv|pat|stu|fmt|file List series in a study\n" );
+-	fprintf(stderr, "    --imagelister:srv|pat|ser|fmt|file  List (local) files in a series\n" );
++	fprintf(stderr, "    --serieslister:srv|pat|stu|fmt|file   List series in a study\n" );
++	fprintf(stderr, "    --imagelister:srv|pat|ser|fmt|file    List (local) files in a series\n" );
+ 	fprintf(stderr, "    --extract:PatientID = 'id'          Extract all dbase tables to X..\n" );
+ 	fprintf(stderr, "    --extract:                          Extract patient dbase table to XA..\n" );
+ 	fprintf(stderr, "    --addrecord:table|flds|values       Append record, values must be in ''\n" );
+@@ -11342,10 +11342,10 @@ PrintOptions ()
+ 	fprintf(stderr, "    --movedatatodevice:to,from          Move patients from one device to another\n" );
+ 	fprintf(stderr, "    --moveseriestodevice:to,from        Move series from one device to another\n" );
+ 	fprintf(stderr, "    --selectlruforarchival:kb,device    Step 1 for archival: to device.Archival\n" );
+-	fprintf(stderr, "    --selectseriestomove:device,age,kb  Step 1 for archival: to device.Archival\n" );
++	fprintf(stderr, "    --selectseriestomove:device,age,kb    Step 1 for archival: to device.Archival\n" );
+ 	fprintf(stderr, "    --preparebunchforburning:to,from    Step 2 for archival: moves to cache\n" );
+-	fprintf(stderr, "    --deletebunchafterburning:deviceto  Step 3 for archival: deletes from cache\n" );
+-	fprintf(stderr, "    --comparebunchafterburning:deviceto Part step 3 - compare jukebox to cache\n" );
++	fprintf(stderr, "    --deletebunchafterburning:deviceto    Step 3 for archival: deletes from cache\n" );
++	fprintf(stderr, "    --comparebunchafterburning:deviceto   Part step 3 - compare jukebox to cache\n" );
+ 	fprintf(stderr, "    --restoremagflags:                  Undo archival sofar\n" );
+ 	fprintf(stderr, "\n");
+ 	fprintf(stderr, "Scripting options:\n");

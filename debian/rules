@@ -26,7 +26,7 @@ dgate: jpeg-6c/libjpeg.a jasper-1.900.1-6ct/src/libjasper/.libs/libjasper.a
 	g++ $(CPPFLAGS) $(CXXFLAGS) -Ijasper-1.900.1-6ct/src/libjasper/include -Ijpeg-6c -I/usr/include/lua5.1 -DUNIX -DNATIVE_ENDIAN=1 -DHAVE_LIBJASPER -DHAVE_LIBJPEG -DUSESQLITE -Wno-write-strings total.cpp -o dgate -lpthread -llua5.1 -lsqlite3 jpeg-6c/libjpeg.a jasper-1.900.1-6ct/src/libjasper/.libs/libjasper.a -Wno-multichar $(LDFLAGS)
 
 dgate.1: dgate
-	./debian/make_manpage
+	./debian/make-manpage
 
 override_dh_auto_build: dgate.1
 	cp dicom.ini.sqlite dicom.ini
