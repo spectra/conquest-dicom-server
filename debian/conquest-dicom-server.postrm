@@ -19,8 +19,7 @@ remove_user_group() {
 
 # Chown root:root what remains
 chown_root() {
-  chown -R root:root $VARDIR > /dev/null || true
-  chown -R root:root $LOGDIR > /dev/null || true
+  chown -R root:root $VARDIR $LOGDIR $ETCDIR > /dev/null || true
 }
 
 case "$1" in
@@ -29,7 +28,7 @@ case "$1" in
     remove_user_group
     ;;
 
-  remove)
+  remove|upgrade|deconfigure|abort-upgrade|failed-upgrade|disappear|abort-install)
     ;;
 
   *)
@@ -37,5 +36,7 @@ case "$1" in
     exit 1
     ;;
 esac
+
+#DEBHELPER#
 
 exit 0

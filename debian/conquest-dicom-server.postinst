@@ -31,14 +31,12 @@ setup_db() {
     /etc/init.d/$PACKAGE regen
   fi
   echo "If it's the first time you install $PACKAGE, disregard any error" \
-       " messages about absent database tables."
+       "messages about absent database tables."
 }
 
 # Change ownership of files
 chown_files() {
-  for target in $VARDIR $ETCDIR $LOGDIR; do
-    chown -R $USER:$GROUP $target
-  done
+  chown -R $USER:$GROUP $VARDIR $ETCDIR $LOGDIR > /dev/null || true
 }
 
 case "$1" in
@@ -56,5 +54,7 @@ case "$1" in
     exit 1
     ;;
 esac
+
+#DEBHELPER#
 
 exit 0
