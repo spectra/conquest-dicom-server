@@ -1,12 +1,11 @@
 [files]
 All of the locations below can be configured in
 .B dicom.ini
-file. By default,
+file. By default, in this package
 .B ConQuest
-expects dicom.ini to be present in the same path as
-the executable. In this package, this behaviour was changed by using
-.B -w/etc/conquest-dicom-server
-option. Please consider this while messing with the files below:
+expects dicom.ini to be present in the
+.B /etc/conquest-dicom-server.
+Please consider this while messing with the files below:
 .TP 15
 /etc/conquest-dicom-server/dicom.ini
 Several self-explanatory configuration parameters for the server.

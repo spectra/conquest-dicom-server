@@ -3,7 +3,7 @@
 PACKAGE=conquest-dicom-server
 VERSION=`dpkg-parsechangelog | sed -n -e 's/^Version: \(.*\)-[^-]*$/\1/p'`
 
-help2man -h "-?" -N -s 1 -n "UCDMC/NKI DICOM server thread and PACS utility application" \
+help2man -h "-w$PWD -?" -N -s 1 -n "UCDMC/NKI DICOM server thread and PACS utility application" \
          --no-discard-stderr --version-string $VERSION -m "ConQuest DICOM server" -S \
          "Netherlands Cancer Institute" \
          --include debian/manparts/synopsis.h2m \
