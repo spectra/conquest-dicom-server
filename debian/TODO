@@ -4,6 +4,7 @@
 [  ] Replace get-orig-source
 [  ] Bind to 127.0.0.1 by default (probably have to patch source code)
 
+[**] Add dgatesop.lst to /etc/conquest-dicom-server
 [**] Change the expected path for dicom.ini by default
 [**] Add Manpage
 [**] Convert Repository layout to git-buildpackage

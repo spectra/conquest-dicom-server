@@ -34,11 +34,12 @@ override_dh_auto_build: dgate.1
 
 override_dh_install:
 	# DICOM Server:
-	dh_install dgate       usr/bin/
-	dh_install dgate.dic   etc/conquest-dicom-server/
-	dh_install dicom.sql   etc/conquest-dicom-server/
-	dh_install dicom.ini   etc/conquest-dicom-server/
-	dh_install acrnema.map etc/conquest-dicom-server/
+	dh_install dgate        usr/bin/
+	dh_install dgate.dic    etc/conquest-dicom-server/
+	dh_install dicom.sql    etc/conquest-dicom-server/
+	dh_install dicom.ini    etc/conquest-dicom-server/
+	dh_install acrnema.map  etc/conquest-dicom-server/
+	dh_install dgatesop.lst etc/conquest-dicom-server/
 
 override_dh_auto_clean:
 	#dh_autoreconf_clean --sourcedirectory=jasper-1.900.1-6ct

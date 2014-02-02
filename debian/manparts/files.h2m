@@ -4,8 +4,10 @@ All of the locations below can be configured in
 file. By default, in this package
 .B ConQuest
 expects dicom.ini to be present in the
-.B /etc/conquest-dicom-server.
-Please consider this while messing with the files below:
+.B /etc/conquest-dicom-server
+directory. This can be changed using
+.B -w
+option.
 .TP 15
 /etc/conquest-dicom-server/dicom.ini
 Several self-explanatory configuration parameters for the server.
@@ -19,6 +21,9 @@ Database schema for the server
 .TP
 /etc/conquest-dicom-server/dgate.dic
 DICOM dictionary
+.TP
+/etc/conquest-dicom-server/dgatesop.lst
+DICOM SOP Class List
 .TP
 /var/log/conquest-dicom-server/dgate.log
 Log from the running server (equivalent to stderr)
