@@ -1,0 +1,33 @@
+From: Pablo Lorenzzoni <spectra@debian.org>
+Date: Sun, 2 Feb 2014 11:21:47 +0000
+Subject: Change port for CONQUESTSRV1 in acrnema.map
+
+---
+ acrnema.map |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/acrnema.map b/acrnema.map
+index c1baed9..4cda61a 100644
+--- a/acrnema.map
++++ b/acrnema.map
+@@ -14,13 +14,14 @@
+  *                                                          *
+  * For compression see manual. Values are un=uncompressed;  *
+  * j1,j2=lossless jpeg;j3..j6=lossy jpeg;n1..n4=nki private *
+- * jk=lossless jpeg2000;jl=lossy jpeg2000                   *
++ * jk=lossless jpeg2000;jl=lossy jpeg2000;as=as is          *
+  *                                                          *
+  ********************************************************** */
+ 
+-CONQUESTSRV1		127.0.0.1	5678		as
+-SUPERMICRO		192.168.0.53	5678		as
+-SKY			192.168.0.34	5678		un
++CONQUESTSRV1		127.0.0.1	11112		as
+ 
+-V*			*		1234		as
+-S*			*		5678		un
++// SUPERMICRO		192.168.0.53	5678		as
++// SKY			192.168.0.34	5678		un
++
++// V*			*		1234		as
++// S*			*		5678		un

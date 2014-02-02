@@ -1,0 +1,102 @@
+[compression]
+.B ConQuest
+supports a lot of compression and downsizing methods. These can be declared
+in the
+.B acrnema.map
+file, using directives 
+.B DroppedFileCompression, IncomingCompression and ArchiveCompression
+in
+.B dicom.ini
+file and/or by using modifiers to AE Title (check
+.B AE TITLE
+section below).
+.PP
+The following information was extracted from
+.B section 7.7
+of the manual (file
+/user/share/doc/conquest-dicom-server/windowsmanual.pdf.gz in this package):
+.PP
+Files dropped into the server will optionally be compressed, decompressed
+and/or recompressed. Supported values are (expected compression ratio stated
+between brackets):
+.TP
+as
+store images as is, e.g. without changing the compression.
+.TP
+is
+store images as is, e.g. without changing the compression.
+.TP
+un
+uncompress NKI and/or JPEG compressed images
+.TP
+n1
+fast NKI private loss-less compression mode 1 (50%)
+.TP
+n2
+as n1 but with CRC check for errors (50%)
+.TP
+n3
+fast NKI private loss-less compression mode 3 (40%)
+.TP
+n4
+as n3 but with CRC check for errors (40%)
+.TP
+j1
+JPEGLossless (retired, use J2 instead) (33%)
+.TP
+j2
+JPEGLosslessNH14 (33%)
+.TP
+j3
+JPEG baseline 1 (8 bit) lossy (8%)
+.TP
+j4
+JPEGExtended2and4 lossy (15%)
+.TP
+j5
+JPEGSpectralNH6and8 lossy (15%)
+.TP
+j6
+JPEGFulllNH10and12 lossy (14%)
+.TP
+j3NN
+JPEG baseline 1 (8 bit) quality as defined (60..95 suggested)
+.TP
+j4NN
+JPEGExtended2and4 quality as defined (60..95 suggested)
+.TP
+j5NN
+JPEGSpectralNH6and8 quality as defined (60..95 suggested)
+.TP
+j6NN
+JPEGFulllNH10and12 quality as defined (60..95 suggested)
+.TP
+jk
+Lossless JPEG2000 (30%)
+.TP
+jl
+Lossy JPEG2000 (20%)
+.TP
+jlNN
+Lossy JPEG2000 bitrate as defined (1..20 suggested)
+.TP
+nj
+Highest NKI mode; but leaves JPEG as is (variable)
+.TP
+uj
+Uncompressed; but leaves JPEG as is (variable)
+.TP
+k1
+Downsize image>1024 pixels wide/high to 1024 (variable)
+.TP
+k2
+Downsize image>512 pixels wide/high to 512 (variable)
+.TP
+k4
+Downsize image>256 pixels wide/high to 256 (variable)
+.TP
+k8
+Downsize image>128 pixels wide/high to 128 (variable)
+.TP
+ka
+Downsize image>64 pixels wide/high to 64 (variable)

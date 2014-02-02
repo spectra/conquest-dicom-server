@@ -4,3 +4,4 @@
 0004-Add-logfiles-location-to-dicom.ini.sqlite.patch
 0005-Separate-option-and-description-in-PrintOptions.patch
 0006-Add-DebianBaseDir-at-dgate.cpp.patch
+0007-Change-port-for-CONQUESTSRV1-in-acrnema.map.patch

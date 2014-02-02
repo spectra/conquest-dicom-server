@@ -11,6 +11,8 @@ help2man -h "-w$PWD -?" -N -s 1 -n "UCDMC/NKI DICOM server thread and PACS utili
          --include debian/manparts/options.h2m \
          --include debian/manparts/otheroptions.h2m \
          --include debian/manparts/files.h2m \
+         --include debian/manparts/compression.h2m \
+         --include debian/manparts/aetitle.h2m \
          --include debian/manparts/author.h2m \
          --include debian/manparts/reportingbugs.h2m \
          -o dgate.1 ./dgate

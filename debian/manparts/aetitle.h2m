@@ -1,0 +1,13 @@
+[ae title]
+The default AE Title for ConQuest DICOM server in this package is
+.B CONQUESTSRV1
+and this is the AE Title you should use in DICOM viewers pointing to it. As
+a "bonus" feature, you can use AE Title to declare the type of compression
+you'll be using between the viewer and the server. just add
+.B ~XX
+to ConQuest AE Title, where XX is the compression algo/level you wish to use.
+For instance, to use
+.B uncompressed
+images, the AE Title
+.B CONQUESTSRV1~un
+can be declared in your DICOM node configuration in the viewer.

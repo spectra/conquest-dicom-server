@@ -1,13 +1,15 @@
 [files]
 All of the locations below can be configured in
 .B dicom.ini
-file. By default, in this package
+file. In this package
 .B ConQuest
 expects dicom.ini to be present in the
 .B /etc/conquest-dicom-server
 directory. This can be changed using
 .B -w
-option.
+option (see 
+.B OPTIONS
+above).
 .TP 15
 /etc/conquest-dicom-server/dicom.ini
 Several self-explanatory configuration parameters for the server.
