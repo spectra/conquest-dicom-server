@@ -1,0 +1,43 @@
+From: Pablo Lorenzzoni <spectra@debian.org>
+Date: Sat, 1 Feb 2014 18:50:39 +0000
+Subject: Add DebianBaseDir at dgate.cpp
+
+---
+ dgate.cpp |   16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
+
+diff --git a/dgate.cpp b/dgate.cpp
+index 61bba6f..cc440aa 100644
+--- a/dgate.cpp
++++ b/dgate.cpp
+@@ -1108,6 +1108,8 @@ char	RootConfig[64]	=	"sscscp";		// main entry in ini file
+ // Later make everything MAX_PATH or similar?
+ char    BaseDir[256] 	=	"";			// where the files are
+ 
++char    DebianBaseDir[256] 	=	"/etc/conquest-dicom-server/";
++
+ #ifndef	UNIX
+ char	ConfigFile[256]	=	".\\dicom.ini";		// name ini file
+ char	DicomDict[256]	=	".\\dgate.dic";		// name dicomdictionary file
+@@ -21109,16 +21111,12 @@ main ( int	argc, char	*argv[] )
+ 			}
+ 		}
+ 
+-	// no -w: set BaseDir to and get ini file from same directory as binary
++	// no -w: set BaseDir to and get ini file from DebianBaseDir
+ 	if (slen == 0)
+-		{ 
+-		if (strrchr(argv[0], PATHSEPCHAR))
+-			{
+-			strcpy(ConfigFile, argv[0]);
+-			*(strrchr(ConfigFile, PATHSEPCHAR) + 1) = 0;
+-			strcpy(BaseDir, ConfigFile);
+-			strcat(ConfigFile, "dicom.ini");
+-			}
++		{
++		strcpy(BaseDir, DebianBaseDir);
++		strcpy(ConfigFile, DebianBaseDir);
++		strcat(ConfigFile, "dicom.ini");
+ 		}
+ 
+ #ifndef UNIX
