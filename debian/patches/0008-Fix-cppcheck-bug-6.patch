@@ -1,0 +1,26 @@
+From: Pablo Lorenzzoni <spectra@debian.org>
+Date: Tue, 4 Feb 2014 17:40:17 -0200
+Subject: Fix cppcheck bug #6
+
+[dgate.cpp:5955]: (error) Array 'items[4]' index 4 out of bounds
+---
+ dgate.cpp |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/dgate.cpp b/dgate.cpp
+index cc440aa..2dce88e 100644
+--- a/dgate.cpp
++++ b/dgate.cpp
+@@ -5951,10 +5951,10 @@ extern "C"
+     const char *items[4];
+     SQLLEN SQLResultLength;
+     for (i=0; i<4; i++) items[i]=lua_tostring(L,i+1);
+-    if (items[1]) for (i=0; i<strlen(items[1]); i++) if (items[1][i]==',') flds++;
++    if (items[0]) for (i=0; i<strlen(items[0]); i++) if (items[0][i]==',') flds++;
++    if (items[1]) if (*items[1]==0) items[1]=NULL;
+     if (items[2]) if (*items[2]==0) items[2]=NULL;
+     if (items[3]) if (*items[3]==0) items[3]=NULL;
+-    if (items[4]) if (*items[4]==0) items[4]=NULL;
+ 
+     Database DB;
+     if (DB.Open ( DataSource, UserName, Password, DataHost ) )
