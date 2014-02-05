@@ -1,0 +1,22 @@
+From: Pablo Lorenzzoni <spectra@debian.org>
+Date: Wed, 5 Feb 2014 16:37:14 -0200
+Subject: Fix cppcheck bug #5.5
+
+[dgate.cpp:6504]: (error) printf format string has 1 parameters but only 0 are given
+---
+ dgate.cpp |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dgate.cpp b/dgate.cpp
+index 2dce88e..ff462b2 100644
+--- a/dgate.cpp
++++ b/dgate.cpp
+@@ -6503,7 +6503,7 @@ extern "C"
+         DICOMDataObject *P = MakeCopy(O);
+ 	int rc = SaveToDisk(DB, P, rFilename, TRUE, &PDU, 0, TRUE);
+ 	if (!rc)
+-	{ OperatorConsole.printf("***[lua addimage] Error entering object into server%s\n");
++	{ OperatorConsole.printf("***[lua addimage] Error entering object into server%s\n", DataHost);
+ 	}
+ 	else
+         { if (rc==2) OperatorConsole.printf("Lua script rewritten file: %s\n", rFilename);
