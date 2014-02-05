@@ -1,0 +1,23 @@
+From: Pablo Lorenzzoni <spectra@debian.org>
+Date: Wed, 5 Feb 2014 14:36:36 +0000
+Subject: Fix cppcheck bug #4
+
+[device.cpp:786]: (error) Dangerous usage of 's' (strncpy doesn't always 0-terminate it)
+---
+ device.cpp |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/device.cpp b/device.cpp
+index 2b07c7c..3afb058 100644
+--- a/device.cpp
++++ b/device.cpp
+@@ -781,7 +781,8 @@ CheckFreeStoreOnCACHEDevice(
+ 
+         if (CACHENumber >= CACHEDevices || CACHENumber < 0) return 0; 
+ 
+-        strncpy(s, CACHEDeviceTable[CACHENumber], 1023); 
++        strncpy(s, CACHEDeviceTable[CACHENumber], 1023);
++	s[1023] = '\0';
+ 
+         if ((chp = strchr(s, '%'))) 
+         { 
