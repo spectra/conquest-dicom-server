@@ -1,0 +1,46 @@
+From: Pablo Lorenzzoni <spectra@debian.org>
+Date: Wed, 5 Feb 2014 11:54:40 +0000
+Subject: Fix cppcheck bug #3 (and others in same function)
+
+[device.cpp:2897]: (error) Memory leak: PatList
+---
+ device.cpp |    8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/device.cpp b/device.cpp
+index 02cf3cd..2b07c7c 100644
+--- a/device.cpp
++++ b/device.cpp
+@@ -2894,10 +2894,16 @@ MakeListOfPatientsOnDevice(char *Device, char **PatientIDList)
+ 		if (PatList==NULL) return -1;
+ 
+ 		if (!DB.QueryDistinct(PatientTableName, "PatientID", "", "DICOMPatients.AccessTime"))
++			{
++			free(PatList);
+ 			return -1;
++			}
+ 
+ 		if(!DB.BindField (1, SQL_C_CHAR, PatientID, 68, &sdword))
++			{
++			free(PatList);
+ 			return -1;
++			}
+ 
+ 		NPat = 0;
+ 		while(DB.NextRecord())
+@@ -2944,6 +2950,7 @@ MakeListOfPatientsOnDevice(char *Device, char **PatientIDList)
+ 			}
+ 
+ 		free (PatList);
++		free (PatientIDList);
+ 		DB.Close();
+ 		return Patients;
+ 		}
+@@ -2985,6 +2992,7 @@ MakeListOfPatientsOnDevice(char *Device, char **PatientIDList)
+ 		}
+ 
+ 	DB.Close();
++	free(PatientIDList);
+ 	return Patients;
+ 	}
+ 

@@ -7,3 +7,4 @@
 0007-Change-port-for-CONQUESTSRV1-in-acrnema.map.patch
 0008-Fix-cppcheck-bug-6.patch
 0009-Fix-cppcheck-bug-1.patch
+0010-Fix-cppcheck-bug-3-and-others-in-same-function.patch
