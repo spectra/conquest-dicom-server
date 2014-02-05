@@ -1,0 +1,22 @@
+From: Pablo Lorenzzoni <spectra@debian.org>
+Date: Wed, 5 Feb 2014 10:57:52 +0000
+Subject: Fix cppcheck bug #1
+
+[buffer.cxx:440]: (error) Mismatching allocation and deallocation: Data
+---
+ buffer.cxx |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/buffer.cxx b/buffer.cxx
+index 08130e0..ce69aa2 100644
+--- a/buffer.cxx
++++ b/buffer.cxx
+@@ -437,7 +437,7 @@ BOOL	Buffer	::	Kill(UINT	Bytes)
+         if (!Data) DicomError(DCM_ERROR_MEMORY, "Bufferspace: out of memory allocating %d bytes\n", Bytes+1);
+ 
+ 	Ret = Read(Data, Bytes);
+-	delete Data;
++	delete [] Data;
+ 	return ( Ret );
+ 	}
+ 	
