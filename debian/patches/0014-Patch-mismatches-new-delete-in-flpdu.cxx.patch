@@ -1,0 +1,97 @@
+From: Pablo Lorenzzoni <spectra@debian.org>
+Date: Wed, 12 Feb 2014 15:48:27 -0200
+Subject: Patch mismatches new/delete in flpdu.cxx
+
+---
+ flpdu.cxx |   40 ++++++++++++++++++++--------------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
+
+diff --git a/flpdu.cxx b/flpdu.cxx
+index 0af7b5e..7d9dda7 100644
+--- a/flpdu.cxx
++++ b/flpdu.cxx
+@@ -456,12 +456,12 @@ CheckedPDU_Service	::	ReleaseMemory ()
+ 		Index = 0;
+ 		while ( Index < SOPUIDListCount )
+ 			{
+-			delete SOPUIDList [ Index ] ;
+-			delete SOPUIDListNames [ Index ] ;
++			delete [] SOPUIDList [ Index ] ;
++			delete [] SOPUIDListNames [ Index ] ;
+ 			++Index;
+ 			}
+-		delete SOPUIDList;
+-		delete SOPUIDListNames;
++		delete [] SOPUIDList;
++		delete [] SOPUIDListNames;
+ 		SOPUIDList = NULL;
+ 		SOPUIDListNames = NULL;
+ 		SOPUIDListCount = 0;
+@@ -472,12 +472,12 @@ CheckedPDU_Service	::	ReleaseMemory ()
+ 		Index = 0;
+ 		while ( Index < TransferUIDListCount )
+ 			{
+-			delete TransferUIDList [ Index ] ;
+-			delete TransferUIDListNames [ Index ] ;
++			delete [] TransferUIDList [ Index ] ;
++			delete [] TransferUIDListNames [ Index ] ;
+ 			++Index;
+ 			}
+-		delete TransferUIDList;
+-		delete TransferUIDListNames;
++		delete [] TransferUIDList;
++		delete [] TransferUIDListNames;
+ 		TransferUIDList = NULL;
+ 		TransferUIDListNames = NULL;
+ 		TransferUIDListCount = 0;
+@@ -488,12 +488,12 @@ CheckedPDU_Service	::	ReleaseMemory ()
+ 		Index = 0;
+ 		while ( Index < ApplicationUIDListCount )
+ 			{
+-			delete ApplicationUIDList [ Index ] ;
+-			delete ApplicationUIDListNames [ Index ] ;
++			delete [] ApplicationUIDList [ Index ] ;
++			delete [] ApplicationUIDListNames [ Index ] ;
+ 			++Index;
+ 			}
+-		delete ApplicationUIDList;
+-		delete ApplicationUIDListNames;
++		delete [] ApplicationUIDList;
++		delete [] ApplicationUIDListNames;
+ 		ApplicationUIDList = NULL;
+ 		ApplicationUIDListNames = NULL;
+ 		ApplicationUIDListCount = 0;
+@@ -503,12 +503,12 @@ CheckedPDU_Service	::	ReleaseMemory ()
+ 		Index = 0;
+ 		while ( Index < RemoteAEListCount )
+ 			{
+-			delete RemoteAEList [ Index ] ;
+-			delete RemoteAEListNames [ Index ] ;
++			delete [] RemoteAEList [ Index ] ;
++			delete [] RemoteAEListNames [ Index ] ;
+ 			++Index;
+ 			}
+-		delete RemoteAEList;
+-		delete RemoteAEListNames;
++		delete [] RemoteAEList;
++		delete [] RemoteAEListNames;
+ 		RemoteAEList = NULL;
+ 		RemoteAEListNames = NULL;
+ 		RemoteAEListCount = 0;
+@@ -518,12 +518,12 @@ CheckedPDU_Service	::	ReleaseMemory ()
+ 		Index = 0;
+ 		while ( Index < LocalAEListCount )
+ 			{
+-			delete LocalAEList [ Index ] ;
+-			delete LocalAEListNames [ Index ] ;
++			delete [] LocalAEList [ Index ] ;
++			delete [] LocalAEListNames [ Index ] ;
+ 			++Index;
+ 			}
+-		delete LocalAEList;
+-		delete LocalAEListNames;
++		delete [] LocalAEList;
++		delete [] LocalAEListNames;
+ 		LocalAEList = NULL;
+ 		LocalAEListNames = NULL;
+ 		LocalAEListCount = 0;
