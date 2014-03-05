@@ -1,0 +1,29 @@
+From: Pablo Lorenzzoni <spectra@debian.org>
+Date: Wed, 5 Mar 2014 17:42:32 -0300
+Subject: Fix cppcheck bug 3 - Reviewed by Marcel
+
+---
+ device.cpp |    6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/device.cpp b/device.cpp
+index d128c04..0d4458f 100644
+--- a/device.cpp
++++ b/device.cpp
+@@ -2895,10 +2895,16 @@ MakeListOfPatientsOnDevice(char *Device, char **PatientIDList)
+ 		if (PatList==NULL) return -1;
+ 
+ 		if (!DB.QueryDistinct(PatientTableName, "PatientID", "", "DICOMPatients.AccessTime"))
++			{
++			free(PatList);
+ 			return -1;
++			}
+ 
+ 		if(!DB.BindField (1, SQL_C_CHAR, PatientID, 68, &sdword))
++			{
++			free(PatList);
+ 			return -1;
++			}
+ 
+ 		NPat = 0;
+ 		while(DB.NextRecord())

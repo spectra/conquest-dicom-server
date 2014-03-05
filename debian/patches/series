@@ -10,3 +10,4 @@
 0010-Fix-cppcheck-bug-5.5.patch
 0011-Patch-mismatches-new-delete-in-flpdu.cxx.patch
 0012-Fix-cppcheck-bugs-8-and-9-Reviewed-by-Marcel.patch
+0013-Fix-cppcheck-bug-3-Reviewed-by-Marcel.patch
