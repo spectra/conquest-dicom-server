@@ -8,7 +8,7 @@ Subject: Fix cppcheck bug #5.5
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/dgate.cpp b/dgate.cpp
-index 2dce88e..ff462b2 100644
+index cc440aa..7aca6a0 100644
 --- a/dgate.cpp
 +++ b/dgate.cpp
 @@ -6503,7 +6503,7 @@ extern "C"

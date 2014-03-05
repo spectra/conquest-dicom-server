@@ -8,7 +8,7 @@ Subject: Fix cppcheck bug #4
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/device.cpp b/device.cpp
-index 2b07c7c..3afb058 100644
+index 02cf3cd..d128c04 100644
 --- a/device.cpp
 +++ b/device.cpp
 @@ -781,7 +781,8 @@ CheckFreeStoreOnCACHEDevice(

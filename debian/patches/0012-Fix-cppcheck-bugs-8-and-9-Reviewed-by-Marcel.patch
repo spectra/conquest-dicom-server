@@ -1,0 +1,30 @@
+From: Pablo Lorenzzoni <spectra@debian.org>
+Date: Wed, 5 Mar 2014 17:35:22 -0300
+Subject: Fix cppcheck bugs 8 and 9 - Reviewed by Marcel
+
+---
+ dgate.cpp |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/dgate.cpp b/dgate.cpp
+index 7aca6a0..6a8c109 100644
+--- a/dgate.cpp
++++ b/dgate.cpp
+@@ -5976,7 +5976,7 @@ extern "C"
+   }
+   static int luasql(lua_State *L)
+   { const char *sql = lua_tostring(L,1);
+-    BOOL f;
++    BOOL f = FALSE;
+ 
+     Database DB;
+     if (DB.Open ( DataSource, UserName, Password, DataHost ) )
+@@ -6410,7 +6410,7 @@ extern "C"
+   static int luadeletedicomobject(lua_State *L)
+   { struct scriptdata *sd = getsd(L);
+     DICOMDataObject *O = NULL;
+-    int owned;
++    int owned = 0;
+     Array < DICOMDataObject * > *A = NULL;
+     if (lua_isuserdata(L,1)) 
+     { lua_getmetatable(L, 1);

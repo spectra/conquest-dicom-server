@@ -5,7 +5,8 @@
 0005-Separate-option-and-description-in-PrintOptions.patch
 0006-Add-DebianBaseDir-at-dgate.cpp.patch
 0007-Change-port-for-CONQUESTSRV1-in-acrnema.map.patch
-0009-Fix-cppcheck-bug-1.patch
-0011-Fix-cppcheck-bug-4.patch
-0012-Fix-cppcheck-bug-5.5.patch
-0014-Patch-mismatches-new-delete-in-flpdu.cxx.patch
+0008-Fix-cppcheck-bug-1.patch
+0009-Fix-cppcheck-bug-4.patch
+0010-Fix-cppcheck-bug-5.5.patch
+0011-Patch-mismatches-new-delete-in-flpdu.cxx.patch
+0012-Fix-cppcheck-bugs-8-and-9-Reviewed-by-Marcel.patch
