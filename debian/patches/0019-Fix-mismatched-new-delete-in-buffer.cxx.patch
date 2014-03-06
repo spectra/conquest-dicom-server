@@ -1,0 +1,21 @@
+From: Pablo Lorenzzoni <spectra@debian.org>
+Date: Thu, 6 Mar 2014 17:02:42 -0300
+Subject: Fix mismatched new/delete in buffer.cxx
+
+---
+ buffer.cxx |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/buffer.cxx b/buffer.cxx
+index ce69aa2..ebbc454 100644
+--- a/buffer.cxx
++++ b/buffer.cxx
+@@ -101,7 +101,7 @@ BufferSpace	::	~BufferSpace()
+ 	{
+ 	if ( !isTemp )
+ 		if ( Data )
+-			delete Data;
++			delete [] Data;
+ 	}
+ 
+ Buffer	::	Buffer()
