@@ -15,3 +15,4 @@
 0015-Fix-mismatched-new-delete-in-dbsql.cpp.patch
 0016-Fix-mismatched-new-delete-in-rtc.cxx.patch
 0017-Fix-mismatched-new-delete-in-farray.thh.patch
+0018-Fix-mismatched-new-delete-in-device.cpp.patch
