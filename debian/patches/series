@@ -13,3 +13,4 @@
 0013-Fix-cppcheck-bug-3-Reviewed-by-Marcel.patch
 0014-Fix-cppcheck-bug-6-Reviewed-by-Marcel.patch
 0015-Fix-mismatched-new-delete-in-dbsql.cpp.patch
+0016-Fix-mismatched-new-delete-in-rtc.cxx.patch

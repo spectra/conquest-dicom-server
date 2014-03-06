@@ -1,0 +1,21 @@
+From: Pablo Lorenzzoni <spectra@debian.org>
+Date: Thu, 6 Mar 2014 15:36:06 -0300
+Subject: Fix mismatched new/delete in rtc.cxx
+
+---
+ rtc.cxx |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/rtc.cxx b/rtc.cxx
+index 67de467..8853418 100644
+--- a/rtc.cxx
++++ b/rtc.cxx
+@@ -125,7 +125,7 @@ RTC	::	DetachRTC ()
+ 					TypeCodes->Get(Index).Group,
+ 					TypeCodes->Get(Index).Element,
+ 					TypeCodes->Get(Index).Description);fflush(stdout);*/
+-				delete TypeCodes->Get(Index).Description;
++				delete [] TypeCodes->Get(Index).Description;
+ 				}
+ 			++Index;
+ 			}
