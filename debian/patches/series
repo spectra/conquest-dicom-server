@@ -12,3 +12,4 @@
 0012-Fix-cppcheck-bugs-8-and-9-Reviewed-by-Marcel.patch
 0013-Fix-cppcheck-bug-3-Reviewed-by-Marcel.patch
 0014-Fix-cppcheck-bug-6-Reviewed-by-Marcel.patch
+0015-Fix-mismatched-new-delete-in-dbsql.cpp.patch

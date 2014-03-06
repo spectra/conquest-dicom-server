@@ -1,0 +1,21 @@
+From: Pablo Lorenzzoni <spectra@debian.org>
+Date: Thu, 6 Mar 2014 15:34:35 -0300
+Subject: Fix mismatched new/delete in dbsql.cpp
+
+---
+ dbsql.cpp |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dbsql.cpp b/dbsql.cpp
+index e364c13..2001d44 100644
+--- a/dbsql.cpp
++++ b/dbsql.cpp
+@@ -2283,7 +2283,7 @@ MakeSafeStringValues (
+ 	(*sout) = '\'';++sout;
+ 	(*sout) = '\0';
+ 	
+-	delete s;
++	delete [] s;
+ 	return ( TRUE );
+ 	}
+ 
