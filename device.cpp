@@ -106,6 +106,10 @@
 20110904	mvh	Fixed leak in InitializeDeviceTable (occurs in read_ini command)
 20120723	mvh	Fixed string overflow found by bcb in MakeListOfLRUPatients
 20130817	mvh	TestFile will uncompress all read data to test it
+Spectra0011 Wed, 5 Feb 2014 14:36:36 +0000: Fix cppcheck bug #4 (strncpy termination)
+Spectra0010 Wed, 5 Feb 2014 11:54:40 +0000: Fix cppcheck bug #3 (and others in same function)
+20140215	mvh	Fixed potential Patlist memory leaks; and also always free PatientIDList in calling;
+
 */
 
 #ifndef UNUSED_ARGUMENT
@@ -782,6 +786,7 @@ CheckFreeStoreOnCACHEDevice(
         if (CACHENumber >= CACHEDevices || CACHENumber < 0) return 0; 
 
         strncpy(s, CACHEDeviceTable[CACHENumber], 1023); 
+	s[1023] = '\0';
 
         if ((chp = strchr(s, '%'))) 
         { 
@@ -2867,6 +2872,7 @@ MakeListOfPatientsOnDevice(char *Device, char **PatientIDList)
 	int 			Patients, NPat, MAXPATIENTS = 10000, i;
 	char			*PatList;
 	
+	*PatientIDList = NULL;
 	
 	if (!DB.Open ( DataSource, UserName, Password, DataHost ) )
 		return -1;
@@ -2894,10 +2900,16 @@ MakeListOfPatientsOnDevice(char *Device, char **PatientIDList)
 		if (PatList==NULL) return -1;
 
 		if (!DB.QueryDistinct(PatientTableName, "PatientID", "", "DICOMPatients.AccessTime"))
+			{
+			free(PatList);
 			return -1;
+			}
 
 		if(!DB.BindField (1, SQL_C_CHAR, PatientID, 68, &sdword))
+			{
+			free(PatList);
 			return -1;
+			}
 
 		NPat = 0;
 		while(DB.NextRecord())
@@ -2930,7 +2942,6 @@ MakeListOfPatientsOnDevice(char *Device, char **PatientIDList)
 			if (!DB.Query(ImageTableName, "ImagePat", QueryString, ""))
 				{
 				free (PatList);
-				free (PatientIDList);
 				return -1;
 				}
 
@@ -2970,7 +2981,8 @@ MakeListOfPatientsOnDevice(char *Device, char **PatientIDList)
 		return -1;
 
 	*PatientIDList = (char *)malloc(256 * MAXPATIENTS);
-	if (*PatientIDList==NULL) return -1;
+	if (*PatientIDList==NULL) 
+		return -1;
 
 	Patients       = 0;
 
@@ -3291,6 +3303,7 @@ PrepareBunchForBurning(char *DeviceFrom, char *DeviceTo)
 	if (NPatients < 0)
 		{
 		OperatorConsole.printf("Archival: *** could not create patient list\n");
+		free (PatientIDList);
 		return FALSE;
 		}
 
@@ -3483,6 +3496,7 @@ MoveDataToDevice(char *DeviceFrom, char *DeviceTo)
 	if (NPatients < 0)
 		{
 		OperatorConsole.printf("MoveDataToDevice: *** could not create patient list\n");
+		free (PatientIDList);
 		return FALSE;
 		}
 
@@ -3753,6 +3767,7 @@ CompareBunchAfterBurning(char *DeviceTo)
 	if (NPatients < 0)
 		{
 		OperatorConsole.printf("Archival: *** could not create patient list\n");
+		free (PatientIDList);
 		return FALSE;
 		}
 
@@ -3815,6 +3830,7 @@ DeleteBunchAfterBurning(char *DeviceTo)
 	if (NPatients < 0)
 		{
 		OperatorConsole.printf("Archival: *** could not create patient list\n");
+		free (PatientIDList);
 		return FALSE;
 		}
 
@@ -3910,6 +3926,7 @@ VerifyMirrorDisk(char *DeviceFrom)
 	if (NPatients < 0)
 		{
 		OperatorConsole.printf("Archival: *** could not create patient list\n");
+		free (PatientIDList);
 		return FALSE;
 		}
 
@@ -3955,6 +3972,7 @@ TestImages(char *DeviceFrom)
 	if (NPatients < 0)
 		{
 		OperatorConsole.printf("Archival: *** could not create patient list\n");
+		free (PatientIDList);
 		return FALSE;
 		}
 

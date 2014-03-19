@@ -213,6 +213,7 @@
 20130807	mvh	Worked on accepting data without patient ID if AllowEmptyPatientID = 1
 20130808	mvh	Added substitution of patient ID for database purpose if AllowEmptyPatientID = 1
 20131013	mvh	Default TruncateFieldNames set to 10
+20140309	mvh	ChangeUID functions leave empty UID as is and escape '
 */
 
 #define NCACHE 256
@@ -1953,7 +1954,6 @@ dbGenUID(char	*oString)
 CRITICAL_SECTION ChangeUIDCritical;
 BOOL ChangeUIDCriticalInit=FALSE;
 
-
 BOOL
 ChangeUID(char *OldUID, const char *Type, char *NewUID)
 	{
@@ -1961,6 +1961,12 @@ ChangeUID(char *OldUID, const char *Type, char *NewUID)
 	char		Values[1024];
 	Database	DB;
 	SQLLEN		sdword;
+
+	if (OldUID[0]==0) 
+		{
+		*NewUID = 0;
+		return TRUE;
+		}
 
 	if (!ChangeUIDCriticalInit)
 	{ InitializeCriticalSection(&ChangeUIDCritical);
@@ -1974,8 +1980,12 @@ ChangeUID(char *OldUID, const char *Type, char *NewUID)
 		}
 
 	EnterCriticalSection(&ChangeUIDCritical);
+	
+	char old[512];
+	strcpy(old, OldUID);
+	DICOM2SQLValue(old);
 
-	sprintf(s, "OldUID = '%s'", OldUID);
+	sprintf(s, "OldUID = %s", old);
 	if(!DB.Query("UIDMODS", "NewUID", s, NULL))
 		{
 		SystemDebug.printf("***Unable to query UIDMODS table\n");
@@ -1995,9 +2005,9 @@ ChangeUID(char *OldUID, const char *Type, char *NewUID)
 		dbGenUID(NewUID);
 		SystemDebug.printf("NewUID for %s = %s\n", Type, NewUID);
 
-		sprintf(Values, "%u, '", (unsigned int)time(NULL));
-		strcat(Values, OldUID);
-		strcat(Values, "', '");
+		sprintf(Values, "%u, ", (unsigned int)time(NULL));
+		strcat(Values, old);
+		strcat(Values, ", '");
 		strcat(Values, Type);
 		strcat(Values, "', '");
 		strcat(Values, NewUID);
@@ -2029,6 +2039,12 @@ ChangeUIDTo(char *OldUID, char *Type, char *NewUID)
 	Database	DB;
 	SQLLEN		sdword;
 
+	if (OldUID[0]==0) 
+		{
+		*NewUID = 0;
+		return TRUE;
+		}
+
 	if (!ChangeUIDCriticalInit)
 	{ InitializeCriticalSection(&ChangeUIDCritical);
 	  ChangeUIDCriticalInit = TRUE;
@@ -2043,7 +2059,11 @@ ChangeUIDTo(char *OldUID, char *Type, char *NewUID)
 		return ( FALSE );
 		}
 
-	sprintf(s, "OldUID = '%s'", OldUID);
+	char old[512];
+	strcpy(old, OldUID);
+	DICOM2SQLValue(old);
+
+	sprintf(s, "OldUID = %s", old);
 	if(!DB.Query("UIDMODS", "NewUID", s, NULL))
 		{
 		SystemDebug.printf("***Unable to query UIDMODS table\n");
@@ -2062,9 +2082,9 @@ ChangeUIDTo(char *OldUID, char *Type, char *NewUID)
 		{
 		SystemDebug.printf("NewUID for %s = %s\n", Type, NewUID);
 
-		sprintf(Values, "%u, '", (unsigned int)time(NULL));
-		strcat(Values, OldUID);
-		strcat(Values, "', '");
+		sprintf(Values, "%u, ", (unsigned int)time(NULL));
+		strcat(Values, old);
+		strcat(Values, ", '");
 		strcat(Values, Type);
 		strcat(Values, "', '");
 		strcat(Values, NewUID);
@@ -2093,6 +2113,12 @@ ChangeUIDBack(char *NewUID, char *OldUID)
 //	char		Values[1024];
 	Database	DB;
 	SQLLEN		sdword;
+
+	if (NewUID[0]==0) 
+		{
+		*OldUID = 0;
+		return TRUE;
+		}
 
 	if (!DB.Open ( DataSource, UserName, Password, DataHost ) )
 		{

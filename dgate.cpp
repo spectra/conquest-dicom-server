@@ -984,11 +984,22 @@ mvh 20090616: Add ^/~ after % command to convert to upper/lowercase, %^ %~ %[; f
 20131103	mvh	Fix in VirtualServerPerSeries when exact #images, would omit SOP tag but set level to IMAGE
 20131104        mvh     Reversed logic: 1 image gives IMAGE move and SOP uid
 20131107        mvh     Added quality clause to save jpg; Release 1.4.17c
+20131219        mvh     Fixed that MIRRORDevice0 setting starts mirror copy thread
+20140128        mvh     added copydicom(source) DicomObject:Copy(); DicomObject:Compress(string)
+20140209        mvh     Added dgate --compress: command
+Spectra0008 Tue, 4 Feb 2014 17:40:17 -0200: Fix cppcheck bug #6 'items[4]' index 4 out of bounds
+Spectra0012 Wed, 5 Feb 2014 16:37:14 -0200: Fix cppcheck bug #5.5 printf format string has 1 parameters but only 0 are given
+Spectra0013 Wed, 5 Feb 2014 16:57:49 -0200: Fix cppcheck bugs #8 e #9
+20140215        mvh     Processed Pablo's cppcheck issues
+20140219	mvh 	Added generic decompressor dgate -nu file_in file_out (works for XDR and DCM)
+20140304	mvh 	Detect Data:Read() and do not crash server on it (just fails)
+20140309	mvh 	fixed lua/file.lua returns status rc; newuids no longer generated or changes empty uids
+			lua mkdir(), dicomquery() now returns raw; fixed luacompress and luacopy; dicomquery2 old one; linux warnings
 
 ENDOFUPDATEHISTORY
 */
 
-#define DGATE_VERSION "1.4.17c"
+#define DGATE_VERSION "1.4.17d"
 
 //#define DO_LEAK_DETECTION	1
 //#define DO_VIOLATION_DETECTION	1
@@ -2601,7 +2612,10 @@ NewUIDsInDICOMObject(DICOMObject *DO, const char *Exceptions, const char *Reason
 				{
 				memcpy(s, vr->Data, vr->Length);
 				s[vr->Length]=0;
-				if (strlen(s)==0) GenUID(s);
+
+				// 20140309: blocked
+				// if (strlen(s)==0) GenUID(s);
+
 				strcat(s, ";");
 				sprintf(name, "%04x,%04x|", vr->Group, vr->Element);
 
@@ -5952,7 +5966,6 @@ extern "C"
     if (items[1]) for (i=0; i<strlen(items[1]); i++) if (items[1][i]==',') flds++;
     if (items[2]) if (*items[2]==0) items[2]=NULL;
     if (items[3]) if (*items[3]==0) items[3]=NULL;
-    if (items[4]) if (*items[4]==0) items[4]=NULL;
 
     Database DB;
     if (DB.Open ( DataSource, UserName, Password, DataHost ) )
@@ -5974,7 +5987,7 @@ extern "C"
   }
   static int luasql(lua_State *L)
   { const char *sql = lua_tostring(L,1);
-    BOOL f;
+    BOOL f=FALSE;
 
     Database DB;
     if (DB.Open ( DataSource, UserName, Password, DataHost ) )
@@ -5989,7 +6002,7 @@ extern "C"
     else
       return 0;
   }
-  static int luadicomquery(lua_State *L)
+  static int luadicomquery2(lua_State *L)
   { const char *ae    = lua_tostring(L,1);
     const char *level = lua_tostring(L,2);
     if (lua_isuserdata(L, 3)) 
@@ -6008,6 +6021,9 @@ extern "C"
     }
     return 0;
   }
+
+  static int luadicomquery(lua_State *L);
+  
   static int luadicommove(lua_State *L)
   { const char *source = lua_tostring(L,1);
     const char *dest   = lua_tostring(L,2);
@@ -6328,6 +6344,10 @@ extern "C"
         lua_getfield(L, -1, "DDO");  P = (DICOMDataObject *) lua_topointer(L, -1); lua_pop(L, 1);
 	char name[512];
         strcpy(name, (char *)lua_tostring(L,2));
+        if (sd->DDO == P)
+        { lua_pop(L, 1);
+          return 0;
+        }
         O = LoadForGUI(name);
         if (!O) 
         { lua_pop(L, 1);
@@ -6358,6 +6378,49 @@ extern "C"
       { DICOMDataObject *pDDO = MakeCopy(O);
         SaveDICOMDataObject((char *)lua_tostring(L,2), pDDO);
         delete pDDO;
+      }
+    }
+    return 0;
+  }
+
+  // copydicom(source), Data:Copy()
+  static int luacopydicom(lua_State *L)
+  { struct scriptdata *sd = getsd(L);
+    if (lua_isuserdata(L,1)) 
+    { DICOMDataObject *O = NULL;
+      lua_getmetatable(L, 1);
+        lua_getfield(L, -1, "DDO");  O = (DICOMDataObject *) lua_topointer(L, -1); lua_pop(L, 1);
+      lua_pop(L, 1);
+
+      if (O)
+      { DICOMDataObject *pDDO = MakeCopy(O);
+        luaCreateObject(L, pDDO, NULL, TRUE); 
+        return 1;
+      }
+    }
+    return 0;
+  }
+
+  // compressdicom(source, string), Data:Compress(string)
+  static int luacompressdicom(lua_State *L)
+  { struct scriptdata *sd = getsd(L);
+    char name[512];
+    strcpy(name, (char *)lua_tostring(L,2));
+    if (lua_isuserdata(L,1)) 
+    { DICOMDataObject *O = NULL;
+      lua_getmetatable(L, 1);
+        lua_getfield(L, -1, "DDO");  O = (DICOMDataObject *) lua_topointer(L, -1); lua_pop(L, 1);
+      lua_pop(L, 1);
+
+      if (O)
+      { DICOMDataObject *pDDO = MakeCopy(O);
+        char cmd[512];
+	sprintf(cmd, "compression %s", name);
+        CallImportConverterN(pDDO, -1, sd->pszModality, sd->pszStationName, sd->pszSop, sd->patid, sd->PDU, sd->Storage, cmd);
+	//BOOL StripGroup2 = memicmp(name, "as", 2)!=0 && memicmp(name, "is", 2)!=0;
+	//recompress(&pDDO, name, "", StripGroup2, sd->PDU);
+        luaCreateObject(L, pDDO, NULL, TRUE);
+        return 1;
       }
     }
     return 0;
@@ -6408,7 +6471,7 @@ extern "C"
   static int luadeletedicomobject(lua_State *L)
   { struct scriptdata *sd = getsd(L);
     DICOMDataObject *O = NULL;
-    int owned;
+    int owned=0;
     Array < DICOMDataObject * > *A = NULL;
     if (lua_isuserdata(L,1)) 
     { lua_getmetatable(L, 1);
@@ -6501,7 +6564,7 @@ extern "C"
         DICOMDataObject *P = MakeCopy(O);
 	int rc = SaveToDisk(DB, P, rFilename, TRUE, &PDU, 0, TRUE);
 	if (!rc)
-	{ OperatorConsole.printf("***[lua addimage] Error entering object into server%s\n");
+	{ OperatorConsole.printf("***[lua addimage] Error entering object into server%s\n", DataHost);
 	}
 	else
         { if (rc==2) OperatorConsole.printf("Lua script rewritten file: %s\n", rFilename);
@@ -6512,7 +6575,21 @@ extern "C"
     return 0;
   }
 
-
+  static int luamkdir(lua_State *L)
+  { if (lua_isstring(L,1)) 
+    { char cline[512], s[512];
+      strcpy(cline, lua_tostring(L,1));
+      for (int sIndex = 0; sIndex<=strlen(cline); sIndex++)
+	if (cline[sIndex]==PATHSEPCHAR)
+	{ strcpy(s, cline);
+	  s[sIndex]='\0';
+	  mkdir(s);
+	}
+        mkdir(cline);
+    }
+    return 0;
+  }
+  
 static void HTML(const char *string, ...);
 static int CGI(char *out, const char *name, const char *def);
 
@@ -6643,6 +6720,8 @@ static int CGI(char *out, const char *name, const char *def);
     if (strcmp(s, "SetImage")==0) return luasetimage(L);
     if (strcmp(s, "Script")==0)   return luascript(L);
     if (strcmp(s, "AddImage")==0) return luaaddimage(L);
+    if (strcmp(s, "Copy")==0)     return luacopydicom(L);
+    if (strcmp(s, "Compress")==0) return luacompressdicom(L);
 
     if (strcmp(s, "new")==0)      return luanewdicomobject(L);
     if (strcmp(s, "newarray")==0) return luanewdicomarray(L);
@@ -6746,7 +6825,7 @@ static int CGI(char *out, const char *name, const char *def);
       { lua_pushstring(L, sd->Storage);
         return 1;
       }
-      else if (strstr("Write|Read|Dump|GetVR|SetVR|GetPixel|SetPixel|GetRow|SetRow|GetColumn|SetColumn|GetImage|SetImage|Script|new|newarray|free|AddImage", lua_tostring(L,2))) 
+      else if (strstr("Write|Read|Dump|GetVR|SetVR|GetPixel|SetPixel|GetRow|SetRow|GetColumn|SetColumn|GetImage|SetImage|Script|new|newarray|free|AddImage|Copy|Compress", lua_tostring(L,2))) 
       { lua_pushvalue(L, 2);
 	lua_pushcclosure(L, luaSeqClosure, 1);
 	return 1;
@@ -7135,6 +7214,7 @@ const char *do_lua(lua_State **L, char *cmd, struct scriptdata *sd)
     lua_register      (*L, "dbquery",       luadbquery);
     lua_register      (*L, "sql",           luasql);
     lua_register      (*L, "dicomquery",    luadicomquery);
+    lua_register      (*L, "dicomquery2",   luadicomquery2);
     lua_register      (*L, "dicommove",     luadicommove);
     lua_register      (*L, "dicomdelete",   luadicomdelete);
     lua_register      (*L, "debuglog",      luadebuglog);
@@ -7148,6 +7228,8 @@ const char *do_lua(lua_State **L, char *cmd, struct scriptdata *sd)
     lua_register      (*L, "getimage",      luagetimage);
     lua_register      (*L, "setimage",      luasetimage);
     lua_register      (*L, "readdicom",     luareaddicom);
+    lua_register      (*L, "copydicom",     luacopydicom);
+    lua_register      (*L, "compressdicom", luacompressdicom);
     lua_register      (*L, "writedicom",    luawritedicom);
     lua_register      (*L, "writeheader",   luawriteheader);
     lua_register      (*L, "newdicomobject",luanewdicomobject);
@@ -7167,6 +7249,7 @@ const char *do_lua(lua_State **L, char *cmd, struct scriptdata *sd)
     lua_register      (*L, "system",        luasystem);
     lua_register      (*L, "sleep",         luasleep);
     lua_register      (*L, "addimage",      luaaddimage);
+    lua_register      (*L, "mkdir",         luamkdir);
     
     lua_createtable   (*L, 0, 0); 
     lua_createtable   (*L, 0, 0);
@@ -9256,8 +9339,9 @@ int CallImportConverterN(DICOMDataObject *DDO, int N, char *pszModality, char *p
 	    // note; threadnum and dco not implemented
             struct scriptdata sd = {PDU, NULL, DDO, N, pszModality, pszStationName, pszSop, patid, Storage, 0, 0};
     	    SystemDebug.printf("Importconverter%d.%d: %s\n", N, part, script);
+    	    sd.rc = 1;
             do_lua(&(PDU->L), script, &sd);
-            rc = sd.rc;
+            ret = sd.rc;
           }
 	  else
 	  { SystemDebug.printf("%sconverter%d.%d: %s\n", ininame, N, part, line);
@@ -11316,6 +11400,7 @@ PrintOptions ()
         fprintf(stderr, "    --extract_frames:file,out,first,last Select frames of DICOM file\n");
 	fprintf(stderr, "    --count_frames:file                  report # frames in DICOM file\n");
         fprintf(stderr, "    --uncompress:file,out                Uncompress DICOM\n");
+        fprintf(stderr, "    --compress:file,mode,out             Compress DICOM to mode e.g. J2\n");
         fprintf(stderr, "    --wadorequest:parameters             Internal WADO server\n");
 	fprintf(stderr, "\n");
 	fprintf(stderr, "Database options:\n");
@@ -11383,6 +11468,7 @@ _SQLConfigDataSource __SQLConfigDataSource;
 #endif
 
 static char ServerCommandAddress[64] = "127.0.0.1";
+BOOL DecompressNKI(char *file_in, char *file_out);
 
 // Main routine for parsing the command line; return FALSE when not running
 // as server or a socket # when running as server thread
@@ -11419,7 +11505,7 @@ ParseArgs (int	argc, char	*argv[], ExtendedPDU_Service *PDU)
 				case	'H':
 #ifdef WIN32
 					getch();
-#endif WIN32
+#endif
 					break;	//Done already.
 
 				case	'w':	// set workdir for ini, map, dic
@@ -12082,6 +12168,11 @@ ParseArgs (int	argc, char	*argv[], ExtendedPDU_Service *PDU)
 							exit(1);
 						}
 
+					if (argv[valid_argc][2] == 'u' || argv[valid_argc][2] == 'U')
+						{
+						DecompressNKI(argv[valid_argc+1], argv[valid_argc+2]);
+						}
+
 					if (argv[valid_argc][2] == 'c' || argv[valid_argc][2] == 'C')
 						{
 						//int dum;
@@ -12167,7 +12258,7 @@ ParseArgs (int	argc, char	*argv[], ExtendedPDU_Service *PDU)
 						//SystemDebug.On();
 						LoadKFactorFile((char*)KFACTORFILE);
 					  	InitACRNemaAddressArray();
-						struct scriptdata sd = {&globalPDU, NULL, NULL, -1, NULL, NULL, NULL, NULL, NULL, 0, NULL};
+						struct scriptdata sd = {&globalPDU, NULL, NULL, -1, NULL, NULL, NULL, NULL, NULL, 0, 0};
 						globalPDU.SetLocalAddress ( (BYTE *)"global" );
 						globalPDU.SetRemoteAddress ( (BYTE *)"dolua" );
 						globalPDU.ThreadNum = 0;
@@ -20256,6 +20347,26 @@ BOOL StorageApp	::	ServerChild (int theArg )
 						}
 					}
 
+				else if (memcmp(SilentText, "compress:", 9)==0)
+					{
+					DICOMDataObject *pDDO;
+					if (p) 
+					{ *p++=0;				// points after 1st comma
+                                    	  q = strchr(p, ',');
+                                    	  if (q) 
+					    *q++=0;				// points after 2nd comma
+					}
+					pDDO = LoadForGUI(SilentText+9);
+
+					if (pDDO) 
+						{
+						recompress(&pDDO, p, "", p[0]=='n' || p[0]=='N', &PDU);
+      						SaveDICOMDataObject(q, pDDO);
+						ImagesToDicomFromGui++;
+                                        	delete pDDO;
+						}
+					}
+
 				else if (memcmp(SilentText, "extract_frames:", 15)==0)
 					{
 					DICOMDataObject *pDDO;
@@ -21304,7 +21415,7 @@ main ( int	argc, char	*argv[] )
 			}
 
 			// Start queue for mirror copy (may reprocess previously failed requests)
-			MyGetPrivateProfileString(szRootSC, "MIRROR0", "-1", szTemp, 32, ConfigFile);
+			MyGetPrivateProfileString(szRootSC, "MIRRORDevice0", "-1", szTemp, 32, ConfigFile);
 			if (atoi(szTemp)!=-1 && !NoThread) 
 			{ mirrorcopy_queue(NULL, NULL);
 			  OperatorConsole.printf("Started mirror copy queue thread\n");
@@ -24319,4 +24430,101 @@ char *heapinfo( void )
   return s;
 }
 
-#endif WIN32
+#endif
+
+ static int luadicomquery(lua_State *L)
+  { const char *ae    = lua_tostring(L,1);
+    const char *Level = lua_tostring(L,2);
+    if (lua_isuserdata(L, 3)) 
+    { DICOMDataObject *O = NULL;
+      lua_getmetatable(L, 3);
+        lua_getfield(L, -1, "DDO");  O = (DICOMDataObject *) lua_topointer(L, -1); lua_pop(L, 1);
+      lua_pop(L, 1);
+      Array < DICOMDataObject * > *A = new Array < DICOMDataObject * >;
+      luaCreateObject(L, NULL, A, TRUE); 
+      if (O) 
+      { DICOMDataObject *P = MakeCopy(O);
+
+        unsigned char 	ip[64], port[64], compress[64], SOP[66];
+	VR		*vr;
+	UID		uid;
+	DICOMCommandObject	DCO;
+	LE_UINT16	command, datasettype, messageid, priority;
+	DICOMDataObject	*DDOPtr;
+	int		level;
+		
+	level=0;
+	if      (strncmp(Level, "PATIENT", 7)==0) level=1;
+	else if (strncmp(Level, "STUDY",   5)==0) level=2;
+	else if (strncmp(Level, "SERIES",  6)==0) level=3;
+	else if (strncmp(Level, "IMAGE",   5)==0) level=4;
+	else if (strncmp(Level, "WORKLIST",8)==0) level=5;
+
+	ExtendedPDU_Service PDU;
+	PDU.AttachRTC(&VRType);
+
+	if(!GetACRNema((char *)ae, (char *)ip, (char *)port, (char *)compress))
+		return 0;
+
+	PDU.ClearAbstractSyntaxs();
+	PDU.SetLocalAddress(MYACRNEMA);
+	PDU.SetRemoteAddress((unsigned char *)ae);
+
+	uid.Set("1.2.840.10008.3.1.1.1");
+	PDU.SetApplicationContext(uid);
+
+	if      (level==1) uid.Set("1.2.840.10008.5.1.4.1.2.1.1"); // PatientRootQuery
+	else if (level==5) uid.Set("1.2.840.10008.5.1.4.31");      // WorkListQuery
+	else               uid.Set("1.2.840.10008.5.1.4.1.2.2.1"); // StudyRootQuery
+	PDU.AddAbstractSyntax(uid);
+
+	PDU.SetTimeOut(TCPIPTimeOut);
+
+	// Make the association for the FIND on port/ip
+	if(!PDU.Connect(ip, port))
+		return ( 0 );
+
+	// Start a Patient/StudyRootQuery
+
+	if (level==1)      strcpy((char*) SOP, "1.2.840.10008.5.1.4.1.2.1.1"); // PatientRootQuery
+	else if (level==5) strcpy((char*) SOP, "1.2.840.10008.5.1.4.31");      // WorklistQuery
+	else               strcpy((char*) SOP, "1.2.840.10008.5.1.4.1.2.2.1"); // StudyRootQuery
+	vr = new VR (0x0000, 0x0002, strlen((char*)SOP), (void*) SOP, FALSE);
+	DCO.Push(vr);
+	command = 0x0020;
+	vr = new VR (0x0000, 0x0100, 0x0002, &command, FALSE);
+	DCO.Push(vr);
+	priority = 0;	// MEDIUM
+	vr = new VR (0x0000, 0x0700, 0x0002, &priority, FALSE);
+	DCO.Push(vr);
+	datasettype = 0x0102;	
+	vr = new VR (0x0000, 0x0800, 0x0002, &datasettype, FALSE);
+	DCO.Push(vr);
+	messageid = 0x0003;
+	vr = new VR (0x0000, 0x0110, 0x0002, &messageid, FALSE);
+	DCO.Push(vr);
+
+	// Use passed data object and Level for query
+
+	P->ChangeVR(0x0008, 0x0052, Level, 'CS', TRUE);
+
+	vr = P->GetVR(0x0002, 0x0010); // delete transfer syntax
+	if (vr) P->DeleteVR(vr);
+
+	MyPatientRootQuery mq;
+	MyStudyRootQuery sq;
+	MyModalityWorkListQuery wq;
+
+	if      (level==1) mq.Write(&PDU, P, A);
+	else if (level==5) wq.Write(&PDU, P, A);
+	else               sq.Write(&PDU, P, A);
+	
+	PDU.Close();
+        delete P;
+	return 1;
+      }
+      return 1;
+    }
+    return 0;
+  }
+ 

@@ -1,6 +1,6 @@
---[[add the following 2 lines to dicom.ini for automatic processing of series sent to SMOOTH after 10 s
+--[[add the following 2 lines to dicom.ini for automatic processing of series sent to server after 10 s
 [lua]
-importconverter0 = if Association.Called=="SMOOTH" then script("process series after 10 by lua/niftytest.lua " .. Data.PatientID .. ":" .. Data.SeriesInstanceUID) end
+importconverter0 = if Association.Called=="CONQUESTSRV!" then script("process series after 10 by lua/niftytest.lua " .. Data.PatientID .. ":" .. Data.SeriesInstanceUID) end
 ]]--
 
 require('niftyutil')

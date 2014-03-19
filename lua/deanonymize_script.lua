@@ -6,6 +6,7 @@
 -- 20130522	mvh	Cleanup for release
 -- 20130718	mvh	Moved log folder
 -- 20130802	mvh	Detect if patientID cannot be deanonymized
+-- 20140309	mvh	Protect against any missing data
 -- =============================================================================
 
 --[[ To test; r-click evaluate in console after project-run:
@@ -34,7 +35,7 @@ local pid2 = string.gsub(pid, '[\\/:*?"<>|]', '_')
 
 -- Log file handling (trailing backslash required for mkdir)
 local logdir = "DicomAnonymized_Log\\"..pid2.."\\";
-local logfile = pid2..'_'..Data.StudyDate..'_'..Data.Modality..'_'..Data.SOPInstanceUID..'.deanonymize.log'
+local logfile = pid2..'_'..(Data.StudyDate or '19700101')..'_'..(Data.Modality or 'UN')..'_'..(Data.SOPInstanceUID or 'unknown')..'.deanonymize.log'
 script('mkdir '..logdir);
 
 f = io.open(logdir .. logfile, "wt");

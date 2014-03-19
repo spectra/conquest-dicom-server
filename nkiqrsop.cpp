@@ -226,6 +226,11 @@
 20130823	mvh	Fixed lossy jpeg compression for 12 bits data
 20130920        ea      Corrected the calculation of new pixel spacing in MaybeDownsize
 20131013	mvh	Default UseBuiltInJPEG set to 1; added quality parameter to ToJPG
+20140207	mvh 	Fixed RLE (signed char 127)+1 gave overflow, now use (int)cCurrent+1
+20140209	mvh 	Fix decompressjpegl here: fix lossless colorspace to RGB
+20140219	mvh 	Added generic DecompressNKI (works for XDR and DCM)
+20140309	mvh 	Catch error if no image VR present in jpeg2000 decompression
+			linux issue on previous change
 */
 
 #define bool BOOL
@@ -1256,6 +1261,11 @@ int get_nki_private_compress_mode(signed char *src)
   return mode;
 }
 
+int get_nki_private_compressed_length(signed char *src)
+{ int nchar = *(int *)(src+8);
+  return nchar;
+}
+
 /* decoder for NKI private compressed pixel data - faster and safe version
    arguments: dest    = (in) points to area where destination data is written (short)
               src     = (in) points compressed source data (byte stream)
@@ -1670,6 +1680,74 @@ BOOL DecompressNKI(DICOMDataObject* pDDO)
     pDDO->DeleteVR(pVR);
   }
   return TRUE;
+}
+
+void SaveDICOMDataObject(char *Filename, DICOMDataObject* pDDO);
+
+BOOL DecompressNKI(char *file_in, char *file_out)
+{ FILE *f = fopen(file_in, "rb");
+  fseek(f, 0, SEEK_END);
+  int fileLength = ftell(f);
+  fseek(f, 0, SEEK_SET);
+  char *buffer = (char *)malloc(fileLength);
+  if (!buffer)
+  { fclose(f);
+    return FALSE;
+  }
+  fread(buffer, 1, fileLength, f);
+  fclose(f);
+  if (fileLength>20)
+  { if (memcmp(buffer, "# AVS", 5)==0)
+    { int start;
+      for (int i=0; i<fileLength; i++)
+      if (buffer[i]==0x0c)
+      { buffer[i]=0;
+        char *p = strstr(buffer, "nki_compression=");
+	if (p) 
+	{ if (atoi(p+16)==0) 
+	    return FALSE;
+	  p[16]='0';
+	}
+        int iDecompressedLength = get_nki_private_decompressed_length((signed char *)buffer+i+2);
+        int iCompressedLength = get_nki_private_compressed_length((signed char *)buffer+i+2)+20;
+        if (!iDecompressedLength)
+          return FALSE;
+	char *buffer2 = (char *)malloc(iDecompressedLength);
+        if (!buffer2)
+          return FALSE;
+	int InLen = nki_private_decompress((short *)buffer2, (signed char *)buffer+i+2, fileLength-i-2);
+	if (InLen==0)
+          return FALSE;
+        FILE *g = fopen(file_out, "wb");
+	fwrite(buffer, i, 1, g);
+	fputc(12, g);
+	fputc(12, g);
+	swab(buffer2, buffer2, iDecompressedLength);
+	fwrite(buffer2, iDecompressedLength, 1, g);
+	printf("remaining: %d; InLen: %d; FileLen=%d; iDecompressedLength=%d", 
+	      fileLength-i-2-iCompressedLength, iCompressedLength, fileLength, iDecompressedLength);
+	fwrite(buffer+i+2+iCompressedLength, fileLength-i-2-iCompressedLength, 1, g);
+	fclose(f);
+	free(buffer);
+	free(buffer2);
+        return TRUE;
+      }
+    }
+    else
+    { free(buffer);
+      DICOMDataObject		*pDDO;
+      PDU_Service		PDU;
+      PDU.AttachRTC(&VRType);
+      pDDO = PDU.LoadDICOMDataObject(file_in);
+      if(!pDDO)
+	return FALSE;
+      int Changed;
+      if(!DecompressImage(&pDDO, &Changed)) return FALSE;
+      SaveDICOMDataObject(file_out, pDDO);
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 
 BOOL CompressNKI(DICOMDataObject* pDDO, int CompressMode /* = 2 */)
@@ -2690,13 +2768,13 @@ static int DecompressRLE(SLICE_INFO* pSliceInfo, VR* pSequence,
             cCurrent = pIn[iNbCompressed++];// Det the count.
             if (cCurrent >= 0)// Positive is a Literal Run.
             {// Check the length in & out?
-                cCurrent++;// The real count
-                if ((iNbCompressed + (int)cCurrent <= iCompressedSize) && 
-                    (*hSeq + cCurrent <= endSeqPtr))
+                //cCurrent++;// The real count
+                if ((iNbCompressed + (int)cCurrent + 1 <= iCompressedSize) && 
+                    (*hSeq + cCurrent + 1 <= endSeqPtr))
                     { // Good, room to copy
-                        memcpy(*hSeq, pIn + iNbCompressed, cCurrent);
-                        iNbCompressed   += cCurrent;
-                        *hSeq += cCurrent;
+                        memcpy(*hSeq, pIn + iNbCompressed, (int)cCurrent+1);
+                        iNbCompressed   += (int)cCurrent+1;
+                        *hSeq += (int)cCurrent+1;
                     }
                 else // What happened, no room or seq ending 0?
                     break;// Run away!
@@ -6649,7 +6727,7 @@ BOOL DecompressJPEGL(DICOMDataObject* pDDO)
 	  DDO = ArrayPtr->Get(currSQObject );//Get the array.
 	  vrImage = DDO->GetVR(0xfffe, 0xe000);//Get the data
 //Look for size and jpeg SOI marker 
-	  if((vrImage->Length) && ((unsigned char *)vrImage->Data)[0] == 0xFF &&
+	  if(vrImage && (vrImage->Length) && ((unsigned char *)vrImage->Data)[0] == 0xFF &&
 			   ((unsigned char *)vrImage->Data)[1] == 0xD8)break;
 	  currSQObject++;
 	}
@@ -6725,7 +6803,16 @@ BOOL DecompressJPEGL(DICOMDataObject* pDDO)
 	}
 	color = TRUE;
   }
-// Time to make an output image buffer.
+
+  // 20140209: lossless color jpeg must be RGB
+  if (cinfo.process == JPROC_LOSSLESS && 
+      cinfo.jpeg_color_space != JCS_RGB &&
+      cinfo.out_color_components == 3) 
+  { OperatorConsole.printf("DecompressJPEGL: forced jpeg colorspace for lossless to RGB\n");
+    cinfo.jpeg_color_space = JCS_RGB;
+  }
+
+ // Time to make an output image buffer.
   if(cinfo.data_precision_other > 8) outBytes = 2;
   else outBytes = 1;
   rowWidth =  cinfo.output_width * cinfo.output_components * outBytes;

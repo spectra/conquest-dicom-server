@@ -6,6 +6,7 @@
 /* mvh 20100717: Merged */
 /* mvh 20130416: Set DEFAULT_BREAK_SIZE for UNIX to 8192 to fix not understood 
                  ubuntu12.04 problem with zeros tranmitted after 1st 64k 
+Spectra-0009: Wed, 5 Feb 2014 10:57:52 +0000: Fix cppcheck bug #1
 */
 
 /****************************************************************************
@@ -437,7 +438,7 @@ BOOL	Buffer	::	Kill(UINT	Bytes)
         if (!Data) DicomError(DCM_ERROR_MEMORY, "Bufferspace: out of memory allocating %d bytes\n", Bytes+1);
 
 	Ret = Read(Data, Bytes);
-	delete Data;
+	delete [] Data;
 	return ( Ret );
 	}
 	

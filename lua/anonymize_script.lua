@@ -11,9 +11,11 @@
 -- 20130522	mvh	Cleanup for release; fixed when birthdate empty
 -- 20130718	mvh	Set logroot not to c:\DicomAnonymized but to DicomAnonymized_Log
 -- 20130813	mvh	Command line overrules generated patientid and patientname
+-- 20140304	mvh	Remove OtherPatienIDSequence
+-- 20140309	mvh	Protect against any missing data
 -- =============================================================================
 
-local scriptversion = "1.4; date 20130813"
+local scriptversion = "1.5; date 20140309"
 
 ---------------------------------- configuration -----------------------------
 -- entries that show up in log but are NOT modified (except implicitly the UIDs)
@@ -38,7 +40,7 @@ local TagsToRemove = {
 "PatientInsurancePlanCodeSequence", "PatientBirthName", "PatientAddress", "InsurancePlanIdentification",
 "PatientMotherBirthName", "MilitaryRank", "BranchOfService", "RegionOfResidence",
 "PatientTelephoneNumbers", "PatientComments", "StudyComments", "ScheduledPerformingPhysicianName",
-"PerformingPhysicianIdentificationSequence" }
+"PerformingPhysicianIdentificationSequence", "OtherPatientIDsSequence" }
 
 local MaintainAge = false
 local MaintainSex = false
@@ -61,7 +63,7 @@ local pid = string.gsub(Data.PatientID, '[\\/:*?"<>|]', '_')
 -- Log file handling (trailing backslash required for mkdir)
 local logdir = logroot..pid.."\\";
 -- 
-local logfile = pid..'_'..Data.StudyDate..'_'..Data.Modality..'_'..Data.SOPInstanceUID..'.log'
+local logfile = pid..'_'..(Data.StudyDate or '19700101')..'_'..(Data.Modality or 'UN')..'_'..(Data.SOPInstanceUID or 'unknown')..'.log'
 script('mkdir '..logdir);
 
 local f = io.open(logdir .. logfile, "wt");
@@ -130,7 +132,7 @@ if Data.PatientBirthDate~='' then
   f:write('Changed patient birthdate to: ', tostring(Data.PatientBirthDate), "\n");
 end
 if (MaintainSex==false) and (Data.PatientSex~='') then
-  local org = Data.PatientSex;
+  local org = Data.PatientSex or 'UN';
   Data.PatientSex = '';
   f:write('Made patient sex empty: ', tostring(Data.PatientSex), "\n");
   if reversible==true then

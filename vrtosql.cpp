@@ -70,6 +70,8 @@
 20120422	mvh	Fix search in DT_MSTR with embedded _ to use  =, was a LIKE that failed for MySQL
 20120624	mvh	Fix DT_MSTR for DoubleBackSlashToDB (mysql and pgsql): requires 4 backslashses (!)
 20120701	mvh	Fix in BuildSearchString for UseEscapeStringConstants for DT_MSTR and DT_DATE
+20131013	mvh	DT_MSTR warning for DBASEIII reports now to console
+20131017        ea      Put the changes of 20120701 back because dgate fails for PatientID with '_'
 */
 
 #ifndef	WHEDGE
@@ -351,8 +353,8 @@ MakeSafeString (
 	
 	// redone these special characters: mvh 20110105
 	//20120701: seems this is not needed and highly complicates further processing
-	//if (AddEscape && db->db_type==DT_POSTGRES) strcpy(sout-1, " ESCAPE E'\\\\'");
-	//else if (AddEscape) strcpy(sout-1, " ESCAPE '\\'");
+	if (AddEscape && db->db_type==DT_POSTGRES) strcpy(sout-1, " ESCAPE E'\\\\'");
+	else if (AddEscape) strcpy(sout-1, " ESCAPE '\\'");
 	// end redone these special characters: mvh 20110105
 
 	delete s;
@@ -570,7 +572,7 @@ BuildSearchString(Database *DB, DBENTRY	*DBE, char	*TableName, VR	*vr, char	*Sea
 					escape, search);
 
 				if (DBE[Index].DICOMType==DT_MSTR)
-					SystemDebug.printf("warning: query for this multi-valued item (%s) will not test individual values\n", DBE[Index].SQLColumn);
+					OperatorConsole.printf("warning: query for this multi-valued item (%s) will not test individual values\n", DBE[Index].SQLColumn);
 				}
 
 			}
