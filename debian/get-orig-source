@@ -4,10 +4,8 @@ PACKAGE=conquest-dicom-server
 
 VERSION=`dpkg-parsechangelog | sed -n -e 's/^Version: \(.*\)-[^-]*$/\1/p'`
 
-#ftp://ftp-rt.nki.nl/outbox/MarcelVanHerk/dicomserver/dicomserver1417c.zip
-#ftp://ftp-rt.nki.nl/outbox/MarcelVanHerk/dicomserver/conquestlinux1417c.tar.gz
 TARFILE=${PACKAGE}_${VERSION}.orig.tar.gz
-UPSTREAM=conquestlinux1417c.tar.gz
+UPSTREAM=conquestlinux1417d.tar.gz
 
 FOLDER=${PACKAGE}-${VERSION}
 
@@ -33,12 +31,11 @@ rm -rf ${FOLDER}/clibs*
 rm -f ${FOLDER}/*.log
 # mak* files
 rm -f ${FOLDER}/mak*
+# conquest-pacs.sh
+rm -rf conquest-pacs.sh
 
 # remove DICOM test files:
 rm -rf ${FOLDER}/data/samples/
-
-# scary stuff:
-rm ${FOLDER}/ActiveFormProj1.ocx
 
 # Unused PDFs
 rm ${FOLDER}/jasper-1.900.1-6ct/doc/*.pdf

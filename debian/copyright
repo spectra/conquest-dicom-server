@@ -6,7 +6,6 @@ Files-Excluded:
     lua_*
     sqlite3.*
     data/samples
-    ActiveFormProj1.ocx
     windowsmanual.pdf
     jasper-1.900.1-6ct/doc/*.pdf
     jpeg-6c/jpeg-6c-changesmvh2.zip
@@ -16,6 +15,7 @@ Files-Excluded:
     clibs*
     *.log
     mak*
+    conquest-pacs.sh
     webserver*
 
 Files: *

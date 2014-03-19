@@ -1,1 +1,5 @@
 lua/
+*.cq
+dgatesop.lst.nojpg
+dgatesop.lst.withjpg
+dicom.ini.www
