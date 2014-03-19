@@ -240,6 +240,11 @@ Data:SetImage(frame, a)
 -- read a from a floating point image, i.e., it has 4 bytes per pixel, scale passed
 -- setimage(frame, a, 1000); Data:SetImage(frame, a, 1000)
 
+-- copy a dicom object
+local c = Data:Copy()
+c:Write('c:\\copy.dcm')
+c:free()
+
 -- create/read/write/destroy a dicom object
 print('------ test create/read/write dicom object --------')
 a = newdicomobject()

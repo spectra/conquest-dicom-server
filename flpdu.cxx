@@ -6,6 +6,7 @@
 20100309	bcb	Commented out unused variable (gcc4.2 Warnings)
 20100619	bcb	Fix gcc4 warnings and improve speed
 20100717	mvh	Merged
+Spectra 0014 - Wed, 12 Feb 2014 15:48:27 -0200: Patch mismatches new/delete in flpdu.cxx
 */
 
 /****************************************************************************
@@ -456,12 +457,12 @@ CheckedPDU_Service	::	ReleaseMemory ()
 		Index = 0;
 		while ( Index < SOPUIDListCount )
 			{
-			delete SOPUIDList [ Index ] ;
-			delete SOPUIDListNames [ Index ] ;
+			delete [] SOPUIDList [ Index ] ;
+			delete [] SOPUIDListNames [ Index ] ;
 			++Index;
 			}
-		delete SOPUIDList;
-		delete SOPUIDListNames;
+		delete [] SOPUIDList;
+		delete [] SOPUIDListNames;
 		SOPUIDList = NULL;
 		SOPUIDListNames = NULL;
 		SOPUIDListCount = 0;
@@ -472,12 +473,12 @@ CheckedPDU_Service	::	ReleaseMemory ()
 		Index = 0;
 		while ( Index < TransferUIDListCount )
 			{
-			delete TransferUIDList [ Index ] ;
-			delete TransferUIDListNames [ Index ] ;
+			delete [] TransferUIDList [ Index ] ;
+			delete [] TransferUIDListNames [ Index ] ;
 			++Index;
 			}
-		delete TransferUIDList;
-		delete TransferUIDListNames;
+		delete [] TransferUIDList;
+		delete [] TransferUIDListNames;
 		TransferUIDList = NULL;
 		TransferUIDListNames = NULL;
 		TransferUIDListCount = 0;
@@ -488,12 +489,12 @@ CheckedPDU_Service	::	ReleaseMemory ()
 		Index = 0;
 		while ( Index < ApplicationUIDListCount )
 			{
-			delete ApplicationUIDList [ Index ] ;
-			delete ApplicationUIDListNames [ Index ] ;
+			delete [] ApplicationUIDList [ Index ] ;
+			delete [] ApplicationUIDListNames [ Index ] ;
 			++Index;
 			}
-		delete ApplicationUIDList;
-		delete ApplicationUIDListNames;
+		delete [] ApplicationUIDList;
+		delete [] ApplicationUIDListNames;
 		ApplicationUIDList = NULL;
 		ApplicationUIDListNames = NULL;
 		ApplicationUIDListCount = 0;
@@ -503,12 +504,12 @@ CheckedPDU_Service	::	ReleaseMemory ()
 		Index = 0;
 		while ( Index < RemoteAEListCount )
 			{
-			delete RemoteAEList [ Index ] ;
-			delete RemoteAEListNames [ Index ] ;
+			delete [] RemoteAEList [ Index ] ;
+			delete [] RemoteAEListNames [ Index ] ;
 			++Index;
 			}
-		delete RemoteAEList;
-		delete RemoteAEListNames;
+		delete [] RemoteAEList;
+		delete [] RemoteAEListNames;
 		RemoteAEList = NULL;
 		RemoteAEListNames = NULL;
 		RemoteAEListCount = 0;
@@ -518,12 +519,12 @@ CheckedPDU_Service	::	ReleaseMemory ()
 		Index = 0;
 		while ( Index < LocalAEListCount )
 			{
-			delete LocalAEList [ Index ] ;
-			delete LocalAEListNames [ Index ] ;
+			delete [] LocalAEList [ Index ] ;
+			delete [] LocalAEListNames [ Index ] ;
 			++Index;
 			}
-		delete LocalAEList;
-		delete LocalAEListNames;
+		delete [] LocalAEList;
+		delete [] LocalAEListNames;
 		LocalAEList = NULL;
 		LocalAEListNames = NULL;
 		LocalAEListCount = 0;

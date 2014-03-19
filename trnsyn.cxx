@@ -59,6 +59,7 @@
 20130523   mvh   Merged Big Endian parse fix not strnlen32u()
 20130619   lsp   Fixed problem in GetTransferSyntaxUID() indicated by Klocwork
 20130711   lsp   Merged
+20140125   mvh   Set TypeCode to SQ if SQObjectArray defined and TypeCode was UN
 */
 
 /*
@@ -1100,6 +1101,9 @@ BOOL	PDU_Service	::	Explicit_ParseDCMIntoRawVR (
 
 		if (vr->TypeCode == 0)
 			vr->TypeCode = 'UN';
+			
+		if (vr->SQObjectArray && vr->TypeCode == 'UN')
+			vr->TypeCode = 'SQ';
 
 		Pack(vr->TypeCode, s1[0], s1[1]);
 		lVRBuffer << s1[0];lVRBuffer<<s1[1];
@@ -1814,6 +1818,9 @@ BOOL	PDU_Service	::	Dynamic_ParseDCMIntoRawVR(
 
 			if (vr->TypeCode == 0)
 				vr->TypeCode = 'UN';
+			
+			if (vr->SQObjectArray && vr->TypeCode == 'UN')
+				vr->TypeCode = 'SQ';
 
 			Pack(vr->TypeCode, s1[0], s1[1]);
 			lVRBuffer << s1[0];lVRBuffer<<s1[1];

@@ -29,6 +29,7 @@
 
 /* bcb 20100619: Fix gcc4 warnings and improve speed.
    mvh 20100717: Merged
+   mvh 20140309: Default AAbort source to 0 (service-user initiated abort)
 */
 
 #	include	"dicom.hpp"
@@ -252,7 +253,7 @@ Reserved1(0),
 Length(0),
 Reserved2(0),
 Reserved3(0),
-Source(3),
+Source(0),
 Reason(1) {}
 #else
 	{
@@ -260,7 +261,7 @@ Reason(1) {}
 	Reserved1 = 0;
 	Reserved2 = 0;
 	Reserved3 = 0;
-	Source = 3;
+	Source = 0;
 	Reason = 1;
 	}
 #endif
