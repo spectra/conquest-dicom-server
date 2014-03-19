@@ -3,14 +3,14 @@ Date: Sat, 1 Feb 2014 15:03:04 +0000
 Subject: Separate option and description in PrintOptions
 
 ---
- dgate.cpp |   64 ++++++++++++++++++++++++++++++-------------------------------
- 1 file changed, 32 insertions(+), 32 deletions(-)
+ dgate.cpp |   58 +++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 29 insertions(+), 29 deletions(-)
 
 diff --git a/dgate.cpp b/dgate.cpp
-index 20c6e3f..61bba6f 100644
+index 99e5f70..ad7768d 100644
 --- a/dgate.cpp
 +++ b/dgate.cpp
-@@ -11174,10 +11174,10 @@ PrintOptions ()
+@@ -11258,10 +11258,10 @@ PrintOptions ()
  	fprintf(stderr, "          [-i|-r|-arDEVICE]   Init|Init/regenerate DB|Regen single device\n");
  	fprintf(stderr, "          [-d|-m|-k]          List (-d) devices (-m) AE map (-k) DICOM.SQL\n");
  	fprintf(stderr, "          [-t|-o]             Test console|Test database\n");
@@ -24,7 +24,7 @@ index 20c6e3f..61bba6f 100644
  	fprintf(stderr, "          [-au|-aeFROM,TO]    Undo select for archiving|rename device\n");
  	fprintf(stderr, "          [-av|-atDEVICE]     Verify mirror disk|Test read files for DEVICE\n");
  	fprintf(stderr, "          [-abJUKEBOX1.2,N]   Make cacheset to burn JUKEBOX1,CD2 from MAGN\n");
-@@ -11188,7 +11188,7 @@ PrintOptions ()
+@@ -11272,7 +11272,7 @@ PrintOptions ()
  	fprintf(stderr, "          [-faFILE<,ID>]      Add file to server<optionally change PATID>\n");
  	fprintf(stderr, "          [-zID]              Delete (zap) patient\n");
  	fprintf(stderr, "          [-frDEVICE,DIR]     Regen single directory DIR on DEVICE\n");
@@ -33,7 +33,7 @@ index 20c6e3f..61bba6f 100644
  	fprintf(stderr, "          [-f?file|-fu|-c#]   get UID of file|Make new UID|UID helper(0..99)\n");
  	fprintf(stderr, "          [-ff#]              Delete old patients until #MB free\n");
  	fprintf(stderr, "          [-gSERVER,DATE]     grab images from SERVER of date not on here\n");
-@@ -11213,14 +11213,14 @@ PrintOptions ()
+@@ -11297,14 +11297,14 @@ PrintOptions ()
  	fprintf(stderr, "    --movestudy:source,dest,patid:studyuid  Move study, patid: optional\n" );
  	fprintf(stderr, "    --moveaccession:source,dest,patid:acc   Move by Accession#, patid: optional\n" );
  	fprintf(stderr, "    --movestudies:source,dest,date(range)   Move studies on date\n" );
@@ -52,7 +52,7 @@ index 20c6e3f..61bba6f 100644
  	fprintf(stderr, "    --mergestudy:uid,uid,..   Start merging studies with given studyuids\n" );
  	fprintf(stderr, "    --mergestudyfile:file     Use to process all files to merge\n" );
  	fprintf(stderr, "    --mergeseries:uid,uid,..  Start merging series with given seriesuids\n" );
-@@ -11228,7 +11228,7 @@ PrintOptions ()
+@@ -11312,7 +11312,7 @@ PrintOptions ()
  	fprintf(stderr, "    --attachanytopatient:any,sample     Modify uids to attach any object to\n" );
  	fprintf(stderr, "    --attachanytostudy:any,sample        patient|study|series in sample file\n" );
  	fprintf(stderr, "    --attachanytoseries:any,sample       Do not attach same at different levels\n" );
@@ -61,7 +61,7 @@ index 20c6e3f..61bba6f 100644
  	fprintf(stderr, "\n");
  	fprintf(stderr, "Maintenance options:\n");
  	fprintf(stderr, "    --initializetables:       Clear and create database\n" );
-@@ -11263,27 +11263,27 @@ PrintOptions ()
+@@ -11347,27 +11347,27 @@ PrintOptions ()
  	fprintf(stderr, "    --read_ini:               Re-read all parameters from DICOM.INI\n" );
  	fprintf(stderr, "    --get_amap:index,fmt      List any entry from ACRNEMA.MAP\n" );
  	fprintf(stderr, "    --get_amaps:fmt           List all entries from ACRNEMA.MAP\n" );
@@ -97,7 +97,7 @@ index 20c6e3f..61bba6f 100644
  	fprintf(stderr, "\n");
  	fprintf(stderr, "Communication options:\n");
  	fprintf(stderr, "    --addimagefile:file,patid      Copy file into server, optionally new patid\n" );
-@@ -11292,12 +11292,12 @@ PrintOptions ()
+@@ -11376,12 +11376,12 @@ PrintOptions ()
  	fprintf(stderr, "    --loadhl7:file                 Load HL7 data into worklist\n" );
  	fprintf(stderr, "    --dump_header:filein,fileout   Create header dump of file\n" );
          fprintf(stderr, "    --forward:file,mode,server     Send file with compr. mode to server\n");
@@ -114,7 +114,7 @@ index 20c6e3f..61bba6f 100644
  	fprintf(stderr, "    --scheduletransfer:options     Background sftp transfer as above\n" );
  	fprintf(stderr, "\n");
  	fprintf(stderr, "Test options:\n");
-@@ -11309,24 +11309,24 @@ PrintOptions ()
+@@ -11393,25 +11393,25 @@ PrintOptions ()
  	fprintf(stderr, "    --clonedb:AE                   Clone db from server for testing\n" );
  	fprintf(stderr, "\n");
  	fprintf(stderr, "Conversion options:\n");
@@ -130,6 +130,7 @@ index 20c6e3f..61bba6f 100644
 +        fprintf(stderr, "    --extract_frames:file,out,first,last   Select frames of DICOM file\n");
  	fprintf(stderr, "    --count_frames:file                  report # frames in DICOM file\n");
          fprintf(stderr, "    --uncompress:file,out                Uncompress DICOM\n");
+         fprintf(stderr, "    --compress:file,mode,out             Compress DICOM to mode e.g. J2\n");
          fprintf(stderr, "    --wadorequest:parameters             Internal WADO server\n");
  	fprintf(stderr, "\n");
  	fprintf(stderr, "Database options:\n");
@@ -147,17 +148,3 @@ index 20c6e3f..61bba6f 100644
  	fprintf(stderr, "    --extract:PatientID = 'id'          Extract all dbase tables to X..\n" );
  	fprintf(stderr, "    --extract:                          Extract patient dbase table to XA..\n" );
  	fprintf(stderr, "    --addrecord:table|flds|values       Append record, values must be in ''\n" );
-@@ -11342,10 +11342,10 @@ PrintOptions ()
- 	fprintf(stderr, "    --movedatatodevice:to,from          Move patients from one device to another\n" );
- 	fprintf(stderr, "    --moveseriestodevice:to,from        Move series from one device to another\n" );
- 	fprintf(stderr, "    --selectlruforarchival:kb,device    Step 1 for archival: to device.Archival\n" );
--	fprintf(stderr, "    --selectseriestomove:device,age,kb  Step 1 for archival: to device.Archival\n" );
-+	fprintf(stderr, "    --selectseriestomove:device,age,kb    Step 1 for archival: to device.Archival\n" );
- 	fprintf(stderr, "    --preparebunchforburning:to,from    Step 2 for archival: moves to cache\n" );
--	fprintf(stderr, "    --deletebunchafterburning:deviceto  Step 3 for archival: deletes from cache\n" );
--	fprintf(stderr, "    --comparebunchafterburning:deviceto Part step 3 - compare jukebox to cache\n" );
-+	fprintf(stderr, "    --deletebunchafterburning:deviceto    Step 3 for archival: deletes from cache\n" );
-+	fprintf(stderr, "    --comparebunchafterburning:deviceto   Part step 3 - compare jukebox to cache\n" );
- 	fprintf(stderr, "    --restoremagflags:                  Undo archival sofar\n" );
- 	fprintf(stderr, "\n");
- 	fprintf(stderr, "Scripting options:\n");

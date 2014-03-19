@@ -7,10 +7,10 @@ Subject: Add DebianBaseDir at dgate.cpp
  1 file changed, 7 insertions(+), 9 deletions(-)
 
 diff --git a/dgate.cpp b/dgate.cpp
-index 61bba6f..cc440aa 100644
+index ad7768d..30581d1 100644
 --- a/dgate.cpp
 +++ b/dgate.cpp
-@@ -1108,6 +1108,8 @@ char	RootConfig[64]	=	"sscscp";		// main entry in ini file
+@@ -1119,6 +1119,8 @@ char	RootConfig[64]	=	"sscscp";		// main entry in ini file
  // Later make everything MAX_PATH or similar?
  char    BaseDir[256] 	=	"";			// where the files are
  
@@ -19,7 +19,7 @@ index 61bba6f..cc440aa 100644
  #ifndef	UNIX
  char	ConfigFile[256]	=	".\\dicom.ini";		// name ini file
  char	DicomDict[256]	=	".\\dgate.dic";		// name dicomdictionary file
-@@ -21109,16 +21111,12 @@ main ( int	argc, char	*argv[] )
+@@ -21220,16 +21222,12 @@ main ( int	argc, char	*argv[] )
  			}
  		}
  

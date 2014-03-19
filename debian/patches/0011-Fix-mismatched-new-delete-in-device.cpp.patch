@@ -7,10 +7,10 @@ Subject: Fix mismatched new/delete in device.cpp
  1 file changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/device.cpp b/device.cpp
-index 0d4458f..d2f7eaa 100644
+index 9022481..b59f02e 100644
 --- a/device.cpp
 +++ b/device.cpp
-@@ -185,12 +185,12 @@ void FreeDeviceTables(void)
+@@ -189,12 +189,12 @@ void FreeDeviceTables(void)
  { int i;
  
    for (i=0; i<(int)MAGDevices; i++)
@@ -27,7 +27,7 @@ index 0d4458f..d2f7eaa 100644
  
    for (i=0; i<(int)MOPDevices; i++)
      delete MOPDeviceTable[i];
-@@ -201,16 +201,16 @@ void FreeDeviceTables(void)
+@@ -205,16 +205,16 @@ void FreeDeviceTables(void)
    delete CDRDeviceTable;
  
    for (i=0; i<(int)CACHEDevices; i++)

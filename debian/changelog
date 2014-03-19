@@ -1,4 +1,4 @@
-conquest-dicom-server (1.4.17c-2) UNRELEASED; urgency=low
+conquest-dicom-server (1.4.17d-1) UNRELEASED; urgency=low
 
   [ Mathieu Malaterre ]
   * Debianization
@@ -7,4 +7,4 @@ conquest-dicom-server (1.4.17c-2) UNRELEASED; urgency=low
   * New Maintainer
   * Initial release (Closes: #680352)
 
- -- Pablo Lorenzzoni <spectra@debian.org>  Fri, 24 Jan 2014 22:34:29 -0200
+ -- Pablo Lorenzzoni <spectra@debian.org>  Wed, 19 Mar 2014 17:16:48 -0300
