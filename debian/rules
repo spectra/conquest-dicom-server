@@ -3,9 +3,13 @@
 
 # Debian Policy 10.1
 CPP = /usr/bin/g++
-CPPFLAGS = -O2 -g -Wall
-CXXFLAGS = -O2 -g -Wall
 INSTALL = install -s
+
+# Get rid of hardening-no-fortify warning by lintian
+CPPFLAGS:=$(shell dpkg-buildflags --get CPPFLAGS)
+CFLAGS:=$(shell dpkg-buildflags --get CFLAGS)
+CXXFLAGS:=$(shell dpkg-buildflags --get CXXFLAGS)
+LDFLAGS:=$(shell dpkg-buildflags --get LDFLAGS)
 
 %:
 	dh $@ --with autotools_dev
