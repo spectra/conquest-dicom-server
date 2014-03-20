@@ -1,0 +1,177 @@
+From: Pablo Lorenzzoni <spectra@debian.org>
+Date: Thu, 20 Mar 2014 16:00:52 -0300
+Subject: Fixed assorted misspellings pointed by lintian.
+
+---
+ acrnema.map                   |    4 ++--
+ dgate.cpp                     |   24 ++++++++++++------------
+ lua/ChangeReturnIPAddress.lua |    4 ++--
+ nkiqrsop.cpp                  |    2 +-
+ socket.cxx                    |    2 +-
+ 5 files changed, 18 insertions(+), 18 deletions(-)
+
+diff --git a/acrnema.map b/acrnema.map
+index 4cda61a..562b06a 100644
+--- a/acrnema.map
++++ b/acrnema.map
+@@ -5,12 +5,12 @@
+  *                                                          *
+  * All DICOM systems that want to retrieve images from the  *
+  * Conquest DICOM server must be listed here with correct   *
+- * AE name, (IP adress or hostname) and port number.        *
++ * AE name, (IP address or hostname) and port number.       *
+  * The first entry is the Conquest system as example.       *
+  *                                                          *
+  *                                                          *
+  * The syntax for each entry is :                           *
+- *   AE   <IP adress|Host name>   port number   compression *
++ *   AE   <IP address|Host name>   port number  compression *
+  *                                                          *
+  * For compression see manual. Values are un=uncompressed;  *
+  * j1,j2=lossless jpeg;j3..j6=lossy jpeg;n1..n4=nki private *
+diff --git a/dgate.cpp b/dgate.cpp
+index 30581d1..59633fe 100644
+--- a/dgate.cpp
++++ b/dgate.cpp
+@@ -535,7 +535,7 @@ mvh 20080819: Added code by map but kept original get_param for old web cgi clie
+               Version to 1.4.14
+ mvh 20080820: Solaris 10 fixes, and general UNIX fixes (map): configfiles may not be in current dir
+ mvh 20080821: Default of ForwardAssociationRelease to 1; added sleep export converter
+-mvh 20080823: Added study UID search to PatientStudyFinder; fixed DcmMove: would call local when remote adressed
++mvh 20080823: Added study UID search to PatientStudyFinder; fixed DcmMove: would call local when remote addressed
+ 	      Added rudimentary query/move web pages
+ mvh 20080825: query/move looks better; added "thumbs" column to local series lister; config patched to readonly
+ 	      added background color and display of icon (to be placed in WebCodeBase)
+@@ -11670,7 +11670,7 @@ ParseArgs (int	argc, char	*argv[], ExtendedPDU_Service *PDU)
+ 					OperatorConsole.printf("If you can read this, the console communication is OK\n");
+                           		SystemDebug.printf("This is systemdebug output; can you read this ?\n");
+                           		SystemDebug.printf("%s%s%s%s%s%s\n", lt, lt, lt, lt, lt, lt);
+-					OperatorConsole.printf(" ---------- Succesful end of test -----------\n");
++					OperatorConsole.printf(" ---------- Successful end of test -----------\n");
+ 					return ( FALSE );
+ 					}
+ 
+@@ -11704,7 +11704,7 @@ ParseArgs (int	argc, char	*argv[], ExtendedPDU_Service *PDU)
+ 						aDB.Close();
+ 						}
+ 
+-					OperatorConsole.printf(" ---------- Succesful end of test -----------\n");
++					OperatorConsole.printf(" ---------- Successful end of test -----------\n");
+ 					return ( FALSE );
+ 					}
+ 
+@@ -11919,19 +11919,19 @@ ParseArgs (int	argc, char	*argv[], ExtendedPDU_Service *PDU)
+ 						{
+ 						if (DB.Open ( "postgres", "postgres", argv[valid_argc]+2, DataHost))
+ 							if (DB.CreateDatabase(argv[valid_argc+1], argv[valid_argc+2], argv[valid_argc+3]))
+-								OperatorConsole.printf("succesfully created database and login\n");
++								OperatorConsole.printf("successfully created database and login\n");
+ 						}
+ 					else if (strcmp(argv[valid_argc+2], "root")==0 || strcmp(argv[valid_argc+2], "sa")==0)
+ 						{
+ 						if (DB.Open ( DataSource, argv[valid_argc+2], argv[valid_argc]+2, DataHost))
+ 							if (DB.CreateDatabase(argv[valid_argc+1], argv[valid_argc+2], argv[valid_argc]+3))
+-								OperatorConsole.printf("succesfully created database\n");
++								OperatorConsole.printf("successfully created database\n");
+ 						}
+ 					else
+ 						{
+ 						if (DB.Open ( DataSource, "sa", argv[valid_argc]+2, DataHost))
+ 							if (DB.CreateDatabase(argv[valid_argc+1], argv[valid_argc+2], argv[valid_argc+3]))
+-								OperatorConsole.printf("succesfully created database and login\n");
++								OperatorConsole.printf("successfully created database and login\n");
+ 						}
+ 					OperatorConsole.printf(" ----------------------------------\n");
+ 					exit(0);
+@@ -19661,12 +19661,12 @@ BOOL StorageApp	::	ServerChild (int theArg )
+ 					fprintf(f, " *                                                          *\n");
+ 					fprintf(f, " * All DICOM systems that want to retrieve images from the  *\n");
+ 					fprintf(f, " * Conquest DICOM server must be listed here with correct   *\n");
+-					fprintf(f, " * AE name, (IP adress or hostname) and port number.        *\n");
++					fprintf(f, " * AE name, (IP address or hostname) and port number.        *\n");
+ 					fprintf(f, " * The first entry is the Conquest system as example.       *\n");
+ 					fprintf(f, " *                                                          *\n");
+ 					fprintf(f, " *                                                          *\n");
+ 					fprintf(f, " * The syntax for each entry is :                           *\n");
+-					fprintf(f, " *   AE   <IP adress|Host name>   port number   compression *\n");
++					fprintf(f, " *   AE   <IP address|Host name>   port number   compression *\n");
+ 					fprintf(f, " *                                                          *\n");
+ 					fprintf(f, " * For compression see manual. Values are un=uncompressed;  *\n");
+ 					fprintf(f, " * ul=littleendianexplicit,ub=bigendianexplicit,ue=both     *\n");
+@@ -23668,7 +23668,7 @@ line6 = <PARAM NAME = NUM VALUE = 0>
+ line7 = <PARAM NAME = currentNo VALUE = 0>
+ line8 = <PARAM NAME = dicURL VALUE = '%webcodebase%dicomviewer100/Dicom.dic'>
+ line9 = <PARAM NAME = imgURL0 VALUE = 
+-line10 = --imagelister:local|%patid%|%seruid%|:%webscriptadress%?%extra%&mode=dicom&slice=%s:%s&compress=un*
++line10 = --imagelister:local|%patid%|%seruid%|:%webscriptaddress%?%extra%&mode=dicom&slice=%s:%s&compress=un*
+ line11 = >
+ line12 = </APPLET>
+ line13 = </BODY>
+@@ -23800,7 +23800,7 @@ windowname = AiViewer V1.00
+       lua_setvar(&globalPDU, "port",            (char *)Port);
+       lua_setvar(&globalPDU, "address",         ServerCommandAddress);
+       lua_setvar(&globalPDU, "webcodebase",     WebCodeBase);
+-      lua_setvar(&globalPDU, "webscriptadress", WebScriptAddress);
++      lua_setvar(&globalPDU, "webscriptaddress", WebScriptAddress);
+       lua_setvar(&globalPDU, "webscriptaddress",WebScriptAddress); // was misspelled
+       lua_setvar(&globalPDU, "extra",           extra);
+       lua_setvar(&globalPDU, "version",         DGATE_VERSION);
+@@ -23875,7 +23875,7 @@ windowname = AiViewer V1.00
+           lua_setvar(&globalPDU, "port",            (char *)Port);
+           lua_setvar(&globalPDU, "address",         ServerCommandAddress);
+           lua_setvar(&globalPDU, "webcodebase",     WebCodeBase);
+-          lua_setvar(&globalPDU, "webscriptadress", WebScriptAddress);
++          lua_setvar(&globalPDU, "webscriptaddress", WebScriptAddress);
+           lua_setvar(&globalPDU, "extra",           extra);
+           lua_setvar(&globalPDU, "version",         DGATE_VERSION);
+           lua_setvar(&globalPDU, "mode",            mode);
+@@ -23926,7 +23926,7 @@ windowname = AiViewer V1.00
+       replace(string, "%port%",            (char *)Port);
+       replace(string, "%address%",         ServerCommandAddress);
+       replace(string, "%webcodebase%",     WebCodeBase);
+-      replace(string, "%webscriptadress%", WebScriptAddress);
++      replace(string, "%webscriptaddress%", WebScriptAddress);
+       replace(string, "%extra%",           extra);
+       replace(string, "%server%",          server);
+       replace(string, "%version%",         DGATE_VERSION);
+diff --git a/lua/ChangeReturnIPAddress.lua b/lua/ChangeReturnIPAddress.lua
+index 6c33453..a5f0c20 100644
+--- a/lua/ChangeReturnIPAddress.lua
++++ b/lua/ChangeReturnIPAddress.lua
+@@ -1,8 +1,8 @@
+ -- This script, when run from 
+ -- [lua] 
+ -- association=dofile('ChangeReturnIPAddress.lua')
+--- will update the return adress for each AE to match the called 
+--- address i.e., this will allow devices without fixed IP adress to
++-- will update the return address for each AE to match the called 
++-- address i.e., this will allow devices without fixed IP address to
+ -- c-move images to them.
+ 
+ --[[ Test code; r-click evaluate in console after project-run:
+diff --git a/nkiqrsop.cpp b/nkiqrsop.cpp
+index f90b4d0..69e1eff 100644
+--- a/nkiqrsop.cpp
++++ b/nkiqrsop.cpp
+@@ -606,7 +606,7 @@ BOOL	StandardRetrieveNKI	::	Read (
+ 			{
+ 			if (PDU->Link.Poll()) 
+ 			      {
+-			      OperatorConsole.printf("Recieved cancel request\n", ACRNema);
++			      OperatorConsole.printf("Received cancel request\n", ACRNema);
+ 			      Cancelled = TRUE;
+ 			      }
+ 			}
+diff --git a/socket.cxx b/socket.cxx
+index 41dd4ac..1e3d462 100644
+--- a/socket.cxx
++++ b/socket.cxx
+@@ -7,7 +7,7 @@
+ 20070406	mvh	Use reentrant gethostbyname_r when available
+ 20070415	mvh	Small fix there for windows
+ 20090620	jf	Added unistd.h for UNIX
+-20090824	mvh	Debug output of adress connecting to socket
++20090824	mvh	Debug output of address connecting to socket
+ 20091231	bcb	Changed char* to const char* for gcc4.2 warnings
+ 20100111	mvh	Merged
+ 20100122	mvh     Gethostbyname: fixed bug reported by Arash 2station would not be found

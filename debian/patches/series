@@ -10,3 +10,4 @@
 0010-Fix-mismatched-new-delete-in-farray.thh.patch
 0011-Fix-mismatched-new-delete-in-device.cpp.patch
 0012-Fix-mismatched-new-delete-in-buffer.cxx.patch
+0013-Fixed-assorted-misspellings-pointed-by-lintian.patch
