@@ -8,6 +8,7 @@ Files-Excluded:
     data/samples
     windowsmanual.pdf
     jasper-1.900.1-6ct/doc/*.pdf
+    jasper-1.900.1-6ct/data/colorprofiles/srgb.icm
     jpeg-6c/jpeg-6c-changesmvh2.zip
     vc80.pdb
     data/dbase/conquest.db3
