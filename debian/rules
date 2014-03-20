@@ -46,6 +46,10 @@ override_dh_install:
 	dh_install acrnema.map  etc/conquest-dicom-server/
 	dh_install dgatesop.lst etc/conquest-dicom-server/
 
+override_dh_compress:
+	# Avoid compressing PDF files
+	dh_compress -X.pdf -X.lua -X.cq -Xsop -Xini
+
 override_dh_auto_clean:
 	#dh_autoreconf_clean --sourcedirectory=jasper-1.900.1-6ct
 	(cd jasper-1.900.1-6ct && ($(MAKE) distclean || echo "Already clean"))

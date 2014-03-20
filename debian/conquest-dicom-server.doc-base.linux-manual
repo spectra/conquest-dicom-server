@@ -1,0 +1,9 @@
+Document: conquest-linux-manual
+Title: ConQuest DICOM Server - Linux Manual
+Author: ConQuest Developers
+Abstract: This manual summarizes ConQuest use in Linux but does not replace
+ Windows Manual.
+Section: Science/Medicine
+
+Format: PDF
+Files: /usr/share/doc/conquest-dicom-server/linuxmanual.pdf

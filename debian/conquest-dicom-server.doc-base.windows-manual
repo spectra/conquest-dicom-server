@@ -1,0 +1,10 @@
+Document: conquest-windows-manual
+Title: ConQuest DICOM Server - Windows Manual
+Author: ConQuest Developers
+Abstract: This manual summarizes ConQuest use in Windows. It's included here
+ because it has valuable information on command-line options and general
+ configuration not otherwise available in the companion Linux Manual.
+Section: Science/Medicine
+
+Format: PDF
+Files: /usr/share/doc/conquest-dicom-server/windowsmanual.pdf
