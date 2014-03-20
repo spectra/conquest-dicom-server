@@ -32,7 +32,9 @@ rm -f ${FOLDER}/*.log
 # mak* files
 rm -f ${FOLDER}/mak*
 # conquest-pacs.sh
-rm -rf conquest-pacs.sh
+rm -rf ${FOLDER}/conquest-pacs.sh
+# remove non-free file
+rm -f ${FOLDER}/jasper-1.900.1-6ct/data/colorprofiles/srgb.icm
 
 # remove DICOM test files:
 rm -rf ${FOLDER}/data/samples/
