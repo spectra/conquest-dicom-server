@@ -1,0 +1,4 @@
+#!/usr/bin/dh-exec
+dgate-sqlite => usr/bin/dgate
+dicom.sql.sqlite => etc/conquest-dicom-server/dicom.sql
+dicom.ini.sqlite => etc/conquest-dicom-server/dicom.ini

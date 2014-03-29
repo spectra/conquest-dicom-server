@@ -1,17 +1,20 @@
 Source: conquest-dicom-server
-Section: web
+Section: science
 Maintainer: Debian Med Packaging Team <debian-med-packaging@lists.alioth.debian.org>
 Uploaders: Pablo Lorenzzoni <spectra@debian.org>, Mathieu Malaterre <malat@debian.org>
 Priority: extra
-Build-Depends: debhelper (>= 9), liblua5.1-dev, libsqlite3-dev, autotools-dev, dh-autoreconf, help2man (>= 1.40.10)
+Build-Depends: debhelper (>= 9), dh-exec, liblua5.1-dev, autotools-dev, dh-autoreconf, help2man (>= 1.40.10), libsqlite3-dev, libmysqlclient-dev, libpq-dev
 Standards-Version: 3.9.5
 Vcs-Browser: http://anonscm.debian.org/tweb/?p=debian-med/conquest-dicom-server.git
 Vcs-Git: git://anonscm.debian.org/debian-med/conquest-dicom-server.git
 Homepage: http://ingenium.home.xs4all.nl/dicom.html
 
-Package: conquest-dicom-server
+Package: conquest-sqlite
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, adduser (>= 3.11)
+Depends: ${shlibs:Depends}, ${misc:Depends}, adduser (>= 3.11), conquest-common
+Provides: conquest-dicom-server
+Conflicts: conquest-dicom-server
+Replaces: conquest-dicom-server
 Description: DICOM Server with storage, verification, query and retrieve
  A full featured DICOM server that has been developed based on and heavily
  extending the public domain UCDMC DICOM code. Some possible applications of
@@ -25,3 +28,91 @@ Description: DICOM Server with storage, verification, query and retrieve
   - Advanced scriptable image modification, filtering, forwarding and
     conversion 
   - DICOM caching and archive merging 
+ .
+ This package uses SQLite as database backend.
+
+Package: conquest-dbase
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, adduser (>= 3.11), conquest-common
+Provides: conquest-dicom-server
+Conflicts: conquest-dicom-server
+Replaces: conquest-dicom-server
+Description: DICOM Server with storage, verification, query and retrieve
+ A full featured DICOM server that has been developed based on and heavily
+ extending the public domain UCDMC DICOM code. Some possible applications of
+ the ConQuest DICOM software are:
+  - DICOM training and testing 
+  - Demonstration and research image archives 
+  - Image format conversion from a scanner with DICOM network access 
+  - DICOM image viewing and slide making 
+  - DICOM image selection, (limited) editing, and splitting and merging of
+    series 
+  - Advanced scriptable image modification, filtering, forwarding and
+    conversion 
+  - DICOM caching and archive merging 
+ .
+ This package uses DBase files as database backend.
+
+Package: conquest-postgres
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, adduser (>= 3.11), conquest-common
+Provides: conquest-dicom-server
+Conflicts: conquest-dicom-server
+Replaces: conquest-dicom-server
+Description: DICOM Server with storage, verification, query and retrieve
+ A full featured DICOM server that has been developed based on and heavily
+ extending the public domain UCDMC DICOM code. Some possible applications of
+ the ConQuest DICOM software are:
+  - DICOM training and testing 
+  - Demonstration and research image archives 
+  - Image format conversion from a scanner with DICOM network access 
+  - DICOM image viewing and slide making 
+  - DICOM image selection, (limited) editing, and splitting and merging of
+    series 
+  - Advanced scriptable image modification, filtering, forwarding and
+    conversion 
+  - DICOM caching and archive merging 
+ .
+ This package uses PostgreSQL as database backend.
+
+Package: conquest-mysql
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, adduser (>= 3.11), conquest-common
+Provides: conquest-dicom-server
+Conflicts: conquest-dicom-server
+Replaces: conquest-dicom-server
+Description: DICOM Server with storage, verification, query and retrieve
+ A full featured DICOM server that has been developed based on and heavily
+ extending the public domain UCDMC DICOM code. Some possible applications of
+ the ConQuest DICOM software are:
+  - DICOM training and testing 
+  - Demonstration and research image archives 
+  - Image format conversion from a scanner with DICOM network access 
+  - DICOM image viewing and slide making 
+  - DICOM image selection, (limited) editing, and splitting and merging of
+    series 
+  - Advanced scriptable image modification, filtering, forwarding and
+    conversion 
+  - DICOM caching and archive merging 
+ .
+ This package uses MySQL as database backend.
+
+Package: conquest-common
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Suggests: conquest-dicom-server
+Description: ConQuest DICOM Server common files
+ A full featured DICOM server that has been developed based on and heavily
+ extending the public domain UCDMC DICOM code. Some possible applications of
+ the ConQuest DICOM software are:
+  - DICOM training and testing 
+  - Demonstration and research image archives 
+  - Image format conversion from a scanner with DICOM network access 
+  - DICOM image viewing and slide making 
+  - DICOM image selection, (limited) editing, and splitting and merging of
+    series 
+  - Advanced scriptable image modification, filtering, forwarding and
+    conversion 
+  - DICOM caching and archive merging 
+ .
+ This package contains common files.

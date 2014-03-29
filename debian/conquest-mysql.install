@@ -1,0 +1,4 @@
+#!/usr/bin/dh-exec
+dgate-mysql => usr/bin/dgate
+dicom.sql.mysql => etc/conquest-dicom-server/dicom.sql
+dicom.ini.mysql => etc/conquest-dicom-server/dicom.ini

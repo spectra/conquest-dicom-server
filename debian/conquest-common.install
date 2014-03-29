@@ -1,0 +1,4 @@
+#!/usr/bin/dh-exec
+dgate.dic => etc/conquest-dicom-server/dgate.dic
+acrnema.map => etc/conquest-dicom-server/acrnema.map
+dgatesop.lst => etc/conquest-dicom-server/dgatesop.lst

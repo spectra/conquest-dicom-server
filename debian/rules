@@ -14,12 +14,41 @@ LDFLAGS:=$(shell dpkg-buildflags --get LDFLAGS)
 %:
 	dh $@ --with autotools_dev
 
+override_dh_auto_clean:
+	#dh_autoreconf_clean --sourcedirectory=jasper-1.900.1-6ct
+	(cd jasper-1.900.1-6ct && ($(MAKE) distclean || echo "Already clean"))
+	(cd jpeg-6c && ($(MAKE) distclean || echo "Already clean"))
+
+override_dh_clean:
+	-rm dgate-*
+	-rm dgate.1
+	-rm debian/conquest-{mysql,postgres,dbase,sqlite}.{manpages,lintian-overrides,postrm,postinst,dgate.init}
+	# autoreconf ?
+	dh_clean jasper-1.900.1-6ct/config.log
+	dh_clean jasper-1.900.1-6ct/config.status
+	dh_clean jpeg-6c/config.log
+	dh_clean jpeg-6c/config.status
+
 override_dh_auto_configure:
 	# see bug #673254
 	#dh_autoreconf --sourcedirectory=jasper-1.900.1-6ct -- -i --force
 	(cd jasper-1.900.1-6ct && autoreconf -i --force)
 	dh_auto_configure --sourcedirectory=jasper-1.900.1-6ct -- --disable-libjpeg
 	dh_auto_configure --sourcedirectory=jpeg-6c
+	./debian/replicate-common-files
+
+override_dh_auto_build: dgate.1
+
+override_dh_compress:
+	# Avoid compressing PDF files
+	dh_compress -X.pdf -X.lua -X.cq -Xsop -Xini
+
+override_dh_installinit:
+	# Install a common initscript
+	dh_installinit --name=dgate
+
+get-orig-source:
+	./debian/get-orig-source
 
 jasper-1.900.1-6ct/src/libjasper/.libs/libjasper.a:
 	$(MAKE) -C jasper-1.900.1-6ct
@@ -27,43 +56,17 @@ jasper-1.900.1-6ct/src/libjasper/.libs/libjasper.a:
 jpeg-6c/libjpeg.a:
 	$(MAKE) -C jpeg-6c
 
-dgate: jpeg-6c/libjpeg.a jasper-1.900.1-6ct/src/libjasper/.libs/libjasper.a
-	$(CPP) $(CPPFLAGS) $(CXXFLAGS) -Ijasper-1.900.1-6ct/src/libjasper/include -Ijpeg-6c -I/usr/include/lua5.1 -DUNIX -DNATIVE_ENDIAN=1 -DHAVE_LIBJASPER -DHAVE_LIBJPEG -DUSESQLITE -Wno-write-strings total.cpp -o dgate -lpthread -llua5.1 -lsqlite3 jpeg-6c/libjpeg.a jasper-1.900.1-6ct/src/libjasper/.libs/libjasper.a -Wno-multichar $(LDFLAGS)
+dgate-sqlite: jpeg-6c/libjpeg.a jasper-1.900.1-6ct/src/libjasper/.libs/libjasper.a
+	$(CPP) $(CPPFLAGS) $(CXXFLAGS) -Ijasper-1.900.1-6ct/src/libjasper/include -Ijpeg-6c -I/usr/include/lua5.1 -DUNIX -DNATIVE_ENDIAN=1 -DHAVE_LIBJASPER -DHAVE_LIBJPEG -DUSESQLITE -Wno-write-strings total.cpp -o dgate-sqlite -lpthread -llua5.1 -lsqlite3 jpeg-6c/libjpeg.a jasper-1.900.1-6ct/src/libjasper/.libs/libjasper.a -Wno-multichar $(LDFLAGS)
 
-dgate.1: dgate
+dgate-dbase: jpeg-6c/libjpeg.a jasper-1.900.1-6ct/src/libjasper/.libs/libjasper.a
+	$(CPP) $(CPPFLAGS) $(CXXFLAGS) -Ijasper-1.900.1-6ct/src/libjasper/include -Ijpeg-6c -I/usr/include/lua5.1 -DUNIX -DNATIVE_ENDIAN=1 -DHAVE_LIBJASPER -DHAVE_LIBJPEG -Wno-write-strings total.cpp -o dgate-dbase -lpthread -llua5.1 jpeg-6c/libjpeg.a jasper-1.900.1-6ct/src/libjasper/.libs/libjasper.a -Wno-multichar $(LDFLAGS)
+
+dgate-postgres: jpeg-6c/libjpeg.a jasper-1.900.1-6ct/src/libjasper/.libs/libjasper.a
+	$(CPP) $(CPPFLAGS) $(CXXFLAGS) -Ijasper-1.900.1-6ct/src/libjasper/include -Ijpeg-6c -I/usr/include/lua5.1 -I/usr/include/postgresql -DUNIX -DNATIVE_ENDIAN=1 -DHAVE_LIBJASPER -DHAVE_LIBJPEG -DPOSTGRES -Wno-write-strings total.cpp -o dgate-postgres -lpthread -llua5.1 -lpq jpeg-6c/libjpeg.a jasper-1.900.1-6ct/src/libjasper/.libs/libjasper.a -Wno-multichar $(LDFLAGS)
+
+dgate-mysql: jpeg-6c/libjpeg.a jasper-1.900.1-6ct/src/libjasper/.libs/libjasper.a
+	$(CPP) $(CPPFLAGS) $(CXXFLAGS) -Ijasper-1.900.1-6ct/src/libjasper/include -Ijpeg-6c -I/usr/include/lua5.1 -I/usr/include/mysql -DUNIX -DNATIVE_ENDIAN=1 -DHAVE_LIBJASPER -DHAVE_LIBJPEG -DUSEMYSQL -Wno-write-strings total.cpp -o dgate-mysql -lpthread -llua5.1 -lmysqlclient jpeg-6c/libjpeg.a jasper-1.900.1-6ct/src/libjasper/.libs/libjasper.a -Wno-multichar $(LDFLAGS)
+
+dgate.1: dgate-sqlite dgate-mysql dgate-postgres dgate-dbase
 	./debian/make-manpage
-
-override_dh_auto_build: dgate.1
-	cp dicom.ini.sqlite dicom.ini
-	cp dicom.sql.sqlite dicom.sql
-
-override_dh_install:
-	# DICOM Server:
-	dh_install dgate        usr/bin/
-	dh_install dgate.dic    etc/conquest-dicom-server/
-	dh_install dicom.sql    etc/conquest-dicom-server/
-	dh_install dicom.ini    etc/conquest-dicom-server/
-	dh_install acrnema.map  etc/conquest-dicom-server/
-	dh_install dgatesop.lst etc/conquest-dicom-server/
-
-override_dh_compress:
-	# Avoid compressing PDF files
-	dh_compress -X.pdf -X.lua -X.cq -Xsop -Xini
-
-override_dh_auto_clean:
-	#dh_autoreconf_clean --sourcedirectory=jasper-1.900.1-6ct
-	(cd jasper-1.900.1-6ct && ($(MAKE) distclean || echo "Already clean"))
-	(cd jpeg-6c && ($(MAKE) distclean || echo "Already clean"))
-
-override_dh_clean:
-	-rm dgate
-	#dh_clean dicom.ini
-	#dh_clean dicom.sql
-	# autoreconf ?
-	dh_clean jasper-1.900.1-6ct/config.log
-	dh_clean jasper-1.900.1-6ct/config.status
-	dh_clean jpeg-6c/config.log
-	dh_clean jpeg-6c/config.status
-
-get-orig-source:
-	./debian/get-orig-source

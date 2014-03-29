@@ -3,6 +3,7 @@
 set -e
 
 PACKAGE=conquest-dicom-server
+SCRIPTNAME=dgate
 USER=_conquest
 GROUP=_conquest
 ETCDIR=/etc/$PACKAGE
@@ -26,12 +27,12 @@ create_user_group() {
 setup_db() {
   echo "We'll regenerate the database..."
   if which invoke-rc.d >/dev/null 2>&1; then
-    invoke-rc.d $PACKAGE regen
+    invoke-rc.d $SCRIPTNAME regen
   else
-    /etc/init.d/$PACKAGE regen
+    /etc/init.d/$SCRIPTNAME regen
   fi
-  echo "If it's the first time you install $PACKAGE, disregard any error" \
-       "messages about absent database tables."
+  echo -e "\n\nIf it's the first time you install $PACKAGE, disregard any" \
+          "error messages about absent database tables."
 }
 
 # Change ownership of files

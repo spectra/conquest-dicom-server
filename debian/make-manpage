@@ -1,6 +1,5 @@
 #!/bin/sh
 
-PACKAGE=conquest-dicom-server
 VERSION=`dpkg-parsechangelog | sed -n -e 's/^Version: \(.*\)-[^-]*$/\1/p'`
 
 help2man -h "-w$PWD -?" -N -s 1 -n "UCDMC/NKI DICOM server thread and PACS utility application" \
@@ -15,4 +14,4 @@ help2man -h "-w$PWD -?" -N -s 1 -n "UCDMC/NKI DICOM server thread and PACS utili
          --include debian/manparts/aetitle.h2m \
          --include debian/manparts/author.h2m \
          --include debian/manparts/reportingbugs.h2m \
-         -o dgate.1 ./dgate
+         -o dgate.1 ./dgate-dbase

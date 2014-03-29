@@ -1,0 +1,4 @@
+#!/usr/bin/dh-exec
+dgate-postgres => usr/bin/dgate
+dicom.sql.postgres => etc/conquest-dicom-server/dicom.sql
+dicom.ini.postgres => etc/conquest-dicom-server/dicom.ini

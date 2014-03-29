@@ -20,25 +20,13 @@ Running User
 The main software runs under an unpriviledged user (_conquest) as daemon
 (initscripts were provided). Check README._conquest for details.
 
-CGI Interface
--------------
-The main software can act as a CGI behind a webserver and it's the only
-"friendly" interface provided in GNU/Linux version (Windows version has a
-GUI).  It still can be used as such, but you'll have to copy/move the binary
-to the proper place yourself. This package only provides it as a DICOM server
-out-of-the-box.
+Database backends
+-----------------
+The database backend for ConQuest needs to be decided at compilation time. So
+we provide 4 different binary packages named after the database backend they
+use: conquest-{dbase,mysql,postgres,mysql}.
 
-I recommend against running it as a CGI interface since it is not very
-secure. If anytime in the future I (or upstream) am able to patch the
-obvious vulnerabilities, I will prepare the package to act as a CGI interface
-as well, but that is just not the case righ now.
-
-Other Databases
----------------
-Originally ConQuest can work with DBIII, SQLite, MySQL or PostgreSQL. This
-package was only compiled to work with SQLite, for now. In the future I
-intend to work on different versions to provide the remaining databases
-connectors.
+At this moment they conflict each other, so you can only have one installed.
 
 Modified Shipped Libraries
 --------------------------

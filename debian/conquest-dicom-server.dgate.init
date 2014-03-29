@@ -1,6 +1,6 @@
 #!/bin/sh
 ### BEGIN INIT INFO
-# Provides:          conquest-dicom-server
+# Provides:          dgate
 # Required-Start:    $network $local_fs $remote_fs
 # Required-Stop:     $network $local_fs $remote_fs
 # Default-Start:     2 3 4 5
@@ -22,7 +22,7 @@ USER=_conquest
 GROUP=_conquest
 NAME=dgate
 DAEMON=/usr/bin/$NAME # Introduce the server's location here
-DAEMON_ARGS="-^$LOGDIR/dgate.log" # Arguments to run the daemon with
+DAEMON_ARGS="-^$LOGDIR/$NAME.log" # Arguments to run the daemon with
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
 

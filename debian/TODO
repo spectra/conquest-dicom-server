@@ -1,6 +1,3 @@
-[  ] Add support for MySQL
-[  ] Add support for DBIII
-[  ] Add support for PostgreSQL
 [  ] Replace get-orig-source
 
 [!!] Bind to 127.0.0.1 by default (probably have to patch source code)
@@ -9,3 +6,6 @@
 [**] Add Manpage
 [**] Convert Repository layout to git-buildpackage
 [**] Run as non-root user
+[**] Add support for MySQL
+[**] Add support for DBIII
+[**] Add support for PostgreSQL

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+EXTENSIONS="dgate.init manpages lintian-overrides postinst postrm"
+PACKAGES="conquest-dbase conquest-mysql conquest-postgres conquest-sqlite"
+BASE=conquest-dicom-server
+
+for package in $PACKAGES; do
+	for extension in $EXTENSIONS; do
+		cp debian/$BASE.$extension debian/$package.$extension
+	done
+done
