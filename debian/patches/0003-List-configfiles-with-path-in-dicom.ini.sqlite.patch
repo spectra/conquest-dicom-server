@@ -3,7 +3,7 @@ Date: Mon, 27 Jan 2014 00:00:01 +0000
 Subject: List configfiles with path in dicom.ini.sqlite
 
 ---
- dicom.ini.sqlite |    7 ++++---
+ dicom.ini.sqlite | 7 ++++---
  1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/dicom.ini.sqlite b/dicom.ini.sqlite

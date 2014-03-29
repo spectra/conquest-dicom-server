@@ -3,7 +3,7 @@ Date: Sat, 1 Feb 2014 18:50:39 +0000
 Subject: Add DebianBaseDir at dgate.cpp
 
 ---
- dgate.cpp |   16 +++++++---------
+ dgate.cpp | 16 +++++++---------
  1 file changed, 7 insertions(+), 9 deletions(-)
 
 diff --git a/dgate.cpp b/dgate.cpp

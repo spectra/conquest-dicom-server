@@ -3,7 +3,7 @@ Date: Thu, 6 Mar 2014 15:37:26 -0300
 Subject: Fix mismatched new/delete in farray.thh
 
 ---
- farray.thh |    4 ++--
+ farray.thh | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/farray.thh b/farray.thh

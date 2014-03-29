@@ -3,7 +3,7 @@ Date: Mon, 27 Jan 2014 00:00:01 +0000
 Subject: Add logfiles location to dicom.ini.sqlite
 
 ---
- dicom.ini.sqlite |    4 ++++
+ dicom.ini.sqlite | 4 ++++
  1 file changed, 4 insertions(+)
 
 diff --git a/dicom.ini.sqlite b/dicom.ini.sqlite

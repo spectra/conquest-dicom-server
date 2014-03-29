@@ -3,7 +3,7 @@ Date: Thu, 6 Mar 2014 15:34:35 -0300
 Subject: Fix mismatched new/delete in dbsql.cpp
 
 ---
- dbsql.cpp |    2 +-
+ dbsql.cpp | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/dbsql.cpp b/dbsql.cpp

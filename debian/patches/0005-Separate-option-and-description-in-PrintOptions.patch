@@ -3,7 +3,7 @@ Date: Sat, 1 Feb 2014 15:03:04 +0000
 Subject: Separate option and description in PrintOptions
 
 ---
- dgate.cpp |   58 +++++++++++++++++++++++++++++-----------------------------
+ dgate.cpp | 58 +++++++++++++++++++++++++++++-----------------------------
  1 file changed, 29 insertions(+), 29 deletions(-)
 
 diff --git a/dgate.cpp b/dgate.cpp

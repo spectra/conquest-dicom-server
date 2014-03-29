@@ -3,11 +3,11 @@ Date: Thu, 20 Mar 2014 16:00:52 -0300
 Subject: Fixed assorted misspellings pointed by lintian.
 
 ---
- acrnema.map                   |    4 ++--
- dgate.cpp                     |   24 ++++++++++++------------
- lua/ChangeReturnIPAddress.lua |    4 ++--
- nkiqrsop.cpp                  |    2 +-
- socket.cxx                    |    2 +-
+ acrnema.map                   |  4 ++--
+ dgate.cpp                     | 24 ++++++++++++------------
+ lua/ChangeReturnIPAddress.lua |  4 ++--
+ nkiqrsop.cpp                  |  2 +-
+ socket.cxx                    |  2 +-
  5 files changed, 18 insertions(+), 18 deletions(-)
 
 diff --git a/acrnema.map b/acrnema.map

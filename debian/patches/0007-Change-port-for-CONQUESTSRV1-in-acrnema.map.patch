@@ -3,7 +3,7 @@ Date: Sun, 2 Feb 2014 11:21:47 +0000
 Subject: Change port for CONQUESTSRV1 in acrnema.map
 
 ---
- acrnema.map |   13 +++++++------
+ acrnema.map | 13 +++++++------
  1 file changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/acrnema.map b/acrnema.map

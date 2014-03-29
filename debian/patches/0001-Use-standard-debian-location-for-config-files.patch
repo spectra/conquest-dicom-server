@@ -3,7 +3,7 @@ Date: Thu, 5 Jul 2012 00:00:01 +0000
 Subject: Use standard debian location for config files
 
 ---
- dicom.ini.sqlite |    4 ++--
+ dicom.ini.sqlite | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/dicom.ini.sqlite b/dicom.ini.sqlite

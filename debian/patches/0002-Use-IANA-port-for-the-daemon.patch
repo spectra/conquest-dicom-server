@@ -3,7 +3,7 @@ Date: Sat, 25 Jan 2014 00:00:01 +0000
 Subject: Use IANA port for the daemon
 
 ---
- dicom.ini.sqlite |    2 +-
+ dicom.ini.sqlite | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/dicom.ini.sqlite b/dicom.ini.sqlite
