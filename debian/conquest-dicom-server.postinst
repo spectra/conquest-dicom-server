@@ -3,7 +3,7 @@
 set -e
 
 PACKAGE=conquest-dicom-server
-SCRIPTNAME=dgate
+NAME=dgate
 USER=_conquest
 GROUP=_conquest
 ETCDIR=/etc/$PACKAGE
@@ -27,9 +27,9 @@ create_user_group() {
 setup_db() {
   echo "We'll regenerate the database..."
   if which invoke-rc.d >/dev/null 2>&1; then
-    invoke-rc.d $SCRIPTNAME regen
+    invoke-rc.d $NAME regen
   else
-    /etc/init.d/$SCRIPTNAME regen
+    /etc/init.d/$NAME regen
   fi
   echo -e "\n\nIf it's the first time you install $PACKAGE, disregard any" \
           "error messages about absent database tables."

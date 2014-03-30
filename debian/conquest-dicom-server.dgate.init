@@ -52,8 +52,8 @@ fi
 
 # Does not run if not enabled in default file
 if ! $DGATE_ENABLE; then
-    echo "You must enable daemon at /etc/default/$NAME. Aborting" >&2
-    exit 1
+    echo "You must enable daemon at /etc/default/$NAME. Exiting" >&2
+    exit
 fi
 
 #

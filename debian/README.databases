@@ -1,0 +1,49 @@
+Information on ConQuest database backends
+-----------------------------------------
+
+(1) File-based databases:
+-------------------------
+The file-based database variants (conquest-dbase and conquest-sqlite) are
+ready to run right after installation. They come with DGATE_ENABLE set to
+true in /etc/default/dgate. 
+
+For dbase, the database files are under /var/lib/conquest-dicom-server/dbase
+directory with extension .DBF. The schema for those files are at
+/etc/conquest-dicom-server/dicom.sql, but just mess with that file if you
+really know what you're doing. The path can be changed editing SQLServer
+variable at /etc/conquest-dicom-server/dicom.ini file, but the filenames are
+inflexible.
+
+For sqlite, the database is a single file under the same directory called
+conquest.sqlite. The path and filename can be changed by editing SQLServer
+variable at /etc/conquest-dicom-server/dicom.ini.
+
+(2) Server-based databases:
+---------------------------
+The server-based database variants (conquest-mysql and conquest-postgres) are
+disabled right after installation (i.e. they come with DGATE_ENABLE set to
+false in /etc/default/dgate file).
+
+You'll need to set up a database and configure it properly in
+/etc/conquest-dicom-server/dicom.ini before setting DGATE_ENABLE to true.
+relevant variables in configuration file are interpreted as follows:
+
+(2.1) SQLHost: database address (e.g. 127.0.0.1)
+(2.2) SQLServer: database name (e.g. conquest)
+(2.3) Username: user allowed to modify given database (e.g. conquest_user)
+(2.4) Password: user's password (e.g hackme)
+
+Once this has been configured, you just have to run /etc/init.d/dgate regen
+to set it up. This is what should be done for MySQL, for instance:
+
+bash$ mysql -u root -p
+mysql> create database conquest;
+mysql> grant all privileges on conquest.* to conquest_user identified by
+       "hackme";
+mysql> flush privileges;
+mysql> \q
+bash$ sudo vi /etc/conquest-dicom-server/dicom.ini (set thing accordingly)
+bash$ sudo vi /etc/default/dgate (set DGATE_ENABLE to true)
+bash$ sudo invoke-rc.d dgate regen
+bash$ sudo invoke-rc.d dgate start
+
