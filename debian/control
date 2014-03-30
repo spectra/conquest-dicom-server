@@ -15,7 +15,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, adduser (>= 3.11), conquest-common
 Provides: conquest-dicom-server
 Conflicts: conquest-dicom-server
 Replaces: conquest-dicom-server
-Description: DICOM Server with storage, verification, query and retrieve
+Description: ConQuest DICOM Server - SQLite backend
  A full featured DICOM server that has been developed based on and heavily
  extending the public domain UCDMC DICOM code. Some possible applications of
  the ConQuest DICOM software are:
@@ -37,7 +37,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, adduser (>= 3.11), conquest-common
 Provides: conquest-dicom-server
 Conflicts: conquest-dicom-server
 Replaces: conquest-dicom-server
-Description: DICOM Server with storage, verification, query and retrieve
+Description: ConQuest DICOM Server - DBaseIII backend
  A full featured DICOM server that has been developed based on and heavily
  extending the public domain UCDMC DICOM code. Some possible applications of
  the ConQuest DICOM software are:
@@ -51,7 +51,7 @@ Description: DICOM Server with storage, verification, query and retrieve
     conversion 
   - DICOM caching and archive merging 
  .
- This package uses DBase files as database backend.
+ This package uses DBaseIII files as database backend.
 
 Package: conquest-postgres
 Architecture: any
@@ -59,7 +59,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, adduser (>= 3.11), conquest-common
 Provides: conquest-dicom-server
 Conflicts: conquest-dicom-server
 Replaces: conquest-dicom-server
-Description: DICOM Server with storage, verification, query and retrieve
+Description: ConQuest DICOM Server - PostgreSQL backend
  A full featured DICOM server that has been developed based on and heavily
  extending the public domain UCDMC DICOM code. Some possible applications of
  the ConQuest DICOM software are:
@@ -81,7 +81,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, adduser (>= 3.11), conquest-common
 Provides: conquest-dicom-server
 Conflicts: conquest-dicom-server
 Replaces: conquest-dicom-server
-Description: DICOM Server with storage, verification, query and retrieve
+Description: ConQuest DICOM Server - MySQL backend
  A full featured DICOM server that has been developed based on and heavily
  extending the public domain UCDMC DICOM code. Some possible applications of
  the ConQuest DICOM software are:
@@ -101,7 +101,7 @@ Package: conquest-common
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Suggests: conquest-dicom-server
-Description: ConQuest DICOM Server common files
+Description: ConQuest DICOM Server - common files
  A full featured DICOM server that has been developed based on and heavily
  extending the public domain UCDMC DICOM code. Some possible applications of
  the ConQuest DICOM software are:
@@ -115,4 +115,6 @@ Description: ConQuest DICOM Server common files
     conversion 
   - DICOM caching and archive merging 
  .
- This package contains common files.
+ This package contains common files. You'll need a package providing
+ conquest-dicom-server (e.g. conquest-mysql, conquest-postgres,
+ conquest-sqlite or conquest-dbase).
