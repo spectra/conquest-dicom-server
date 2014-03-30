@@ -1,6 +1,6 @@
 #!/bin/sh
 
-EXTENSIONS="dgate.init manpages lintian-overrides postinst postrm"
+EXTENSIONS="dgate.init manpages postinst postrm"
 PACKAGES="conquest-dbase conquest-mysql conquest-postgres conquest-sqlite"
 BASE=conquest-dicom-server
 
@@ -8,4 +8,6 @@ for package in $PACKAGES; do
 	for extension in $EXTENSIONS; do
 		cp debian/$BASE.$extension debian/$package.$extension
 	done
+	sed "s/PACKAGE/$package/" debian/lintian-overrides.in > \
+            debian/$package.lintian-overrides
 done
