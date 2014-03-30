@@ -25,9 +25,13 @@ DAEMON=/usr/bin/$NAME # Introduce the server's location here
 DAEMON_ARGS="-^$LOGDIR/$NAME.log" # Arguments to run the daemon with
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
+DGATE_ENABLE=false
 
 # Exit if the package is not installed
 [ -x $DAEMON ] || exit 0
+
+# Read configuration variable file if it is present
+[ -r /etc/default/$NAME ] && . /etc/default/$NAME
 
 # Load the VERBOSE setting and other rcS variables
 . /lib/init/vars.sh
@@ -43,6 +47,12 @@ if ! getent passwd | grep -q "^$USER:"; then
 fi
 if ! getent group | grep -q "^$GROUP:"; then
     echo "Conquest group does not exist. Aborting" >&2
+    exit 1
+fi
+
+# Does not run if not enabled in default file
+if ! $DGATE_ENABLE; then
+    echo "You must enable daemon at /etc/default/$NAME. Aborting" >&2
     exit 1
 fi
 

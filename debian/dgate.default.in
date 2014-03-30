@@ -1,0 +1,8 @@
+# Please note that you have to configure /etc/conquest-dicom-server/dicom.ini
+# to provide database configuration for conquest-mysql and conquest-postgres.
+# The variants with disk-based database (conquest-dbase and conquest-sqlite)
+# have the follwing variable set to true by default since default database file
+# location is assumed.
+#
+# Set the following variable true or false to run the daemon
+DGATE_ENABLE=DGATE_ENABLE_VALUE

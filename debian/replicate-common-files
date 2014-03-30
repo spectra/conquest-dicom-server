@@ -3,11 +3,27 @@
 EXTENSIONS="dgate.init manpages postinst postrm"
 PACKAGES="conquest-dbase conquest-mysql conquest-postgres conquest-sqlite"
 BASE=conquest-dicom-server
+DGATE_ENABLE_VALUE=true
 
 for package in $PACKAGES; do
-	for extension in $EXTENSIONS; do
-		cp debian/$BASE.$extension debian/$package.$extension
-	done
-	sed "s/PACKAGE/$package/" debian/lintian-overrides.in > \
+    # Solve common replication
+    for extension in $EXTENSIONS; do
+        cp debian/$BASE.$extension debian/$package.$extension
+    done
+
+    # Solve lintian-overrides
+    sed "s/PACKAGE/$package/" debian/lintian-overrides.in > \
             debian/$package.lintian-overrides
+
+    # Solve default file
+    case $package in
+        conquest-dbase|conquest-sqlite)
+            DGATE_ENABLE_VALUE=true
+            ;;
+        conquest-mysql|conquest-postgres)
+            DGATE_ENABLE_VALUE=false
+            ;;
+    esac
+    sed "s/DGATE_ENABLE_VALUE/$DGATE_ENABLE_VALUE/" debian/dgate.default.in > \
+            debian/$package.dgate.default
 done
