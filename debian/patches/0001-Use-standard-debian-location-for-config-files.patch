@@ -34,7 +34,7 @@ index 44ca5d0..a810fec 100644
 -SQLServer                = ./data/dbase/
 -Username                 = conquest
 -Password                 = conquest
-+SQLServer                = /var/lib/conquest-dicom-server/dbase/conquest.dbase
++SQLServer                = /var/lib/conquest-dicom-server/dbase/
 +Username                 = dontcare
 +Password                 = dontcare
  PostGres                 = 0
