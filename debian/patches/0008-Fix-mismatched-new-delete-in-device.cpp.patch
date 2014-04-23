@@ -3,7 +3,7 @@ Date: Thu, 6 Mar 2014 15:43:54 -0300
 Subject: Fix mismatched new/delete in device.cpp
 
 ---
- device.cpp | 20 ++++++++++----------
+ device.cpp |   20 ++++++++++----------
  1 file changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/device.cpp b/device.cpp

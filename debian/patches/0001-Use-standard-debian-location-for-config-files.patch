@@ -3,14 +3,14 @@ Date: Thu, 5 Jul 2012 00:00:01 +0000
 Subject: Use standard debian location for config files
 
 ---
- dicom.ini.dbase    | 21 +++++++++++++--------
- dicom.ini.mysql    | 19 ++++++++++++-------
- dicom.ini.postgres | 15 ++++++++++-----
- dicom.ini.sqlite   | 17 +++++++++++------
+ dicom.ini.dbase    |   21 +++++++++++++--------
+ dicom.ini.mysql    |   19 ++++++++++++-------
+ dicom.ini.postgres |   15 ++++++++++-----
+ dicom.ini.sqlite   |   17 +++++++++++------
  4 files changed, 46 insertions(+), 26 deletions(-)
 
 diff --git a/dicom.ini.dbase b/dicom.ini.dbase
-index 44ca5d0..a810fec 100644
+index 44ca5d0..973662d 100644
 --- a/dicom.ini.dbase
 +++ b/dicom.ini.dbase
 @@ -10,18 +10,19 @@ Edition                  = Personal

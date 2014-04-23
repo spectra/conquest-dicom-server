@@ -3,7 +3,7 @@ Date: Thu, 6 Mar 2014 17:02:42 -0300
 Subject: Fix mismatched new/delete in buffer.cxx
 
 ---
- buffer.cxx | 2 +-
+ buffer.cxx |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/buffer.cxx b/buffer.cxx

@@ -3,7 +3,7 @@ Date: Thu, 6 Mar 2014 15:36:06 -0300
 Subject: Fix mismatched new/delete in rtc.cxx
 
 ---
- rtc.cxx | 2 +-
+ rtc.cxx |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/rtc.cxx b/rtc.cxx

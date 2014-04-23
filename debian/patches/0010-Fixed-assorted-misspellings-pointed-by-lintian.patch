@@ -3,12 +3,12 @@ Date: Thu, 20 Mar 2014 16:00:52 -0300
 Subject: Fixed assorted misspellings pointed by lintian.
 
 ---
- acrnema.map                   |  4 ++--
- dgate.cpp                     | 24 ++++++++++++------------
- lua/ChangeReturnIPAddress.lua |  4 ++--
- nkiqrsop.cpp                  |  2 +-
- socket.cxx                    |  2 +-
- 5 files changed, 18 insertions(+), 18 deletions(-)
+ acrnema.map                   |    4 ++--
+ dgate.cpp                     |   38 +++++++++++++++++++-------------------
+ lua/ChangeReturnIPAddress.lua |    4 ++--
+ nkiqrsop.cpp                  |    2 +-
+ socket.cxx                    |    2 +-
+ 5 files changed, 25 insertions(+), 25 deletions(-)
 
 diff --git a/acrnema.map b/acrnema.map
 index 4cda61a..562b06a 100644
@@ -30,9 +30,18 @@ index 4cda61a..562b06a 100644
   * For compression see manual. Values are un=uncompressed;  *
   * j1,j2=lossless jpeg;j3..j6=lossy jpeg;n1..n4=nki private *
 diff --git a/dgate.cpp b/dgate.cpp
-index 30581d1..59633fe 100644
+index 30581d1..cf54e56 100644
 --- a/dgate.cpp
 +++ b/dgate.cpp
+@@ -485,7 +485,7 @@ mvh 20071124: Added [sop xxx] clause to [forward|get]
+ 	      Real life example (must all be one one line, max 512 characters): 
+               ifnotequal "%m", "RTPLAN"; stop; 						nop "tests modality = RTPLAN";
+ 	      ifnotequal "%V*300a,00b2[0,1]", "A2"; stop; 				nop "test machine name = A2"
+-	      forward to XVI_A2; 							nop "forwards the current recieved RTPLAN";
++	      forward to XVI_A2; 							nop "forwards the current received RTPLAN";
+ 	      get study modality CT from NKIPACS; 					nop "collects associated CT";
+ 	      get study modality RTSTRUCT sop %V/300c,0060.0/0008,1155 from NKIPACS; 	nop "collects associated RTSTRUCT";
+ 	      forward study modality CT imagetype *AXIAL* to XVI_A2; 			nop "forwards associated CT";
 @@ -535,7 +535,7 @@ mvh 20080819: Added code by map but kept original get_param for old web cgi clie
                Version to 1.4.14
  mvh 20080820: Solaris 10 fixes, and general UNIX fixes (map): configfiles may not be in current dir
@@ -42,6 +51,33 @@ index 30581d1..59633fe 100644
  	      Added rudimentary query/move web pages
  mvh 20080825: query/move looks better; added "thumbs" column to local series lister; config patched to readonly
  	      added background color and display of icon (to be placed in WebCodeBase)
+@@ -1183,7 +1183,7 @@ int	ProcessTime=0;					// total time processing (downsize)
+ int	SaveTime=0;					// total time saving
+ 
+ int	ImagesSent=0;					// how many images were sent
+-int	ImagesReceived=0;				// idem recieved
++int	ImagesReceived=0;				// idem received
+ int	ImagesSaved=0;					// idem saved
+ int	ImagesForwarded=0;				// idem forwarded
+ int	ImagesExported=0;				// executable as export converted
+@@ -1473,7 +1473,7 @@ void StatusDisplay(FILE *f)
+   fprintf(f, "Old JPEG decoder=%d, JPEGLIB jpeg codec=%d, LIBJASPER jpeg2000 codec=%d\n", intjpeg, libjpeg, libjasper);
+ 
+   fprintf(f, "Run time (s) total %d, query %d, load %d, save %d, compress %d, process %d, gpps %d\n", TotalTime, QueryTime/1000, LoadTime, SaveTime, RecompressTime, ProcessTime, gppstime);
+-  fprintf(f, "Associations=%d; Threads=%d (%d open); Images sent=%d, recieved=%d, forwarded=%d\n", IncomingAssociations, ThreadCount, OpenThreadCount, ImagesSent, ImagesReceived, ImagesForwarded);
++  fprintf(f, "Associations=%d; Threads=%d (%d open); Images sent=%d, received=%d, forwarded=%d\n", IncomingAssociations, ThreadCount, OpenThreadCount, ImagesSent, ImagesReceived, ImagesForwarded);
+   fprintf(f, "Images printed=%d, in color=%d\n", SetBasicGrayScaleImageBox+SetBasicColorImageBox, SetBasicColorImageBox);
+   fprintf(f, "Activity: Echo:%d, Find:%d, Move:%d, Unknown:%d, gpps:%d\n", EchoRequest, C_Find_PatientRoot+C_Find_StudyRoot+C_Find_PatientStudyOnly+C_Find_ModalityWorkList,
+   	C_Move_PatientRootNKI+C_Move_PatientRoot+C_Move_StudyRootNKI+C_Move_StudyRoot+C_Move_PatientStudyOnlyNKI+C_Move_PatientStudyOnly, UnknownRequest, gpps);
+@@ -2348,7 +2348,7 @@ void SaveDICOMDataObject(char *Filename, DICOMDataObject* pDDO);
+ int SearchDICOMObject(DICOMObject *DDO, const char *desc, char *result, Array < DICOMDataObject * > **A = NULL, DICOMDataObject **O = NULL);
+ #endif
+ 
+-// This class handles temporary storage of a recieved object named with SOP
++// This class handles temporary storage of a received object named with SOP
+ class	MyBridgeStorage	:	public UnknownStorage
+ 	{
+ 	public:
 @@ -11670,7 +11670,7 @@ ParseArgs (int	argc, char	*argv[], ExtendedPDU_Service *PDU)
  					OperatorConsole.printf("If you can read this, the console communication is OK\n");
                            		SystemDebug.printf("This is systemdebug output; can you read this ?\n");
@@ -83,6 +119,33 @@ index 30581d1..59633fe 100644
  						}
  					OperatorConsole.printf(" ----------------------------------\n");
  					exit(0);
+@@ -13281,7 +13281,7 @@ int VirtualQuery(DICOMDataObject *DDO, const char *Level, int N, Array < DICOMDa
+ 	
+ 	PDU.Close();
+ 
+-	// anything recieved ?
++	// anything received ?
+ 	if (pADDO->GetSize() != s)
+ 		{
+ 		DBENTRY *dum;
+@@ -15611,7 +15611,7 @@ struct ReadAheadThreadData
+ #define NULLHANDLE 0
+ #endif
+ 
+-// to process any recieved data during virtual server operation
++// to process any received data during virtual server operation
+ // call once in a while during virtual reception of data
+ 
+ static int ProcessRATData(struct ReadAheadThreadData *ratd, int maxfiles)
+@@ -18058,7 +18058,7 @@ BOOL StorageApp ::	StorageCommitmentSupport( CheckedPDU_Service *PDU, DICOMComma
+ 	*CommitData = new DICOMDataObject;
+ 	if (ActionStorageCommitmentPushRequest.Read(DCO, PDU, *CommitData))
+ 		{
+-		OperatorConsole.printf("Storage commitment request recieved\n");
++		OperatorConsole.printf("Storage commitment request received\n");
+  		if (!ActionStorageCommitmentPushResponse.Write(PDU, DCO, &StorageCommitmentPushModelInstanceUID, 1, 0, NULL)) 
+ 			return FALSE;
+ 	
 @@ -19661,12 +19661,12 @@ BOOL StorageApp	::	ServerChild (int theArg )
  					fprintf(f, " *                                                          *\n");
  					fprintf(f, " * All DICOM systems that want to retrieve images from the  *\n");
