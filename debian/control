@@ -98,7 +98,7 @@ Description: ConQuest DICOM Server - MySQL backend
  This package uses MySQL as database backend.
 
 Package: conquest-common
-Architecture: any
+Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Suggests: conquest-dicom-server
 Description: ConQuest DICOM Server - common files
